@@ -1,6 +1,7 @@
 package screens;
 
 import btck.com.MyGdxGame;
+import btck.com.model.constant.GameConstant;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -17,9 +18,13 @@ public class Credits implements Screen {
     MyGdxGame myGdxGame;
 
     Texture creditPng;
+    Texture arrowInactive;
+    Texture arrowActive;
     public Credits(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         creditPng = new Texture("credits.png");
+        arrowActive = new Texture("back arrow.png");
+        arrowInactive = new Texture("back arrow inactive.png");
     }
 
     @Override
@@ -33,6 +38,7 @@ public class Credits implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         myGdxGame.batch.begin();
 
+        drawArrow();
         myGdxGame.batch.draw(creditPng, (MainMenuScreen.WIDTH - creditWidth) / 2, (MainMenuScreen.HEIGHT - creditHeight) / 2, creditWidth, creditHeight);
 
         myGdxGame.batch.end();
@@ -60,18 +66,21 @@ public class Credits implements Screen {
 
     @Override
     public void dispose() {
-
+        arrowInactive.dispose();
+        arrowActive.dispose();
+        creditPng.dispose();
     }
     
     public void drawArrow(){
-        if(Gdx.input.getX() < newGameX + arrowEdge && Gdx.input.getX() > newGameX && GameConstant.screenHeight - Gdx.input.getY() < newGameY + newGameHeight && GameConstant.screenHeight - Gdx.input.getY() > newGameY){
-            myGdxGame.batch.draw(newGameActive, newGameX, newGameY, arrowEdge, newGameHeight);
+        int arrowPositions = 50;
+        if(Gdx.input.getX() < arrowPositions + arrowEdge && Gdx.input.getX() > arrowPositions && GameConstant.screenHeight - Gdx.input.getY() < arrowPositions + arrowEdge && GameConstant.screenHeight - Gdx.input.getY() > arrowPositions){
+            myGdxGame.batch.draw(arrowActive, arrowPositions, arrowPositions, arrowEdge, arrowEdge);
             if(Gdx.input.isTouched()){
                 this.dispose();
-                myGdxGame.setScreen(new IngameScreen(myGdxGame));
+                myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
             }
         }else{
-            myGdxGame.batch.draw(newGameInactive, newGameX, newGameY, arrowEdge, newGameHeight);
+            myGdxGame.batch.draw(arrowInactive, arrowPositions, arrowPositions, arrowEdge, arrowEdge);
         }
     }
 }

@@ -1,5 +1,6 @@
 package btck.com;
 
+import btck.com.model.constant.GameConstant;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import btck.com.MyGdxGame;
@@ -9,6 +10,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
+		config.setWindowedMode(GameConstant.screenWidth, GameConstant.screenHeight);
+		config.setResizable(false);
 		config.setTitle("ProGamejam_BTCK");
 		config.setWindowedMode(1400, 850);
 		new Lwjgl3Application(new MyGdxGame(), config);
