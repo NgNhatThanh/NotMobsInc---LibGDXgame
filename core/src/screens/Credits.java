@@ -12,8 +12,8 @@ import jdk.tools.jmod.Main;
 
 public class Credits implements Screen {
 
-    public static final int creditWidth = 500;
-    public static final int creditHeight = 250;
+    public static final int creditWidth = 700;
+    public static final int creditHeight = 350;
     public static final int arrowEdge = 50;
     MyGdxGame myGdxGame;
 
@@ -22,9 +22,9 @@ public class Credits implements Screen {
     Texture arrowActive;
     public Credits(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
-        creditPng = new Texture("credits.png");
-        arrowActive = new Texture("back arrow.png");
-        arrowInactive = new Texture("back arrow inactive.png");
+        creditPng = new Texture("credits\\credits.png");
+        arrowActive = new Texture("credits\\back arrow.png");
+        arrowInactive = new Texture("credits\\back arrow inactive.png");
     }
 
     @Override
