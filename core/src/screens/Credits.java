@@ -13,6 +13,7 @@ public class Credits implements Screen {
 
     public static final int creditWidth = 500;
     public static final int creditHeight = 250;
+    public static final int arrowEdge = 50;
     MyGdxGame myGdxGame;
 
     Texture creditPng;
@@ -60,5 +61,17 @@ public class Credits implements Screen {
     @Override
     public void dispose() {
 
+    }
+    
+    public void drawArrow(){
+        if(Gdx.input.getX() < newGameX + arrowEdge && Gdx.input.getX() > newGameX && GameConstant.screenHeight - Gdx.input.getY() < newGameY + newGameHeight && GameConstant.screenHeight - Gdx.input.getY() > newGameY){
+            myGdxGame.batch.draw(newGameActive, newGameX, newGameY, arrowEdge, newGameHeight);
+            if(Gdx.input.isTouched()){
+                this.dispose();
+                myGdxGame.setScreen(new IngameScreen(myGdxGame));
+            }
+        }else{
+            myGdxGame.batch.draw(newGameInactive, newGameX, newGameY, arrowEdge, newGameHeight);
+        }
     }
 }
