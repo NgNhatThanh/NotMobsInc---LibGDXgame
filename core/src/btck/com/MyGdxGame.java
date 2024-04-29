@@ -1,7 +1,11 @@
 package btck.com;
 
+import btck.com.common.io.MouseHandler;
+import btck.com.model.constant.GameState;
+import btck.com.model.entity.player.Swordman;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -14,6 +18,9 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		Gdx.input.setInputProcessor(MouseHandler.getInstance());
+		GameManager.getInstance().setCurrentPlayer(new Swordman());
+		GameManager.getInstance().gameState = GameState.MENU;
 		this.setScreen(new MainMenuScreen(this));
 	}
 

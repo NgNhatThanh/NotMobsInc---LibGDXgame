@@ -1,6 +1,8 @@
 package screens;
 
+import btck.com.GameManager;
 import btck.com.MyGdxGame;
+import btck.com.model.constant.GameState;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -48,6 +50,7 @@ public class MainMenuScreen  implements Screen {
             myGdxGame.batch.draw(newGameActive, newGameX, newGameY, newGameWidth, newGameHeight);
             if(Gdx.input.isTouched()){
                 this.dispose();
+                GameManager.getInstance().gameState = GameState.INGAME;
                 myGdxGame.setScreen(new IngameScreen(myGdxGame));
             }
         }else{
