@@ -24,7 +24,7 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         myGdxGame.batch.begin();
 
-        myGdxGame.batch.draw(new Texture("badlogic.jpg"), 100, 100);
+        myGdxGame.batch.draw(new Texture("exitInActive.png"), 100, 100);
 
         myGdxGame.batch.end();
     }

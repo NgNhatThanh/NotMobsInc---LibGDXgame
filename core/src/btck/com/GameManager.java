@@ -1,11 +1,7 @@
 package btck.com;
 
 import btck.com.model.entity.Player;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class GameManager {
 
     public static GameManager gameManager;

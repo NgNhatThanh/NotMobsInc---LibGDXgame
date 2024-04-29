@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import screens.IngameScreen;
 import screens.MainMenuScreen;
 
 public class MyGdxGame extends Game {
@@ -18,10 +19,9 @@ public class MyGdxGame extends Game {
 
 	public void render () {
 		super.render();
-		ScreenUtils.clear(0, 0, 0, 1);
-		batch.begin();
-
-		batch.end();
+//		ScreenUtils.clear(0, 0, 0, 1);
+//		batch.begin();
+//		batch.end();
 	}
 	
 	public void dispose () {
