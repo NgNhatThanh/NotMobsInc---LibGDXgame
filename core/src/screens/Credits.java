@@ -1,16 +1,24 @@
 package screens;
 
 import btck.com.MyGdxGame;
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import jdk.tools.jmod.Main;
 
-public class IngameScreen implements Screen {
+public class Credits implements Screen {
 
+    public static final int creditWidth = 500;
+    public static final int creditHeight = 250;
     MyGdxGame myGdxGame;
-    public IngameScreen(MyGdxGame myGdxGame){
+
+    Texture creditPng;
+    public Credits(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
+        creditPng = new Texture("credits.png");
     }
 
     @Override
@@ -24,7 +32,7 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         myGdxGame.batch.begin();
 
-        myGdxGame.batch.draw(new Texture("MainMenuScreen\\exitInactive.png"), 100, 100);
+        myGdxGame.batch.draw(creditPng, (MainMenuScreen.WIDTH - creditWidth) / 2, (MainMenuScreen.HEIGHT - creditHeight) / 2, creditWidth, creditHeight);
 
         myGdxGame.batch.end();
     }
@@ -54,4 +62,3 @@ public class IngameScreen implements Screen {
 
     }
 }
-
