@@ -1,6 +1,7 @@
 package screens;
 
 import btck.com.MyGdxGame;
+import btck.com.model.constant.GameConstant;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -24,7 +25,7 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         myGdxGame.batch.begin();
 
-        myGdxGame.batch.draw(new Texture("exitInActive.png"), 100, 100);
+        myGdxGame.batch.draw(new Texture("ingame/map.gif"), 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
 
         myGdxGame.batch.end();
     }
