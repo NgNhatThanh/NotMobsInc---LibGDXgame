@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.setWindowedMode(GameConstant.screenWidth, GameConstant.screenHeight);
 		config.setResizable(false);
 		config.setTitle("ProGamejam_BTCK");
+		config.setWindowedMode(1400, 850);
 		new Lwjgl3Application(new MyGdxGame(), config);
 	}
 }

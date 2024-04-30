@@ -37,6 +37,7 @@ public class IngameScreen implements Screen {
 
         myGdxGame.batch.draw(map, 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
 
+
         myGdxGame.batch.end();
 
         GameManager.getInstance().getCurrentPlayer().draw(myGdxGame.batch);

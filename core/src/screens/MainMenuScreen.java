@@ -8,12 +8,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
+import org.w3c.dom.Text;
 
 public class MainMenuScreen  implements Screen {
     public static final int newGameWidth = 300;
     public static final int newGameHeight = 70;
-    public static final int exitWidth = 120;
-    public static final int exitHeight = 48;
+    public static final int exitWidth = 135;
+    public static final int exitHeight = 54;
+    public static final int creditWidth = 300;
+    public static final int creditHeight = 60;
     public static int WIDTH = Gdx.graphics.getWidth();
     public static int HEIGHT = Gdx.graphics.getHeight();
     MyGdxGame myGdxGame;
@@ -22,12 +25,18 @@ public class MainMenuScreen  implements Screen {
     Texture newGameInactive;
     Texture exitInactive;
     Texture exitActive;
+    Texture creditActive;
+    Texture creditInactive;
     public MainMenuScreen(MyGdxGame myGdxGame){
+        System.out.println(MainMenuScreen.WIDTH);
+        System.out.println(MainMenuScreen.HEIGHT);
         this.myGdxGame = myGdxGame;
         newGameActive = new Texture("MainMenuScreen\\new game active.png");
         newGameInactive = new Texture("MainMenuScreen\\white new game.png");
         exitInactive = new Texture("MainMenuScreen\\exitInactive.png");
         exitActive = new Texture("MainMenuScreen\\exitActive.png");
+        creditActive = new Texture("MainMenuScreen\\creditActive.png");
+        creditInactive = new Texture("MainMenuScreen\\creditInactive.png");
     }
 
     @Override
@@ -43,8 +52,10 @@ public class MainMenuScreen  implements Screen {
 
         int newGameX = (WIDTH - newGameWidth - 20);
         int newGameY = (HEIGHT - newGameHeight - 50);
-        int exitX = newGameX + 10;
-        int exitY = newGameY - 50;
+        int creditX = newGameX - 15;
+        int creditY = newGameY - 50;
+        int exitX = newGameX;
+        int exitY = creditY - 50;
 
         if(Gdx.input.getX() < newGameX + newGameWidth && Gdx.input.getX() > newGameX && MainMenuScreen.HEIGHT - Gdx.input.getY() < newGameY + newGameHeight && MainMenuScreen.HEIGHT - Gdx.input.getY() > newGameY){
             myGdxGame.batch.draw(newGameActive, newGameX, newGameY, newGameWidth, newGameHeight);
@@ -64,6 +75,15 @@ public class MainMenuScreen  implements Screen {
             }
         }else{
             myGdxGame.batch.draw(exitInactive, exitX, exitY, exitWidth, exitHeight);
+        }
+
+        if(Gdx.input.getX() < exitX + creditWidth && Gdx.input.getX() > creditX && MainMenuScreen.HEIGHT - Gdx.input.getY() < creditY + creditHeight && MainMenuScreen.HEIGHT - Gdx.input.getY() > creditY){
+            myGdxGame.batch.draw(creditActive, creditX, creditY, creditWidth, creditHeight);
+            if(Gdx.input.isTouched()){
+                myGdxGame.setScreen(new Credits(myGdxGame));
+            }
+        }else{
+            myGdxGame.batch.draw(creditInactive, creditX, creditY, creditWidth, creditHeight);
         }
 
         myGdxGame.batch.end();
@@ -95,6 +115,8 @@ public class MainMenuScreen  implements Screen {
         this.newGameInactive.dispose();
         this.exitActive.dispose();
         this.exitInactive.dispose();
+        this.creditActive.dispose();
+        this.creditInactive.dispose();
     }
 }
 
