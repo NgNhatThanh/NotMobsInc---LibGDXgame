@@ -1,4 +1,4 @@
-package btck.com.view;
+package btck.com.view.map;
 
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;

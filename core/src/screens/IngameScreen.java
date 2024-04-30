@@ -3,12 +3,14 @@ package screens;
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.model.constant.GameConstant;
+import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -23,16 +25,21 @@ public class IngameScreen implements Screen {
 
     private Viewport viewport;
 
+    HUD hud;
+
+    Matrix4 matrix4;
+
     public IngameScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
+        matrix4 = myGdxGame.batch.getProjectionMatrix();
         cam = new OrthographicCamera();
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
-//        viewport.apply(true);
+        hud = new HUD(myGdxGame.batch);
+        //        viewport.apply(true);
 //        cam.position.set(0, 0, 0);
 //        cam.update();
 //        viewport.setScreenX(0);
 //        viewport.setScreenY(0);
-        System.out.println(viewport.getWorldWidth());
     }
 
     Texture map;
@@ -52,15 +59,17 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-//        myGdxGame.batch.setProjectionMatrix(cam.combined);
+//        myGdxGame.batch.setProjectionMatrix(matrix4);
 
         myGdxGame.batch.begin();
 
         myGdxGame.batch.draw(map, 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
 
         GameManager.getInstance().getCurrentPlayer().draw(myGdxGame.batch);
-
         myGdxGame.batch.end();
+
+//        myGdxGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     public void spawnPlayer(){
