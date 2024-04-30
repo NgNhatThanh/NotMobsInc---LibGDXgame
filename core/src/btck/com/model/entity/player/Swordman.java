@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
 
@@ -16,8 +18,6 @@ import static java.lang.Math.sqrt;
 public class Swordman extends Player {
 
     TextureAtlas textureAtlas;
-    Rectangle hitbox;
-
     final int NORMAL_SPEED = 200;
     final int ATTACK_SPEED =450;
     int CURRENT_SPEED = NORMAL_SPEED;
@@ -29,9 +29,15 @@ public class Swordman extends Player {
 
     private float a, b, x1, y1 ,deltaSP;
 
+    ShapeRenderer shapeRenderer;
+
     public Swordman(){
         width = 124;
         height = 84;
+
+        hitbox = new Rectangle(x, y, 124, 84);
+        shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setAutoShapeType(true);
 
         textureAtlas = new TextureAtlas("atlas/player/swordman.atlas");
         animations = new Animation[3];
@@ -40,23 +46,20 @@ public class Swordman extends Player {
         animations[1] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_run"));
         animations[2] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_attack"));
 
-//        animations[0].setPlayMode(Animation.PlayMode.LOOP);
-//        animations[1].setPlayMode(Animation.PlayMode.LOOP);
-//        animations[2].setPlayMode(Animation.PlayMode.LOOP);
-
-//        for(Animation animation : animations) animation.setPlayMode(Animation.PlayMode.LOOP);
-
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
         statetime += Gdx.graphics.getDeltaTime();
-
-        spriteBatch.begin();
+//        shapeRenderer.begin();
+//        shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2);
+//        shapeRenderer.end();
 
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? 62 : -62) + x, y, (flip ? -1 : 1) * width, height);
+        hitbox.x = x - width / 4;
+        hitbox.y = y;
 
-        spriteBatch.end();
+//        System.out.println(hitbox.x + " " + hitbox.y);
 
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;

@@ -2,7 +2,11 @@ package btck.com;
 
 import btck.com.model.constant.GameState;
 import btck.com.model.entity.Player;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class GameManager {
 
     public static GameManager gameManager;
@@ -16,11 +20,4 @@ public class GameManager {
         return gameManager;
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
 }

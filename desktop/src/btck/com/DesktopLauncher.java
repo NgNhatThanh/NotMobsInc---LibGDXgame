@@ -11,9 +11,8 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setWindowedMode(GameConstant.screenWidth, GameConstant.screenHeight);
-		config.setResizable(false);
+//		config.setResizable(false);
 		config.setTitle("ProGamejam_BTCK");
-		config.setWindowedMode(1400, 850);
 		new Lwjgl3Application(new MyGdxGame(), config);
 	}
 }

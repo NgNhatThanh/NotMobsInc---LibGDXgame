@@ -1,5 +1,5 @@
 package btck.com.model.constant;
 
 public enum GameState {
-    MENU, INGAME, PAUSE
+    MENU, INGAME, PAUSE, END
 }
