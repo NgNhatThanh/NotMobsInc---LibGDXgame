@@ -27,11 +27,8 @@ public class IngameScreen implements Screen {
 
     HUD hud;
 
-    Matrix4 matrix4;
-
     public IngameScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
-        matrix4 = myGdxGame.batch.getProjectionMatrix();
         cam = new OrthographicCamera();
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
         hud = new HUD(myGdxGame.batch);
@@ -58,8 +55,6 @@ public class IngameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-//        myGdxGame.batch.setProjectionMatrix(matrix4);
 
         myGdxGame.batch.begin();
 

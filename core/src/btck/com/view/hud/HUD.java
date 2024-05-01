@@ -1,5 +1,6 @@
 package btck.com.view.hud;
 
+import btck.com.GameManager;
 import btck.com.model.constant.GameConstant;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,10 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class HUD {
+public class HUD implements Disposable {
     public Stage stage;
     Viewport viewport;
 
@@ -47,5 +49,15 @@ public class HUD {
         table.add(healthNumLabel).expandX();
 
         stage.addActor(table);
+    }
+
+    public void update(){
+        levelNumLabel.setText(GameManager.getInstance().getCurrentPlayer().level);
+        healthNumLabel.setText(GameManager.getInstance().getCurrentPlayer().height);
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 }
