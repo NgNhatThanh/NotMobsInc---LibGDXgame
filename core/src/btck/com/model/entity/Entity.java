@@ -15,9 +15,11 @@ public abstract class Entity {
     protected int attackX, attackY;
     public int width, height;
     public int speed;
+    public int damage;
     protected boolean attacking;
     protected boolean flip;
     protected boolean dead;
+    protected boolean exist = true;
     protected Rectangle hitbox;
     protected boolean isHit;
     public abstract void draw(SpriteBatch spriteBatch);
@@ -26,4 +28,5 @@ public abstract class Entity {
     public boolean hit(Entity entity){
         return this.hitbox.overlaps(entity.hitbox);
     }
+
 }

@@ -2,6 +2,10 @@ package btck.com.model.entity;
 
 public abstract class Enemy extends Entity{
 
-    protected int exp;
+    public int exp;
+    public abstract void move(float x, float y);
 
+    public int getExp() {
+        return exp;
+    }
 }

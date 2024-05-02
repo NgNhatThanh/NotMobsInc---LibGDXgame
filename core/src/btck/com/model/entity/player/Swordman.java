@@ -10,8 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
-import java.awt.*;
-
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
@@ -32,6 +30,11 @@ public class Swordman extends Player {
     ShapeRenderer shapeRenderer;
 
     public Swordman(){
+        damage = 2;
+        nextLevelExp = 5;
+        expToLevelUp = 6;
+        exist = true;
+
         width = 124;
         height = 84;
 
@@ -40,12 +43,12 @@ public class Swordman extends Player {
         shapeRenderer.setAutoShapeType(true);
 
         textureAtlas = new TextureAtlas("atlas/player/swordman.atlas");
-        animations = new Animation[3];
+        animations = new Animation[4];
 
         animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));
         animations[1] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_run"));
         animations[2] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_attack"));
-
+        animations[3] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_die"));
     }
 
     @Override
@@ -61,6 +64,8 @@ public class Swordman extends Player {
 
 //        System.out.println(hitbox.x + " " + hitbox.y);
 
+        if(dead && animations[animationIdx].isAnimationFinished(statetime)) exist = false;
+
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;
             CURRENT_SPEED = NORMAL_SPEED;
@@ -68,18 +73,37 @@ public class Swordman extends Player {
             attacking = false;
         }
 
-        if(!attacking) move(Gdx.input.getX(), GameConstant.screenHeight - Gdx.input.getY());
-        else move(attackX, attackY);
+        hitbox.setWidth(animations[animationIdx].getKeyFrame(statetime).getRegionWidth());
+        hitbox.setHeight(animations[animationIdx].getKeyFrame(statetime).getRegionHeight());
+//        System.out.println(hitbox.width +  " " + hitbox.getHeight());
+
+        if(!attacking){
+            move(Gdx.input.getX(), GameConstant.screenHeight - Gdx.input.getY());
+        }
+        else{
+            move(attackX, attackY);
+        }
+
+        update();
     }
 
     @Override
     public void update() {
-
+        if(health == 0){
+            dead = true;
+            animationIdx = 3;
+        }
+        else{
+            while(currentExp >= expToLevelUp){
+                expToLevelUp += nextLevelExp;
+                nextLevelExp += 5;
+                ++level;
+            }
+        }
     }
 
-    @Override
     public void attack(int x, int y) {
-        if(!attacking){
+        if(!dead && !attacking){
             attackX = x; attackY = GameConstant.screenHeight - y;
             CURRENT_SPEED = ATTACK_SPEED;
             animationIdx = 2;
@@ -89,6 +113,7 @@ public class Swordman extends Player {
         }
     }
 
+    @Override
     public void move(int desX, int desY){
         if(abs(x - desX) < 5 && abs(y - desY) < 5) {
             if(!attacking) animationIdx = 0;

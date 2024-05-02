@@ -2,15 +2,12 @@ package screens;
 
 import btck.com.MyGdxGame;
 import btck.com.model.constant.GameConstant;
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import jdk.tools.jmod.Main;
 
-public class Credits implements Screen {
+public class CreditsScene implements Screen {
 
     public static final int creditWidth = 700;
     public static final int creditHeight = 350;
@@ -20,7 +17,7 @@ public class Credits implements Screen {
     Texture creditPng;
     Texture arrowInactive;
     Texture arrowActive;
-    public Credits(MyGdxGame myGdxGame){
+    public CreditsScene(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         creditPng = new Texture("credits\\credits.png");
         arrowActive = new Texture("credits\\back arrow.png");

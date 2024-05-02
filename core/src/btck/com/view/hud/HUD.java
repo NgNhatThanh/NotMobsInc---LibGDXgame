@@ -53,7 +53,7 @@ public class HUD implements Disposable {
 
     public void update(){
         levelNumLabel.setText(GameManager.getInstance().getCurrentPlayer().level);
-        healthNumLabel.setText(GameManager.getInstance().getCurrentPlayer().height);
+        healthNumLabel.setText(GameManager.getInstance().getCurrentPlayer().getHealth());
     }
 
     @Override
