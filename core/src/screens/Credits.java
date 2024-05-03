@@ -8,7 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import jdk.tools.jmod.Main;
+
 
 public class Credits implements Screen {
 
