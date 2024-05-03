@@ -30,7 +30,7 @@ public class IngameScreen implements Screen {
     private Viewport viewport;
 
     HUD hud;
-
+    
     Array<Enemy> enemies;
 
     Player player;

@@ -50,9 +50,10 @@ public class HUD implements Disposable {
 
         stage.addActor(table);
     }
+
     public void update(){
         levelNumLabel.setText(GameManager.getInstance().getCurrentPlayer().level);
-        healthNumLabel.setText(GameManager.getInstance().getCurrentPlayer().getHealth());
+        healthNumLabel.setText(GameManager.getInstance().getCurrentPlayer().height);
     }
 
     @Override
