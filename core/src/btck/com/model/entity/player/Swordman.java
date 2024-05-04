@@ -1,6 +1,8 @@
 package btck.com.model.entity.player;
 
 import btck.com.model.constant.GameConstant;
+import btck.com.model.entity.Enemy;
+import btck.com.model.entity.Entity;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -35,6 +38,8 @@ public class Swordman extends Player {
         expToLevelUp = 6;
         exist = true;
 
+        health = 5;
+        hitEntities = new Array<>();
         width = 124;
         height = 84;
 
@@ -51,8 +56,18 @@ public class Swordman extends Player {
         animations[3] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_die"));
     }
 
+    void attackDone(){
+        for(Entity entity : hitEntities){
+            if(!entity.isExist()) this.currentExp += ((Enemy)entity).exp;
+        }
+
+        hitEntities.clear();
+    }
+
     @Override
     public void draw(SpriteBatch spriteBatch) {
+//        System.out.println(animationIdx + " " + animations[animationIdx].getKeyFrameIndex(statetime));
+//        System.out.println(health);
         statetime += Gdx.graphics.getDeltaTime();
 //        shapeRenderer.begin();
 //        shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2);
@@ -71,11 +86,13 @@ public class Swordman extends Player {
             CURRENT_SPEED = NORMAL_SPEED;
             animationIdx = 1;
             attacking = false;
+            attackDone();
         }
 
-        hitbox.setWidth(animations[animationIdx].getKeyFrame(statetime).getRegionWidth());
-        hitbox.setHeight(animations[animationIdx].getKeyFrame(statetime).getRegionHeight());
-//        System.out.println(hitbox.width +  " " + hitbox.getHeight());
+//        hitbox.setWidth(62);
+//        hitbox.setHeight(42);
+
+        if(dead) return;
 
         if(!attacking){
             move(Gdx.input.getX(), GameConstant.screenHeight - Gdx.input.getY());
@@ -89,7 +106,9 @@ public class Swordman extends Player {
 
     @Override
     public void update() {
-        if(health == 0){
+        if(health <= 0){
+            health = 0;
+            statetime = 0;
             dead = true;
             animationIdx = 3;
         }

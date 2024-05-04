@@ -2,6 +2,7 @@ package btck.com.model.entity.enemy;
 
 import btck.com.GameManager;
 import btck.com.model.entity.Enemy;
+import btck.com.model.entity.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+
+import java.util.Iterator;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -27,11 +31,17 @@ public class Mushroom extends Enemy {
     int SPEED = 100;
     private float a, b, x1, y1 ,deltaSP;
 
+    int frameToDealDamage = 6;
+    boolean dealed;
+
     public Mushroom(){
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        health = 1;
+        hitEntities = new Array<>();
+        takeDameEntities = new Array<>();
+        damage = 2;
+        health = 4;
         exp = 2;
         width = 128;
         height = 160;
@@ -63,7 +73,20 @@ public class Mushroom extends Enemy {
         hitbox.x = x;
         hitbox.y = y;
 
-        if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)) animationIdx = 2;
+        if(attacking && !dealed && animations[animationIdx].getKeyFrameIndex(statetime) == frameToDealDamage){
+//            System.out.println("deal");
+            dealDamage();
+        }
+
+        if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
+            animationIdx = 2;
+            if(attacking){
+                hitEntities.clear();
+                attacking = false;
+
+                dealed = false;
+            }
+        }
 
         if(dead && animations[animationIdx].isAnimationFinished(statetime)) exist = false;
 
@@ -82,6 +105,17 @@ public class Mushroom extends Enemy {
             statetime = 0;
             animationIdx = 3;
         }
+    }
+
+    void dealDamage(){
+        dealed = true;
+        takeDameEntities = hitEntities;
+
+        for(Iterator<Entity> entityIterator = takeDameEntities.iterator(); entityIterator.hasNext(); ){
+            entityIterator.next().takeDamage(this.damage);
+        }
+
+        hitEntities.clear();
     }
 
     @Override

@@ -6,6 +6,7 @@ import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.model.entity.enemy.Mushroom;
+import btck.com.model.entity.player.Swordman;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -40,6 +41,7 @@ public class IngameScreen implements Screen {
     long lastEnemySpawntime;
 
     public IngameScreen(MyGdxGame myGdxGame){
+        lastEnemySpawntime = System.currentTimeMillis();
         rand = new Random();
         player = GameManager.getInstance().getCurrentPlayer();
 
@@ -82,14 +84,15 @@ public class IngameScreen implements Screen {
         myGdxGame.batch.begin();
 
         myGdxGame.batch.draw(map, 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
-        System.out.println(enemies.size);
         for (Iterator<Enemy> enemyIterator = enemies.iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
 
             tmp.draw(myGdxGame.batch);
             if(player.isAttacking() && player.hit(tmp)){
-                player.currentExp += tmp.exp;
-                tmp.setHealth(tmp.getHealth() - player.damage);
+                player.addHitEntity(tmp);
+            }
+            if(tmp.isAttacking() && tmp.hit(player)){
+                tmp.addHitEntity(player);
             }
             if(!tmp.isExist()){
                 enemyIterator.remove();
