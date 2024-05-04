@@ -35,6 +35,7 @@ public class Swordman extends Player {
         expToLevelUp = 6;
         exist = true;
 
+        health = 10;
         width = 124;
         height = 84;
 

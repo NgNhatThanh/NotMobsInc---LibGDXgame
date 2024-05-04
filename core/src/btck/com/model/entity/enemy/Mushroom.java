@@ -111,8 +111,8 @@ public class Mushroom extends Enemy {
         dealed = true;
         takeDameEntities = hitEntities;
 
-        for(Iterator<Entity> entityIterator = takeDameEntities.iterator(); entityIterator.hasNext(); ){
-            entityIterator.next().takeDamage(this.damage);
+        for (Entity takeDameEntity : takeDameEntities) {
+            takeDameEntity.takeDamage(this.damage);
         }
 
         hitEntities.clear();

@@ -6,6 +6,7 @@ import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.model.entity.enemy.Gladiator;
+import btck.com.model.entity.enemy.Mushroom;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -116,7 +117,7 @@ public class IngameScreen implements Screen {
     }
 
     public void spawnEnemy(){
-        Enemy enemy = new Gladiator();
+        Enemy enemy = new Mushroom();
 
 //        enemy.setX(rand.nextFloat(GameConstant.screenWidth - enemy.width));
 //        enemy.setY(rand.nextFloat(GameConstant.screenHeight - enemy.height));
