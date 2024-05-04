@@ -38,15 +38,13 @@ public class Mushroom extends Enemy {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        hitEntities = new Array<>();
-        takeDameEntities = new Array<>();
         damage = 2;
         health = 4;
         exp = 2;
         width = 128;
         height = 160;
 
-        textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/enemy/mushroom.atlas"));
+        textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/enemy/mushroom/mushroom.atlas"));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, 80, 64);
@@ -73,10 +71,10 @@ public class Mushroom extends Enemy {
         hitbox.x = x;
         hitbox.y = y;
 
-        if(attacking && !dealed && animations[animationIdx].getKeyFrameIndex(statetime) == frameToDealDamage){
-//            System.out.println("deal");
-            dealDamage();
-        }
+//        if(attacking && !dealed && animations[animationIdx].getKeyFrameIndex(statetime) == frameToDealDamage){
+////            System.out.println("deal");
+//            dealDamage();
+//        }
 
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
             animationIdx = 2;

@@ -28,12 +28,12 @@ public abstract class Entity {
     public abstract void update();
     public abstract void attack(int x, int y);
 
-    protected Array<Entity> hitEntities;
-    protected Array<Entity> takeDameEntities;
+    protected Array<Entity> hitEntities = new Array<>();
+    protected Array<Entity> takeDameEntities = new Array<>();
 
     public void addHitEntity(Entity entity){
         if(hitEntities.contains(entity, false)) return;
-//        entity.takeDamage(this.damage);
+        entity.takeDamage(this.damage);
         hitEntities.add(entity);
     }
 

@@ -49,6 +49,7 @@ public class IngameScreen implements Screen {
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
         hud = new HUD(myGdxGame.batch);
 
+//        cam.position.set(GameConstant.screenWidth / 2, GameConstant.screenHeight / 2, 0);
         enemies = new Array<>();
         //        viewport.apply(true);
 //        cam.position.set(0, 0, 0);
@@ -80,19 +81,27 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+//        myGdxGame.batch.setProjectionMatrix(cam.combined);
+
         myGdxGame.batch.begin();
 
         myGdxGame.batch.draw(map, 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
-        System.out.println(enemies.size);
+//        System.out.println(enemies.size);
         for (Iterator<Enemy> enemyIterator = enemies.iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
 
             tmp.draw(myGdxGame.batch);
             if(player.isAttacking() && player.hit(tmp)){
-                player.currentExp += tmp.exp;
-                tmp.setHealth(tmp.getHealth() - player.damage);
+                player.addHitEntity(tmp);
+                System.out.println(tmp.getHealth());
             }
+
+            if(tmp.isAttacking() && tmp.hit(player)){
+                tmp.addHitEntity(player);
+            }
+
             if(!tmp.isExist()){
+                System.out.println("chet");
                 enemyIterator.remove();
             }
         }
