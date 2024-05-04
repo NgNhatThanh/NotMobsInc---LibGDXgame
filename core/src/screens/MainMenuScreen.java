@@ -3,7 +3,7 @@ package screens;
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.model.constant.GameState;
-import btck.com.model.entity.player.Swordman;
+import btck.com.model.entity.player.swordman.Swordman;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
