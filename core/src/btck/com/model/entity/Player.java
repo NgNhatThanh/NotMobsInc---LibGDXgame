@@ -1,5 +1,6 @@
 package btck.com.model.entity;
 
+import btck.com.model.constant.PlayerState;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.nio.channels.spi.SelectorProvider;

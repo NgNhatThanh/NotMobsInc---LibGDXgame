@@ -8,8 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.ScreenUtils;
-import org.w3c.dom.Text;
 
 public class MainMenuScreen  implements Screen {
     public static final int newGameWidth = 300;
@@ -82,7 +80,7 @@ public class MainMenuScreen  implements Screen {
         if(Gdx.input.getX() < exitX + creditWidth && Gdx.input.getX() > creditX && MainMenuScreen.HEIGHT - Gdx.input.getY() < creditY + creditHeight && MainMenuScreen.HEIGHT - Gdx.input.getY() > creditY){
             myGdxGame.batch.draw(creditActive, creditX, creditY, creditWidth, creditHeight);
             if(Gdx.input.isTouched()){
-                myGdxGame.setScreen(new Credits(myGdxGame));
+                myGdxGame.setScreen(new CreditsScene(myGdxGame));
             }
         }else{
             myGdxGame.batch.draw(creditInactive, creditX, creditY, creditWidth, creditHeight);

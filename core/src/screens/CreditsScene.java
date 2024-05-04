@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
-public class Credits implements Screen {
+public class CreditsScene implements Screen {
 
     public static final int creditWidth = 700;
     public static final int creditHeight = 350;
@@ -20,7 +20,7 @@ public class Credits implements Screen {
     Texture creditPng;
     Texture arrowInactive;
     Texture arrowActive;
-    public Credits(MyGdxGame myGdxGame){
+    public CreditsScene(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         creditPng = new Texture("credits\\credits.png");
         arrowActive = new Texture("credits\\back arrow.png");
