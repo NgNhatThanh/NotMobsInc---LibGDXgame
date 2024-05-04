@@ -32,11 +32,12 @@ public class Gladiator extends Enemy {
         shapeRenderer.setAutoShapeType(true);
 
         health = 1;
+        damage = 3;
         exp = 2;
         width = 128;
         height = 160;
 
-        textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/gladiator/gladiator_atlas.atlas"));
+        textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/enemy/gladiator/gladiator_atlas.atlas"));
         animations = new Animation[3];
 
         hitbox = new Rectangle(0, 0, 80, 64);
@@ -118,7 +119,7 @@ public class Gladiator extends Enemy {
     @Override
     public void attack(int x, int y) {
         animationIdx = 1;
-        stateTime = 0f;
+        stateTime = 0;
         attacking = true;
     }
 }

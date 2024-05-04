@@ -35,6 +35,7 @@ public class Swordman extends Player {
         expToLevelUp = 6;
         exist = true;
 
+        health = 5;
         width = 124;
         height = 84;
 
@@ -42,7 +43,7 @@ public class Swordman extends Player {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        textureAtlas = new TextureAtlas("atlas/player/swordman.atlas");
+        textureAtlas = new TextureAtlas("atlas/player/swordman/swordman.atlas");
         animations = new Animation[4];
 
         animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));
@@ -59,38 +60,47 @@ public class Swordman extends Player {
 //        shapeRenderer.end();
 
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? 62 : -62) + x, y, (flip ? -1 : 1) * width, height);
-        hitbox.x = x - width / 4;
+        hitbox.x = x;
         hitbox.y = y;
 
 //        System.out.println(hitbox.x + " " + hitbox.y);
 
-        if(dead && animations[animationIdx].isAnimationFinished(statetime)) exist = false;
+        if(dead && animations[animationIdx].isAnimationFinished(statetime)){
+            System.out.println(animationIdx);
+            exist = false;
+            System.out.println("bay mau");
+            return;
+        }
 
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;
+            hitEntities.clear();
             CURRENT_SPEED = NORMAL_SPEED;
             animationIdx = 1;
             attacking = false;
         }
 
-        hitbox.setWidth(animations[animationIdx].getKeyFrame(statetime).getRegionWidth());
-        hitbox.setHeight(animations[animationIdx].getKeyFrame(statetime).getRegionHeight());
+//        hitbox.setWidth(animations[animationIdx].getKeyFrame(statetime).getRegionWidth());
+//        hitbox.setHeight(animations[animationIdx].getKeyFrame(statetime).getRegionHeight());
 //        System.out.println(hitbox.width +  " " + hitbox.getHeight());
 
-        if(!attacking){
-            move(Gdx.input.getX(), GameConstant.screenHeight - Gdx.input.getY());
-        }
-        else{
-            move(attackX, attackY);
+        if(!dead){
+            if(!attacking){
+                move(Gdx.input.getX(), GameConstant.screenHeight - Gdx.input.getY());
+            }
+            else{
+                move(attackX, attackY);
+            }
         }
 
-        update();
+        if(!dead) update();
     }
 
     @Override
     public void update() {
-        if(health == 0){
+        if(health <= 0){
             dead = true;
+            statetime = 0;
             animationIdx = 3;
         }
         else{
