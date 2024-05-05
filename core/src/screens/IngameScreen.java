@@ -2,6 +2,8 @@ package screens;
 
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
+import btck.com.common.io.MouseHandler;
+import btck.com.model.constant.ConstantSound;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
@@ -40,6 +42,9 @@ public class IngameScreen implements Screen {
 
     long lastEnemySpawntime;
 
+    Texture quitInactive;
+    Texture quitActive;
+
     public IngameScreen(MyGdxGame myGdxGame){
         rand = new Random();
         player = GameManager.getInstance().getCurrentPlayer();
@@ -47,10 +52,18 @@ public class IngameScreen implements Screen {
         this.myGdxGame = myGdxGame;
         cam = new OrthographicCamera();
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
+        Gdx.input.setInputProcessor(new MouseHandler());
+        ConstantSound.bgmIngame.play();
         hud = new HUD(myGdxGame.batch);
+
+
+        quitActive = new Texture("ingame/quit active-02.png");
+        quitInactive = new Texture("ingame/quit-02.png");
+
 
 //        cam.position.set(GameConstant.screenWidth / 2, GameConstant.screenHeight / 2, 0);
         enemies = new Array<>();
+
         //        viewport.apply(true);
 //        cam.position.set(0, 0, 0);
 //        cam.update();
@@ -86,6 +99,8 @@ public class IngameScreen implements Screen {
         myGdxGame.batch.begin();
 
         myGdxGame.batch.draw(map, 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
+
+        drawQuitLabel();
 //        System.out.println(enemies.size);
         for (Iterator<Enemy> enemyIterator = enemies.iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
@@ -159,7 +174,26 @@ public class IngameScreen implements Screen {
 
     @Override
     public void dispose() {
+        quitInactive.dispose();
+        quitActive.dispose();
+
         hud.dispose();
         map.dispose();
+    }
+
+    public void drawQuitLabel(){
+        int labelX = GameConstant.screenWidth - 200, labelY = 50;
+        int quitWidth = 135;
+        int quitHeight = 50;
+        if(Gdx.input.getX() < labelX + quitWidth && Gdx.input.getX() > labelX && GameConstant.screenHeight - Gdx.input.getY() < labelY + quitHeight && GameConstant.screenHeight - Gdx.input.getY() > labelY){
+            myGdxGame.batch.draw(quitActive, labelX, labelY, quitWidth, quitHeight);
+            if(Gdx.input.isTouched()){
+                ConstantSound.bgmIngame.dispose();
+                this.dispose();
+                myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+            }
+        }else{
+            myGdxGame.batch.draw(quitInactive, labelX, labelY, quitWidth, quitHeight);
+        }
     }
 }

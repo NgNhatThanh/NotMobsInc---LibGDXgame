@@ -1,5 +1,6 @@
 package btck.com.model.entity.player;
 
+import btck.com.model.constant.ConstantSound;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import screens.SettingScreen;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -17,7 +19,7 @@ public class Swordman extends Player {
 
     TextureAtlas textureAtlas;
     final int NORMAL_SPEED = 200;
-    final int ATTACK_SPEED =450;
+    final int ATTACK_SPEED = 450;
     int CURRENT_SPEED = NORMAL_SPEED;
 
     final float FRAME_SPEED = 0.1f;
@@ -113,6 +115,9 @@ public class Swordman extends Player {
     }
 
     public void attack(int x, int y) {
+        if(!attacking)
+            ConstantSound.slash.play();
+
         if(!dead && !attacking){
             attackX = x; attackY = GameConstant.screenHeight - y;
             CURRENT_SPEED = ATTACK_SPEED;
