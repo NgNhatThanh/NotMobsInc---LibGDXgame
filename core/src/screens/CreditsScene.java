@@ -8,9 +8,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import jdk.tools.jmod.Main;
 
-public class Credits implements Screen {
+
+public class CreditsScene implements Screen {
 
     public static final int creditWidth = 700;
     public static final int creditHeight = 350;
@@ -19,8 +19,8 @@ public class Credits implements Screen {
 
     Texture creditPng;
     public static Texture arrowInactive = new Texture("credits\\back arrow inactive.png");;
-    public static Texture arrowActive = new Texture("credits\\back arrow.png");;
-    public Credits(MyGdxGame myGdxGame){
+    public static Texture arrowActive = new Texture("credits\\back arrow.png");
+    public CreditsScene(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         creditPng = new Texture("credits\\credits.png");
     }

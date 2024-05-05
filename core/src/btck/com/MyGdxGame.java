@@ -27,7 +27,7 @@ public class MyGdxGame extends Game {
 	public void render () {
 		super.render();
 	}
-	
+
 	public void dispose () {
 		batch.dispose();
 	}

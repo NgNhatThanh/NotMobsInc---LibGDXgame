@@ -95,7 +95,7 @@ public class MainMenuScreen  implements Screen {
         if(Gdx.input.getX() < creditX + creditWidth && Gdx.input.getX() > creditX && MainMenuScreen.HEIGHT - Gdx.input.getY() < creditY + creditHeight && MainMenuScreen.HEIGHT - Gdx.input.getY() > creditY){
             myGdxGame.batch.draw(creditActive, creditX, creditY, creditWidth, creditHeight);
             if(Gdx.input.isTouched()){
-                myGdxGame.setScreen(new Credits(myGdxGame));
+                myGdxGame.setScreen(new CreditsScene(myGdxGame));
             }
         }else{
             myGdxGame.batch.draw(creditInactive, creditX, creditY, creditWidth, creditHeight);

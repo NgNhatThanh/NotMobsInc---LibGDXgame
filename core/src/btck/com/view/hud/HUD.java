@@ -2,6 +2,7 @@ package btck.com.view.hud;
 
 import btck.com.GameManager;
 import btck.com.model.constant.GameConstant;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,7 +29,7 @@ public class HUD implements Disposable {
     Table table;
 
     public HUD(SpriteBatch spriteBatch){
-        health = 4;
+        health = GameManager.getInstance().getCurrentPlayer().getHealth();
         level = 0;
 
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, new OrthographicCamera());
@@ -53,7 +54,7 @@ public class HUD implements Disposable {
 
     public void update(){
         levelNumLabel.setText(GameManager.getInstance().getCurrentPlayer().level);
-        healthNumLabel.setText(GameManager.getInstance().getCurrentPlayer().height);
+        healthNumLabel.setText(GameManager.getInstance().getCurrentPlayer().getHealth());
     }
 
     @Override

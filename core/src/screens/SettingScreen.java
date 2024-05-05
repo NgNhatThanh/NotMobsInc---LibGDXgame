@@ -84,14 +84,14 @@ public class SettingScreen implements Screen {
 
     public void drawArrow(){
         int arrowPositions = 50;
-        if(Gdx.input.getX() < arrowPositions + Credits.arrowEdge && Gdx.input.getX() > arrowPositions && GameConstant.screenHeight - Gdx.input.getY() < arrowPositions + Credits.arrowEdge && GameConstant.screenHeight - Gdx.input.getY() > arrowPositions){
-            myGdxGame.batch.draw(Credits.arrowActive, arrowPositions, arrowPositions, Credits.arrowEdge, Credits.arrowEdge);
+        if(Gdx.input.getX() < arrowPositions + CreditsScene.arrowEdge && Gdx.input.getX() > arrowPositions && GameConstant.screenHeight - Gdx.input.getY() < arrowPositions + CreditsScene.arrowEdge && GameConstant.screenHeight - Gdx.input.getY() > arrowPositions){
+            myGdxGame.batch.draw(CreditsScene.arrowActive, arrowPositions, arrowPositions, CreditsScene.arrowEdge, CreditsScene.arrowEdge);
             if(Gdx.input.isTouched()){
                 this.dispose();
                 myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
             }
         }else{
-            myGdxGame.batch.draw(Credits.arrowInactive, arrowPositions, arrowPositions, Credits.arrowEdge, Credits.arrowEdge);
+            myGdxGame.batch.draw(CreditsScene.arrowInactive, arrowPositions, arrowPositions, CreditsScene.arrowEdge, CreditsScene.arrowEdge);
         }
     }
 
