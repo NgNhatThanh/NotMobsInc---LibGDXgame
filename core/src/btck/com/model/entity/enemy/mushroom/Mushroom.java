@@ -32,8 +32,8 @@ public class Mushroom extends Enemy {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        health = 7;
-        exp = 2;
+        health = 3;
+        exp = 4;
         width = 128;
         height = 160;
 
@@ -53,6 +53,7 @@ public class Mushroom extends Enemy {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
+//        System.out.println(health);
         statetime += Gdx.graphics.getDeltaTime();
 
 //        shapeRenderer.begin();

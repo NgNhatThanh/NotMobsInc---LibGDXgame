@@ -33,6 +33,7 @@ public abstract class Entity {
 
     public void takeDamage(int damage){
         this.health -= damage;
+        update();
     }
 
 }

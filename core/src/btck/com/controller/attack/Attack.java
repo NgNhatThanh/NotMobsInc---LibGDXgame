@@ -27,14 +27,12 @@ public abstract class Attack {
         this.animation = animation;
         this.dealDamageType = dealDamageType;
         hitEntities = new Array<>();
-
-        hitbox = owner.getHitbox(); // just to test
     }
 
     public abstract void start();
 
     public void update(float statetime){
-//        System.out.println(owner + " " + animation.getKeyFrameIndex(statetime));
+        if(owner.isDead()) return;
         if(frameToDealDamageIdx < frameToDealDamage.length && animation.getKeyFrameIndex(statetime) == frameToDealDamage[frameToDealDamageIdx]){
             dealDamage();
         }
@@ -52,12 +50,16 @@ public abstract class Attack {
 
     public void addHitEntity(Entity entity){
         statetime += Gdx.graphics.getDeltaTime();
+//        System.out.println("add " + animation.getKeyFrameIndex(statetime));
         if(frameToDealDamageIdx >= frameToDealDamage.length || animation.getKeyFrameIndex(statetime) != frameToDealDamage[frameToDealDamageIdx]) return;
         if(hitEntities.contains(entity, false)) return;
         hitEntities.add(entity);
     }
 
+    public abstract void updateHitbox();
+
     public boolean hit(Entity entity){
+        updateHitbox();
         return this.hitbox.overlaps(entity.getHitbox());
     }
 
@@ -65,7 +67,7 @@ public abstract class Attack {
         statetime = 0;
         frameToDealDamageIdx = 0;
         hitEntities.clear();
-        for(boolean deal : dealed) deal = false;
+        if(dealed != null) for(boolean deal : dealed) deal = false;
     }
 
 }

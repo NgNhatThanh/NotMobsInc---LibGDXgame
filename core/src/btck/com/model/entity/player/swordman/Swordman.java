@@ -53,7 +53,7 @@ public class Swordman extends Player {
         animations[2] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_attack"));
         animations[3] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_die"));
 
-        attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.ONCE);
+        attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.MULTIPLE);
     }
 
     @Override
@@ -67,16 +67,11 @@ public class Swordman extends Player {
         hitbox.x = x;
         hitbox.y = y;
 
-//        System.out.println(hitbox.x + " " + hitbox.y);
-
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
-            System.out.println(animationIdx);
             exist = false;
             System.out.println("bay mau");
             return;
         }
-
-        if(attacking) attack.update(statetime);
 
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;

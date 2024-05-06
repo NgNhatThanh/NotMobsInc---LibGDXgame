@@ -88,7 +88,6 @@ public class IngameScreen implements Screen {
 
         for (Iterator<Enemy> enemyIterator = enemies.iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
-
             tmp.draw(myGdxGame.batch);
             if(player.isAttacking() && player.getAttack().hit(tmp)){
                 player.getAttack().addHitEntity(tmp);
@@ -97,9 +96,7 @@ public class IngameScreen implements Screen {
             if(tmp.isAttacking() && tmp.getAttack().hit(player)){
                 tmp.getAttack().addHitEntity(player);
             }
-
             if(!tmp.isExist()){
-                System.out.println("chet");
                 enemyIterator.remove();
             }
         }
