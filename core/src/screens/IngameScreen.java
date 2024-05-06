@@ -5,8 +5,7 @@ import btck.com.MyGdxGame;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
-import btck.com.model.entity.enemy.Gladiator;
-import btck.com.model.entity.enemy.Mushroom;
+import btck.com.model.entity.enemy.mushroom.Mushroom;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -86,27 +85,24 @@ public class IngameScreen implements Screen {
         myGdxGame.batch.begin();
 
         myGdxGame.batch.draw(map, 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
-//        System.out.println(enemies.size);
+
         for (Iterator<Enemy> enemyIterator = enemies.iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
-
             tmp.draw(myGdxGame.batch);
-            if(player.isAttacking() && player.hit(tmp)){
-                player.addHitEntity(tmp);
-                System.out.println(tmp.getHealth());
+            if(player.isAttacking() && player.getAttack().hit(tmp)){
+                player.getAttack().addHitEntity(tmp);
             }
 
-            if(tmp.isAttacking() && tmp.hit(player)){
-                tmp.addHitEntity(player);
+            if(tmp.isAttacking() && tmp.getAttack().hit(player)){
+                tmp.getAttack().addHitEntity(player);
             }
-
             if(!tmp.isExist()){
-                System.out.println("chet");
                 enemyIterator.remove();
             }
         }
 
         GameManager.getInstance().getCurrentPlayer().draw(myGdxGame.batch);
+
         myGdxGame.batch.end();
 
 //        myGdxGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
