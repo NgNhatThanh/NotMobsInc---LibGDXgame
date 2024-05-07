@@ -2,12 +2,10 @@ package screens;
 
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
-import btck.com.controller.spawn.EnemyEnum;
+import btck.com.controller.spawn.Spawner;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
-import btck.com.model.entity.enemy.mage.Mage;
-import btck.com.model.entity.enemy.mushroom.Mushroom;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -36,6 +34,7 @@ public class IngameScreen implements Screen {
     Array<Enemy> enemies;
     
     int maxEnemyAmount = 7;
+    int maxEnemySpawnAtOnce = 3;
 
     Player player;
 
@@ -43,10 +42,13 @@ public class IngameScreen implements Screen {
 
     long lastEnemySpawntime;
 
+    Spawner spawner;
+
     public IngameScreen(MyGdxGame myGdxGame){
         rand = new Random();
         player = GameManager.getInstance().getCurrentPlayer();
 
+        spawner = new Spawner(this, maxEnemyAmount, maxEnemySpawnAtOnce);
         this.myGdxGame = myGdxGame;
         cam = new OrthographicCamera();
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
@@ -79,7 +81,7 @@ public class IngameScreen implements Screen {
 
         if(System.currentTimeMillis() - lastEnemySpawntime >= 5000){
             lastEnemySpawntime = System.currentTimeMillis();
-            spawnEnemy();
+            spawner.spawnEnemy();
         }
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
@@ -126,30 +128,12 @@ public class IngameScreen implements Screen {
         GameManager.getInstance().getCurrentPlayer().setY(playerSpawnY);
     }
 
-    public void spawnEnemy(){
-        
-        int spawnAmount = rand.nextInt(1, 3);
-        
-        if(enemies.size + spawnAmount > maxEnemyAmount) spawnAmount = maxEnemyAmount - enemies.size;
-        
-        while(spawnAmount-- > 0){
-            Enemy spawnEnemy = null;
-            EnemyEnum enemyEnum = EnemyEnum.getRandom();
-            switch (enemyEnum){
-                case MUSHROOM :
-                    spawnEnemy = new Mushroom();
-                    break;
-                case MAGE:
-                    spawnEnemy = new Mage();
-                    break;
-            }
+    public void addEnemy(Enemy enemy){
+        enemies.add(enemy);
+    }
 
-            float randomX = rand.nextInt((int) (GameConstant.screenWidth - spawnEnemy.width));
-            float randomY = rand.nextInt((int) (GameConstant.screenHeight - spawnEnemy.height));
-            spawnEnemy.setX(randomX);
-            spawnEnemy.setY(randomY);
-            enemies.add(spawnEnemy);
-        }
+    public int getCurrentEnemyAmount(){
+        return enemies.size;
     }
 
     @Override
