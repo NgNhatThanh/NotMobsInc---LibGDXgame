@@ -5,6 +5,7 @@ import btck.com.MyGdxGame;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
+import btck.com.model.entity.enemy.mage.Mage;
 import btck.com.model.entity.enemy.mushroom.Mushroom;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
@@ -67,6 +68,7 @@ public class IngameScreen implements Screen {
         map = new Texture("ingame/map.gif");
 
         spawnPlayer();
+//        spawnEnemy();
     }
 
     @Override
@@ -124,8 +126,6 @@ public class IngameScreen implements Screen {
     public void spawnEnemy(){
         Enemy enemy = new Mushroom();
 
-//        enemy.setX(rand.nextFloat(GameConstant.screenWidth - enemy.width));
-//        enemy.setY(rand.nextFloat(GameConstant.screenHeight - enemy.height));
         float randomX = rand.nextInt((int) (GameConstant.screenWidth - enemy.width));
         float randomY = rand.nextInt((int) (GameConstant.screenHeight - enemy.height));
         enemy.setX(randomX);

@@ -3,6 +3,7 @@ package btck.com.model.entity.enemy.mushroom;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -23,12 +24,24 @@ public class HeadAttack extends Attack {
     }
 
     @Override
-    public void updateHitbox() {
-
+    public void update(float statetime) {
+        if(owner.isDead()) return;
+        if(frameToDealDamageIdx < frameToDealDamage.length && animation.getKeyFrameIndex(statetime) == frameToDealDamage[frameToDealDamageIdx]){
+            dealDamage();
+        }
     }
 
-    public void end(){
-        super.end();
-        owner.currentSpeed = owner.normalSpeed;
+    @Override
+    public void addHitEntity(Entity entity) {
+        statetime += Gdx.graphics.getDeltaTime();
+//        System.out.println("add " + animation.getKeyFrameIndex(statetime));
+        if(frameToDealDamageIdx >= frameToDealDamage.length || animation.getKeyFrameIndex(statetime) != frameToDealDamage[frameToDealDamageIdx]) return;
+        if(hitEntities.contains(entity, false)) return;
+        hitEntities.add(entity);
+    }
+
+    @Override
+    public void updateHitbox() {
+
     }
 }

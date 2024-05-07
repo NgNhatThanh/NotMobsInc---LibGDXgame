@@ -31,12 +31,7 @@ public abstract class Attack {
 
     public abstract void start();
 
-    public void update(float statetime){
-        if(owner.isDead()) return;
-        if(frameToDealDamageIdx < frameToDealDamage.length && animation.getKeyFrameIndex(statetime) == frameToDealDamage[frameToDealDamageIdx]){
-            dealDamage();
-        }
-    }
+    public abstract void update(float statetime);
 
     public void dealDamage(){
         for(Entity entity : hitEntities){
@@ -48,13 +43,7 @@ public abstract class Attack {
         hitEntities.clear();
     }
 
-    public void addHitEntity(Entity entity){
-        statetime += Gdx.graphics.getDeltaTime();
-//        System.out.println("add " + animation.getKeyFrameIndex(statetime));
-        if(frameToDealDamageIdx >= frameToDealDamage.length || animation.getKeyFrameIndex(statetime) != frameToDealDamage[frameToDealDamageIdx]) return;
-        if(hitEntities.contains(entity, false)) return;
-        hitEntities.add(entity);
-    }
+    public abstract void addHitEntity(Entity entity);
 
     public abstract void updateHitbox();
 
@@ -64,6 +53,7 @@ public abstract class Attack {
     }
 
     public void end(){
+        owner.currentSpeed = owner.normalSpeed;
         statetime = 0;
         frameToDealDamageIdx = 0;
         hitEntities.clear();
