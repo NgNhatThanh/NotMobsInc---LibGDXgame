@@ -2,6 +2,7 @@ package screens;
 
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
+import btck.com.controller.spawn.EnemyEnum;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
@@ -33,6 +34,8 @@ public class IngameScreen implements Screen {
     HUD hud;
     
     Array<Enemy> enemies;
+    
+    int maxEnemyAmount = 7;
 
     Player player;
 
@@ -124,13 +127,29 @@ public class IngameScreen implements Screen {
     }
 
     public void spawnEnemy(){
-        Enemy enemy = new Mushroom();
+        
+        int spawnAmount = rand.nextInt(1, 3);
+        
+        if(enemies.size + spawnAmount > maxEnemyAmount) spawnAmount = maxEnemyAmount - enemies.size;
+        
+        while(spawnAmount-- > 0){
+            Enemy spawnEnemy = null;
+            EnemyEnum enemyEnum = EnemyEnum.getRandom();
+            switch (enemyEnum){
+                case MUSHROOM :
+                    spawnEnemy = new Mushroom();
+                    break;
+                case MAGE:
+                    spawnEnemy = new Mage();
+                    break;
+            }
 
-        float randomX = rand.nextInt((int) (GameConstant.screenWidth - enemy.width));
-        float randomY = rand.nextInt((int) (GameConstant.screenHeight - enemy.height));
-        enemy.setX(randomX);
-        enemy.setY(randomY);
-        enemies.add(enemy);
+            float randomX = rand.nextInt((int) (GameConstant.screenWidth - spawnEnemy.width));
+            float randomY = rand.nextInt((int) (GameConstant.screenHeight - spawnEnemy.height));
+            spawnEnemy.setX(randomX);
+            spawnEnemy.setY(randomY);
+            enemies.add(spawnEnemy);
+        }
     }
 
     @Override
