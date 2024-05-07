@@ -3,10 +3,12 @@ package screens;
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.PlayerState;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.model.entity.enemy.Gladiator;
 import btck.com.model.entity.enemy.Mushroom;
+import btck.com.model.entity.player.Swordman;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -35,7 +37,7 @@ public class IngameScreen implements Screen {
     Array<Enemy> enemies;
 
     Player player;
-
+    Swordman swordman;
     Random rand;
 
     long lastEnemySpawntime;
@@ -118,6 +120,10 @@ public class IngameScreen implements Screen {
             this.dispose();
             myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
         }
+        if (GameOver()){
+            myGdxGame.setScreen(new GameOverScreen(myGdxGame));
+            dispose();
+        }
     }
 
     public void spawnPlayer(){
@@ -161,5 +167,12 @@ public class IngameScreen implements Screen {
     public void dispose() {
         hud.dispose();
         map.dispose();
+    }
+
+    public boolean GameOver(){
+        if (GameManager.getInstance().currentPlayer.isDead()){
+            return true;
+        }
+        return false;
     }
 }

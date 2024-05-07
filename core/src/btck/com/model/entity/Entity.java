@@ -3,7 +3,7 @@ package btck.com.model.entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.sun.source.tree.WhileLoopTree;
+//import com.sun.source.tree.WhileLoopTree;
 import lombok.Getter;
 import lombok.Setter;
 

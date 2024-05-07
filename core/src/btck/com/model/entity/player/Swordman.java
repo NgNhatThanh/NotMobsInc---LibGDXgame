@@ -162,4 +162,11 @@ public class Swordman extends Player {
         x = x1;
         y = y1;
     }
+
+    public boolean isDead(){
+        return dead;
+    }
+//    public float getStateTime(){
+//        return statetime;
+//    }
 }
