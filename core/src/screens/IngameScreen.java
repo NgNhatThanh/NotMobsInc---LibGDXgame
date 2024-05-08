@@ -117,10 +117,6 @@ public class IngameScreen implements Screen {
 
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
             System.out.println("chet");
-            this.dispose();
-            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
-        }
-        if (GameOver()){
             myGdxGame.setScreen(new GameOverScreen(myGdxGame));
             dispose();
         }
@@ -167,12 +163,5 @@ public class IngameScreen implements Screen {
     public void dispose() {
         hud.dispose();
         map.dispose();
-    }
-
-    public boolean GameOver(){
-        if (GameManager.getInstance().currentPlayer.isDead()){
-            return true;
-        }
-        return false;
     }
 }

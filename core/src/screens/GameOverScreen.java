@@ -38,20 +38,24 @@
     
         @Override
         public void render(float delta) {
+            System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
+
             Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             myGdxGame.batch.begin();
     
             int gameOverX = (GameOverScreen.WIDTH - gameOverWidth)/2;
             int gameOverY = (GameOverScreen.HEIGHT - gameOverHeight)/2;
+//            System.out.println(gameOverX + " " + gameOverY);
+
             myGdxGame.batch.draw(gameOver, gameOverX, gameOverY, gameOverWidth, gameOverHeight);
-    
+
             int tryAgainX =  (GameOverScreen.WIDTH - tryAgainWidth)/2;;
             int tryAgainY = gameOverY - 50;
     
             if(Gdx.input.getX() < tryAgainX + tryAgainWidth && Gdx.input.getX() > tryAgainX &&
-                    GameOverScreen.HEIGHT - Gdx.input.getY() < tryAgainHeight &&
-                    GameOverScreen.HEIGHT - Gdx.input.getY() > tryAgainY) {
+                    GameOverScreen.HEIGHT - tryAgainHeight < Gdx.input.getY() &&
+                    GameOverScreen.HEIGHT - tryAgainHeight > Gdx.input.getY()) {
                 myGdxGame.batch.draw(tryAgainActive, tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight);
                 if(Gdx.input.isTouched()){
                     myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
