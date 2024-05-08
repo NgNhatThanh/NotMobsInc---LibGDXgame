@@ -29,6 +29,11 @@ public class DashAttack extends Attack {
         owner.move(attackX, attackY);
     }
 
+    @Override
+    public void update(float statetime) {
+
+    }
+
     public void addHitEntity(Entity entity){
         if(hitEntities.contains(entity, false)) return;
         entity.takeDamage(this.damage);
@@ -38,13 +43,5 @@ public class DashAttack extends Attack {
 
     @Override
     public void updateHitbox() {
-//        hitbox.x = owner.getX();
-//        hitbox.y = owner.getY();
     }
-
-    public void end(){
-        super.end();
-        owner.currentSpeed = owner.normalSpeed;
-    }
-
 }

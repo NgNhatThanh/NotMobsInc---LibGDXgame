@@ -1,7 +1,10 @@
 package btck.com.model.entity;
 
 import btck.com.controller.attack.Attack;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.sun.source.tree.WhileLoopTree;
@@ -26,6 +29,10 @@ public abstract class Entity {
     protected Rectangle hitbox;
     protected boolean isHit;
     protected Attack attack;
+    protected TextureAtlas textureAtlas;
+    protected Animation<TextureRegion>[] animations;
+    protected float statetime;
+    protected int animationIdx;
     public abstract void draw(SpriteBatch spriteBatch);
     public abstract void update();
     public abstract void attack(int x, int y);

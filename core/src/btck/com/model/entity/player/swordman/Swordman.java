@@ -18,13 +18,9 @@ import static java.lang.Math.sqrt;
 
 public class Swordman extends Player {
 
-    TextureAtlas textureAtlas;
     final int NORMAL_SPEED = 200;
 
     final float FRAME_SPEED = 0.1f;
-    Animation<TextureRegion>[] animations;
-    float statetime;
-    int animationIdx;
 
     private float a, b, x1, y1 ,deltaSP;
 
@@ -37,7 +33,7 @@ public class Swordman extends Player {
 
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        health = 5;
+        health = 10;
         width = 124;
         height = 84;
 
@@ -53,7 +49,7 @@ public class Swordman extends Player {
         animations[2] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_attack"));
         animations[3] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_die"));
 
-        attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.MULTIPLE);
+        attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.ONCE);
     }
 
     @Override

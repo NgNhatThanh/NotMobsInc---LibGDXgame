@@ -2,10 +2,10 @@ package screens;
 
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
+import btck.com.controller.spawn.Spawner;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
-import btck.com.model.entity.enemy.mushroom.Mushroom;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -32,6 +32,9 @@ public class IngameScreen implements Screen {
     HUD hud;
     
     Array<Enemy> enemies;
+    
+    int maxEnemyAmount = 7;
+    int maxEnemySpawnAtOnce = 3;
 
     Player player;
 
@@ -39,10 +42,13 @@ public class IngameScreen implements Screen {
 
     long lastEnemySpawntime;
 
+    Spawner spawner;
+
     public IngameScreen(MyGdxGame myGdxGame){
         rand = new Random();
         player = GameManager.getInstance().getCurrentPlayer();
 
+        spawner = new Spawner(this, maxEnemyAmount, maxEnemySpawnAtOnce);
         this.myGdxGame = myGdxGame;
         cam = new OrthographicCamera();
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
@@ -67,6 +73,7 @@ public class IngameScreen implements Screen {
         map = new Texture("ingame/map.gif");
 
         spawnPlayer();
+//        spawnEnemy();
     }
 
     @Override
@@ -74,7 +81,7 @@ public class IngameScreen implements Screen {
 
         if(System.currentTimeMillis() - lastEnemySpawntime >= 5000){
             lastEnemySpawntime = System.currentTimeMillis();
-            spawnEnemy();
+            spawner.spawnEnemy();
         }
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
@@ -121,16 +128,12 @@ public class IngameScreen implements Screen {
         GameManager.getInstance().getCurrentPlayer().setY(playerSpawnY);
     }
 
-    public void spawnEnemy(){
-        Enemy enemy = new Mushroom();
-
-//        enemy.setX(rand.nextFloat(GameConstant.screenWidth - enemy.width));
-//        enemy.setY(rand.nextFloat(GameConstant.screenHeight - enemy.height));
-        float randomX = rand.nextInt((int) (GameConstant.screenWidth - enemy.width));
-        float randomY = rand.nextInt((int) (GameConstant.screenHeight - enemy.height));
-        enemy.setX(randomX);
-        enemy.setY(randomY);
+    public void addEnemy(Enemy enemy){
         enemies.add(enemy);
+    }
+
+    public int getCurrentEnemyAmount(){
+        return enemies.size;
     }
 
     @Override
