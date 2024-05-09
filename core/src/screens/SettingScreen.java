@@ -122,12 +122,12 @@ public class SettingScreen implements Screen {
 
         table.add(lSound);
         table.add(soundSlider).width(500).padLeft(10);
-        soundSlider.setValue(ConstantSound.slash.getVolume());
+        soundSlider.setValue(ConstantSound.getSoundVolume());
         soundSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ConstantSound.slash.setVolume(soundSlider.getValue());
-                ConstantSound.slash.play();
+                ConstantSound.setSoundVolume(soundSlider.getValue());
+                ConstantSound.slash.play(ConstantSound.getSoundVolume());
             }
         });
     }

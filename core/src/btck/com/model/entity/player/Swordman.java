@@ -116,7 +116,7 @@ public class Swordman extends Player {
 
     public void attack(int x, int y) {
         if(!attacking)
-            ConstantSound.slash.play();
+            ConstantSound.slash.play(ConstantSound.getSoundVolume());
 
         if(!dead && !attacking){
             attackX = x; attackY = GameConstant.screenHeight - y;
