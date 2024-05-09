@@ -1,6 +1,6 @@
 package btck.com.model.entity.player;
 
-import btck.com.model.constant.ConstantSound;
+import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import screens.SettingScreen;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;

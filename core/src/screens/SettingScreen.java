@@ -1,7 +1,7 @@
 package screens;
 
 import btck.com.MyGdxGame;
-import btck.com.model.constant.ConstantSound;
+import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.GameConstant;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

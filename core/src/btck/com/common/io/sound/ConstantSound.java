@@ -1,4 +1,4 @@
-package btck.com.model.constant;
+package btck.com.common.io.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;

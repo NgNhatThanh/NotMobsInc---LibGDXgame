@@ -3,7 +3,7 @@ package screens;
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.io.MouseHandler;
-import btck.com.model.constant.ConstantSound;
+import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.GameState;
 import btck.com.model.entity.player.Swordman;
 import com.badlogic.gdx.Gdx;
