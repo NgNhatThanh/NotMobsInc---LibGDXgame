@@ -2,6 +2,7 @@ package btck.com.model.entity.player.swordman;
 
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
+import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
@@ -105,6 +106,9 @@ public class Swordman extends Player {
     }
 
     public void attack(int x, int y) {
+        if(!attacking)
+            ConstantSound.slash.play(ConstantSound.getSoundVolume());
+
         if(!dead && !attacking){
             attackX = x; attackY = GameConstant.screenHeight - y;
             animationIdx = 2;

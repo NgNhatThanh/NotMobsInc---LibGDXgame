@@ -18,13 +18,11 @@ public class CreditsScene implements Screen {
     MyGdxGame myGdxGame;
 
     Texture creditPng;
-    Texture arrowInactive;
-    Texture arrowActive;
+    public static Texture arrowInactive = new Texture("credits\\back arrow inactive.png");;
+    public static Texture arrowActive = new Texture("credits\\back arrow.png");
     public CreditsScene(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         creditPng = new Texture("credits\\credits.png");
-        arrowActive = new Texture("credits\\back arrow.png");
-        arrowInactive = new Texture("credits\\back arrow inactive.png");
     }
 
     @Override
