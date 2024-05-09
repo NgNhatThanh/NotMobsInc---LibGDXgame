@@ -4,8 +4,12 @@ import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.controller.spawn.Spawner;
 import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.PlayerState;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
+import btck.com.model.entity.enemy.Gladiator;
+import btck.com.model.entity.enemy.Mushroom;
+import btck.com.model.entity.player.Swordman;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -37,7 +41,7 @@ public class IngameScreen implements Screen {
     int maxEnemySpawnAtOnce = 3;
 
     Player player;
-
+    Swordman swordman;
     Random rand;
 
     long lastEnemySpawntime;
@@ -118,8 +122,8 @@ public class IngameScreen implements Screen {
 
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
             System.out.println("chet");
-            this.dispose();
-            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+            myGdxGame.setScreen(new GameOverScreen(myGdxGame));
+            dispose();
         }
     }
 
