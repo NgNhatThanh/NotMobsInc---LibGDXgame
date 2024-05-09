@@ -2,6 +2,8 @@ package screens;
 
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
+import btck.com.common.io.MouseHandler;
+import btck.com.common.io.sound.ConstantSound;
 import btck.com.controller.spawn.Spawner;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
@@ -32,16 +34,20 @@ public class IngameScreen implements Screen {
     HUD hud;
     
     Array<Enemy> enemies;
-    
+
     int maxEnemyAmount = 7;
     int maxEnemySpawnAtOnce = 3;
 
     Player player;
+
     Random rand;
 
     long lastEnemySpawntime;
 
     Spawner spawner;
+
+    Texture quitInactive;
+    Texture quitActive;
 
     public IngameScreen(MyGdxGame myGdxGame){
         rand = new Random();
@@ -51,7 +57,14 @@ public class IngameScreen implements Screen {
         this.myGdxGame = myGdxGame;
         cam = new OrthographicCamera();
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
+        Gdx.input.setInputProcessor(new MouseHandler());
+        ConstantSound.bgmIngame.play();
         hud = new HUD(myGdxGame.batch);
+
+
+        quitActive = new Texture("ingame/quit active-02.png");
+        quitInactive = new Texture("ingame/quit-02.png");
+
 
 //        cam.position.set(GameConstant.screenWidth / 2, GameConstant.screenHeight / 2, 0);
         enemies = new Array<>();
@@ -72,7 +85,6 @@ public class IngameScreen implements Screen {
         map = new Texture("ingame/map.gif");
 
         spawnPlayer();
-//        spawnEnemy();
     }
 
     @Override
@@ -92,8 +104,12 @@ public class IngameScreen implements Screen {
 
         myGdxGame.batch.draw(map, 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
 
+        drawQuitLabel();
+//        System.out.println(enemies.size);
+
         for (Iterator<Enemy> enemyIterator = enemies.iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
+
             tmp.draw(myGdxGame.batch);
             if(player.isAttacking() && player.getAttack().hit(tmp)){
                 player.getAttack().addHitEntity(tmp);
@@ -102,7 +118,9 @@ public class IngameScreen implements Screen {
             if(tmp.isAttacking() && tmp.getAttack().hit(player)){
                 tmp.getAttack().addHitEntity(player);
             }
+
             if(!tmp.isExist()){
+                System.out.println("chet");
                 enemyIterator.remove();
             }
         }
@@ -117,8 +135,8 @@ public class IngameScreen implements Screen {
 
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
             System.out.println("chet");
-            myGdxGame.setScreen(new GameOverScreen(myGdxGame));
-            dispose();
+            this.dispose();
+            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
         }
     }
 
@@ -157,7 +175,27 @@ public class IngameScreen implements Screen {
 
     @Override
     public void dispose() {
+        quitInactive.dispose();
+        quitActive.dispose();
+
+        ConstantSound.bgmIngame.dispose();
         hud.dispose();
         map.dispose();
+    }
+
+    public void drawQuitLabel(){
+        int labelX = GameConstant.screenWidth - 200, labelY = 50;
+        int quitWidth = 135;
+        int quitHeight = 50;
+        if(Gdx.input.getX() < labelX + quitWidth && Gdx.input.getX() > labelX && GameConstant.screenHeight - Gdx.input.getY() < labelY + quitHeight && GameConstant.screenHeight - Gdx.input.getY() > labelY){
+            myGdxGame.batch.draw(quitActive, labelX, labelY, quitWidth, quitHeight);
+            if(Gdx.input.isTouched()){
+                ConstantSound.bgmIngame.dispose();
+                this.dispose();
+                myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+            }
+        }else{
+            myGdxGame.batch.draw(quitInactive, labelX, labelY, quitWidth, quitHeight);
+        }
     }
 }
