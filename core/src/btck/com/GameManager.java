@@ -13,7 +13,7 @@ public class GameManager {
 
     public GameState gameState;
 
-    Player currentPlayer;
+    public Player currentPlayer;
 
     public static GameManager getInstance(){
         if(gameManager == null) gameManager = new GameManager();

@@ -32,7 +32,7 @@ public class Gladiator extends Enemy {
         shapeRenderer.setAutoShapeType(true);
 
         health = 1;
-        damage = 3;
+
         exp = 2;
         width = 128;
         height = 160;

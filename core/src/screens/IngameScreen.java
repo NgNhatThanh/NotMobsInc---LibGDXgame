@@ -4,10 +4,10 @@ import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.io.MouseHandler;
 import btck.com.common.io.sound.ConstantSound;
+import btck.com.controller.spawn.Spawner;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
-import btck.com.model.entity.enemy.Mushroom;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -35,11 +35,16 @@ public class IngameScreen implements Screen {
     
     Array<Enemy> enemies;
 
+    int maxEnemyAmount = 7;
+    int maxEnemySpawnAtOnce = 3;
+
     Player player;
 
     Random rand;
 
     long lastEnemySpawntime;
+
+    Spawner spawner;
 
     Texture quitInactive;
     Texture quitActive;
@@ -48,6 +53,7 @@ public class IngameScreen implements Screen {
         rand = new Random();
         player = GameManager.getInstance().getCurrentPlayer();
 
+        spawner = new Spawner(this, maxEnemyAmount, maxEnemySpawnAtOnce);
         this.myGdxGame = myGdxGame;
         cam = new OrthographicCamera();
         viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
@@ -62,7 +68,6 @@ public class IngameScreen implements Screen {
 
 //        cam.position.set(GameConstant.screenWidth / 2, GameConstant.screenHeight / 2, 0);
         enemies = new Array<>();
-
         //        viewport.apply(true);
 //        cam.position.set(0, 0, 0);
 //        cam.update();
@@ -87,7 +92,7 @@ public class IngameScreen implements Screen {
 
         if(System.currentTimeMillis() - lastEnemySpawntime >= 5000){
             lastEnemySpawntime = System.currentTimeMillis();
-            spawnEnemy();
+            spawner.spawnEnemy();
         }
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
@@ -101,17 +106,17 @@ public class IngameScreen implements Screen {
 
         drawQuitLabel();
 //        System.out.println(enemies.size);
+
         for (Iterator<Enemy> enemyIterator = enemies.iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
 
             tmp.draw(myGdxGame.batch);
-            if(player.isAttacking() && player.hit(tmp)){
-                player.addHitEntity(tmp);
-                System.out.println(tmp.getHealth());
+            if(player.isAttacking() && player.getAttack().hit(tmp)){
+                player.getAttack().addHitEntity(tmp);
             }
 
-            if(tmp.isAttacking() && tmp.hit(player)){
-                tmp.addHitEntity(player);
+            if(tmp.isAttacking() && tmp.getAttack().hit(player)){
+                tmp.getAttack().addHitEntity(player);
             }
 
             if(!tmp.isExist()){
@@ -121,6 +126,7 @@ public class IngameScreen implements Screen {
         }
 
         GameManager.getInstance().getCurrentPlayer().draw(myGdxGame.batch);
+
         myGdxGame.batch.end();
 
 //        myGdxGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -139,16 +145,12 @@ public class IngameScreen implements Screen {
         GameManager.getInstance().getCurrentPlayer().setY(playerSpawnY);
     }
 
-    public void spawnEnemy(){
-        Enemy enemy = new Mushroom();
-
-//        enemy.setX(rand.nextFloat(GameConstant.screenWidth - enemy.width));
-//        enemy.setY(rand.nextFloat(GameConstant.screenHeight - enemy.height));
-        float randomX = rand.nextInt((int) (GameConstant.screenWidth - enemy.width));
-        float randomY = rand.nextInt((int) (GameConstant.screenHeight - enemy.height));
-        enemy.setX(randomX);
-        enemy.setY(randomY);
+    public void addEnemy(Enemy enemy){
         enemies.add(enemy);
+    }
+
+    public int getCurrentEnemyAmount(){
+        return enemies.size;
     }
 
     @Override

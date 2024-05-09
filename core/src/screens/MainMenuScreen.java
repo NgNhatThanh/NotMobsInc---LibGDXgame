@@ -5,7 +5,7 @@ import btck.com.MyGdxGame;
 import btck.com.common.io.MouseHandler;
 import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.GameState;
-import btck.com.model.entity.player.Swordman;
+import btck.com.model.entity.player.swordman.Swordman;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;

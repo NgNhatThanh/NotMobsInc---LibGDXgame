@@ -1,8 +1,8 @@
-package btck.com.model.entity.enemy;
+package btck.com.model.entity.enemy.mushroom;
 
 import btck.com.GameManager;
+import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Enemy;
-import btck.com.model.entity.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,40 +10,29 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-
-import java.util.Iterator;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
 public class Mushroom extends Enemy {
 
-    TextureAtlas textureAtlas;
-
     ShapeRenderer shapeRenderer;
 
-    Animation<TextureRegion>[] animations;
-    int animationIdx;
-
     float FRAME_SPEED = 0.1f;
-    float statetime;
-    int SPEED = 100;
     private float a, b, x1, y1 ,deltaSP;
-
-    int frameToDealDamage = 6;
-    boolean dealed;
 
     public Mushroom(){
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        damage = 2;
-        health = 4;
-        exp = 2;
+        attackRange = 50;
+        health = 3;
+        exp = 4;
         width = 128;
         height = 160;
 
+        normalSpeed = 100;
+        currentSpeed = 100;
         textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/enemy/mushroom/mushroom.atlas"));
         animations = new Animation[5];
 
@@ -54,12 +43,13 @@ public class Mushroom extends Enemy {
         animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_run"));
         animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_die"));
         animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_attack"));
+
+        attack = new HeadAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-//        System.out.println(x + " " + y);
-
+//        System.out.println(health);
         statetime += Gdx.graphics.getDeltaTime();
 
 //        shapeRenderer.begin();
@@ -71,25 +61,19 @@ public class Mushroom extends Enemy {
         hitbox.x = x;
         hitbox.y = y;
 
-//        if(attacking && !dealed && animations[animationIdx].getKeyFrameIndex(statetime) == frameToDealDamage){
-////            System.out.println("deal");
-//            dealDamage();
-//        }
+        if(attacking) attack.update(statetime);
 
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
             animationIdx = 2;
             if(attacking){
-                hitEntities.clear();
                 attacking = false;
-
-                dealed = false;
+                attack.end();
             }
         }
 
         if(dead && animations[animationIdx].isAnimationFinished(statetime)) exist = false;
 
         if(animationIdx > 0 && animationIdx < 3){
-//            System.out.println("PL: " + GameManager.getInstance().getCurrentPlayer().getX() + " " + GameManager.getInstance().getCurrentPlayer().getY());
             move(GameManager.getInstance().getCurrentPlayer().getX(), GameManager.getInstance().getCurrentPlayer().getY());
         }
         if(!dead) update();
@@ -98,28 +82,15 @@ public class Mushroom extends Enemy {
     @Override
     public void update() {
         if(health <= 0){
-            System.out.println("died");
             dead = true;
             statetime = 0;
             animationIdx = 3;
         }
     }
 
-    void dealDamage(){
-        dealed = true;
-        takeDameEntities = hitEntities;
-
-        for (Entity takeDameEntity : takeDameEntities) {
-            takeDameEntity.takeDamage(this.damage);
-        }
-
-        hitEntities.clear();
-    }
-
     @Override
     public void move(float desX, float desY){
-
-        if(abs(x - desX) < 50 && abs(y - desY) < 50) {
+        if(abs(x - desX) < attackRange && abs(y - desY) < attackRange) {
             attack((int) desX, (int) desY);
             return;
         }
@@ -127,7 +98,7 @@ public class Mushroom extends Enemy {
         if(desX < x) flip = false;
         else flip = true;
 
-        deltaSP = SPEED * Gdx.graphics.getDeltaTime();
+        deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
 
         if(abs(x - desX) < 5){
             if(desY > y) y += deltaSP;
@@ -161,5 +132,6 @@ public class Mushroom extends Enemy {
         animationIdx = 4;
         statetime = 0;
         attacking = true;
+        attack.start();
     }
 }
