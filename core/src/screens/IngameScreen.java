@@ -177,6 +177,7 @@ public class IngameScreen implements Screen {
         quitInactive.dispose();
         quitActive.dispose();
 
+        ConstantSound.bgmIngame.dispose();
         hud.dispose();
         map.dispose();
     }

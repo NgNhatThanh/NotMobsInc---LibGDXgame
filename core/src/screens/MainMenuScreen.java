@@ -7,6 +7,7 @@ import btck.com.model.constant.ConstantSound;
 import btck.com.model.constant.GameState;
 import btck.com.model.entity.player.Swordman;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,7 +34,7 @@ public class MainMenuScreen  implements Screen {
     Texture settingActive;
     Texture settingInactive;
     public MainMenuScreen(MyGdxGame myGdxGame){
-        Gdx.input.setInputProcessor(new MouseHandler());
+        Gdx.input.setInputProcessor(new InputAdapter());
         System.out.println(MainMenuScreen.WIDTH);
         System.out.println(MainMenuScreen.HEIGHT);
         this.myGdxGame = myGdxGame;
