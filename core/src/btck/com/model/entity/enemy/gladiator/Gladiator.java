@@ -27,13 +27,14 @@ public class Gladiator extends Enemy {
         currentSpeed = 100;
 
         textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/enemy/gladiator/gladiator.atlas"));
-        animations = new Animation[3];
+        animations = new Animation[4];
 
         hitbox = new Rectangle(0, 0, width, height);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("Run"));
-        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("Attack"));
-        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("Dead"));
+        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("run"));
+        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("attack"));
+        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("dead"));
+        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spawn"));
     }
 
 
@@ -44,7 +45,7 @@ public class Gladiator extends Enemy {
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
         height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? 01: 1) * width, height);
+        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1: 1) * width, height);
 
         hitbox.x = x;
         hitbox.y = y;
@@ -66,7 +67,7 @@ public class Gladiator extends Enemy {
     @Override
     public void move(float desX, float desY) {
         if(abs(x - desX) < attackRange && abs(y - desY) < attackRange) {
-            attack((int) desX, (int) desY);
+//            attack((int) desX, (int) desY);
             return;
         }
 

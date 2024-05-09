@@ -6,7 +6,7 @@ import btck.com.controller.spawn.EnemyEnum;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
-import btck.com.model.entity.enemy.Gladiator;
+import btck.com.model.entity.enemy.gladiator.Gladiator;
 import btck.com.model.entity.enemy.mage.Mage;
 import btck.com.model.entity.enemy.mushroom.Mushroom;
 import btck.com.view.hud.HUD;
