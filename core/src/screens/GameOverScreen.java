@@ -11,9 +11,9 @@
     
     public class GameOverScreen  implements Screen {
         public static final int gameOverWidth = 400;
-        public static final int gameOverHeight = 380;
-        public static final int tryAgainWidth = 400;
-        public static final int tryAgainHeight = 380;
+        public static final int gameOverHeight = 100;
+        public static final int tryAgainWidth = 300;
+        public static final int tryAgainHeight = 70;
         public static int WIDTH = Gdx.graphics.getWidth();
         public static int HEIGHT = Gdx.graphics.getHeight();
         MyGdxGame myGdxGame;
@@ -51,11 +51,11 @@
             myGdxGame.batch.draw(gameOver, gameOverX, gameOverY, gameOverWidth, gameOverHeight);
 
             int tryAgainX =  (GameOverScreen.WIDTH - tryAgainWidth)/2;;
-            int tryAgainY = gameOverY - 50;
+            int tryAgainY = gameOverY - 70;
     
             if(Gdx.input.getX() < tryAgainX + tryAgainWidth && Gdx.input.getX() > tryAgainX &&
-                    GameOverScreen.HEIGHT - tryAgainHeight < Gdx.input.getY() &&
-                    GameOverScreen.HEIGHT - tryAgainHeight > Gdx.input.getY()) {
+                    GameOverScreen.HEIGHT - Gdx.input.getY() < tryAgainHeight + tryAgainY &&
+                    GameOverScreen.HEIGHT - Gdx.input.getY() > tryAgainY) {
                 myGdxGame.batch.draw(tryAgainActive, tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight);
                 if(Gdx.input.isTouched()){
                     myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
