@@ -12,5 +12,4 @@ public abstract class Player extends Entity{
     public int expToLevelUp;
     public int nextLevelExp;
 
-    public abstract void move(int desX, int desY);
 }

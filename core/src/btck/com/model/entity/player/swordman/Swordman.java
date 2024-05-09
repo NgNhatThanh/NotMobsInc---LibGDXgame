@@ -1,5 +1,7 @@
-package btck.com.model.entity.player;
+package btck.com.model.entity.player.swordman;
 
+import btck.com.controller.attack.Attack;
+import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
@@ -9,33 +11,29 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import lombok.Getter;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
 public class Swordman extends Player {
 
-    TextureAtlas textureAtlas;
     final int NORMAL_SPEED = 200;
-    final int ATTACK_SPEED =450;
-    int CURRENT_SPEED = NORMAL_SPEED;
 
     final float FRAME_SPEED = 0.1f;
-    Animation<TextureRegion>[] animations;
-    float statetime;
-    int animationIdx;
 
     private float a, b, x1, y1 ,deltaSP;
 
     ShapeRenderer shapeRenderer;
 
     public Swordman(){
-        damage = 2;
         nextLevelExp = 5;
         expToLevelUp = 6;
         exist = true;
 
-        health = 5;
+        normalSpeed = NORMAL_SPEED;
+        currentSpeed = normalSpeed;
+        health = 10;
         width = 124;
         height = 84;
 
@@ -50,6 +48,8 @@ public class Swordman extends Player {
         animations[1] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_run"));
         animations[2] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_attack"));
         animations[3] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_die"));
+
+        attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.ONCE);
     }
 
     @Override
@@ -63,10 +63,7 @@ public class Swordman extends Player {
         hitbox.x = x;
         hitbox.y = y;
 
-//        System.out.println(hitbox.x + " " + hitbox.y);
-
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
-            System.out.println(animationIdx);
             exist = false;
             System.out.println("bay mau");
             return;
@@ -74,15 +71,10 @@ public class Swordman extends Player {
 
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;
-            hitEntities.clear();
-            CURRENT_SPEED = NORMAL_SPEED;
             animationIdx = 1;
             attacking = false;
+            attack.end();
         }
-
-//        hitbox.setWidth(animations[animationIdx].getKeyFrame(statetime).getRegionWidth());
-//        hitbox.setHeight(animations[animationIdx].getKeyFrame(statetime).getRegionHeight());
-//        System.out.println(hitbox.width +  " " + hitbox.getHeight());
 
         if(!dead){
             if(!attacking){
@@ -115,16 +107,15 @@ public class Swordman extends Player {
     public void attack(int x, int y) {
         if(!dead && !attacking){
             attackX = x; attackY = GameConstant.screenHeight - y;
-            CURRENT_SPEED = ATTACK_SPEED;
             animationIdx = 2;
             attacking = true;
             statetime = 0;
-            move(attackX, attackY);
+            attack.start();
         }
     }
 
     @Override
-    public void move(int desX, int desY){
+    public void move(float desX, float desY){
         if(abs(x - desX) < 5 && abs(y - desY) < 5) {
             if(!attacking) animationIdx = 0;
             return;
@@ -134,7 +125,7 @@ public class Swordman extends Player {
         if(desX < x) flip = true;
         else flip = false;
 
-        deltaSP = CURRENT_SPEED * Gdx.graphics.getDeltaTime();
+        deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
 
         if(abs(x - desX) < 5){
             if(desY > y) y += deltaSP;
