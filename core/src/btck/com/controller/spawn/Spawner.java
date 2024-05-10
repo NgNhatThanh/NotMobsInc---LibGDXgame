@@ -1,6 +1,6 @@
 package btck.com.controller.spawn;
 
-import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.enemy.mage.Mage;
 import btck.com.model.entity.enemy.mushroom.Mushroom;
@@ -45,8 +45,8 @@ public class Spawner {
                     break;
             }
 
-            float randomX = rand.nextInt((int) (GameConstant.screenWidth - spawnEnemy.width));
-            float randomY = rand.nextInt((int) (GameConstant.screenHeight - spawnEnemy.height));
+            float randomX = rand.nextInt((int) (Constants.screenWidth - spawnEnemy.width));
+            float randomY = rand.nextInt((int) (Constants.screenHeight - spawnEnemy.height));
             spawnEnemy.setX(randomX);
             spawnEnemy.setY(randomY);
             ingameScreen.addEnemy(spawnEnemy);

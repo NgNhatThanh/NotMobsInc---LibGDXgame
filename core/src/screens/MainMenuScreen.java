@@ -4,6 +4,7 @@ import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.io.MouseHandler;
 import btck.com.common.io.sound.ConstantSound;
+import btck.com.model.constant.Constants;
 import btck.com.model.constant.GameState;
 import btck.com.model.entity.player.swordman.Swordman;
 import com.badlogic.gdx.Gdx;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.sun.tools.jconsole.JConsoleContext;
 
 public class MainMenuScreen  implements Screen {
     public static final int newGameWidth = 500;
@@ -33,19 +35,19 @@ public class MainMenuScreen  implements Screen {
     Texture creditInactive;
     Texture settingActive;
     Texture settingInactive;
-    public MainMenuScreen(MyGdxGame myGdxGame){
+    public MainMenuScreen(MyGdxGame myGdxGame) {
         Gdx.input.setInputProcessor(new InputAdapter());
         System.out.println(MainMenuScreen.WIDTH);
         System.out.println(MainMenuScreen.HEIGHT);
         this.myGdxGame = myGdxGame;
-        newGameActive = new Texture("MainMenuScreen\\new game active.png");
-        newGameInactive = new Texture("MainMenuScreen\\white new game.png");
-        exitInactive = new Texture("MainMenuScreen\\exitInactive.png");
-        exitActive = new Texture("MainMenuScreen\\exitActive.png");
-        creditActive = new Texture("MainMenuScreen\\creditActive.png");
-        creditInactive = new Texture("MainMenuScreen\\creditInactive.png");
-        settingActive = new Texture("MainMenuScreen/settings active.png");
-        settingInactive = new Texture("MainMenuScreen/settings.png");
+        newGameActive = new Texture(Constants.newGameIconActivePath);
+        newGameInactive = new Texture(Constants.newGameIconInactivePath);
+        exitInactive = new Texture(Constants.exitIconInactivePath);
+        exitActive = new Texture(Constants.exitIconActivePath);
+        creditActive = new Texture(Constants.creditIconActivePath);
+        creditInactive = new Texture(Constants.creditIconInactivePath);
+        settingActive = new Texture(Constants.settingIconActivePath);
+        settingInactive = new Texture(Constants.settingIconInactivePath);
         ConstantSound.bgm.play();
     }
 

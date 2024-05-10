@@ -1,8 +1,7 @@
 package btck.com.view.hud;
 
 import btck.com.GameManager;
-import btck.com.model.constant.GameConstant;
-import com.badlogic.gdx.Game;
+import btck.com.model.constant.Constants;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -32,7 +31,7 @@ public class HUD implements Disposable {
         health = GameManager.getInstance().getCurrentPlayer().getHealth();
         level = 0;
 
-        viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, new OrthographicCamera());
+        viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
         table = new Table();
         table.top();
