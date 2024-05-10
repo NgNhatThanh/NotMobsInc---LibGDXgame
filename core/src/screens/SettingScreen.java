@@ -2,7 +2,7 @@ package screens;
 
 import btck.com.MyGdxGame;
 import btck.com.common.io.sound.ConstantSound;
-import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -28,7 +28,7 @@ public class SettingScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal("uiskin/uiskin.json"));
+        skin = new Skin(Gdx.files.internal(Constants.uiskinPath));
         table = new Table();
 
         adjustBgm();
@@ -84,7 +84,7 @@ public class SettingScreen implements Screen {
 
     public void drawArrow(){
         int arrowPositions = 50;
-        if(Gdx.input.getX() < arrowPositions + CreditsScene.arrowEdge && Gdx.input.getX() > arrowPositions && GameConstant.screenHeight - Gdx.input.getY() < arrowPositions + CreditsScene.arrowEdge && GameConstant.screenHeight - Gdx.input.getY() > arrowPositions){
+        if(Gdx.input.getX() < arrowPositions + CreditsScene.arrowEdge && Gdx.input.getX() > arrowPositions && Constants.screenHeight - Gdx.input.getY() < arrowPositions + CreditsScene.arrowEdge && Constants.screenHeight - Gdx.input.getY() > arrowPositions){
             myGdxGame.batch.draw(CreditsScene.arrowActive, arrowPositions, arrowPositions, CreditsScene.arrowEdge, CreditsScene.arrowEdge);
             if(Gdx.input.isTouched()){
                 this.dispose();

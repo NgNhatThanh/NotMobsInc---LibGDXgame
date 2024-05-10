@@ -1,13 +1,11 @@
 package screens;
 
 import btck.com.MyGdxGame;
-import btck.com.model.constant.GameConstant;
-import com.badlogic.gdx.ApplicationAdapter;
+import btck.com.model.constant.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class CreditsScene implements Screen {
@@ -18,11 +16,11 @@ public class CreditsScene implements Screen {
     MyGdxGame myGdxGame;
 
     Texture creditPng;
-    public static Texture arrowInactive = new Texture("credits\\back arrow inactive.png");;
-    public static Texture arrowActive = new Texture("credits\\back arrow.png");
+    public static Texture arrowInactive = new Texture(Constants.backArrowInactiveIconPath);
+    public static Texture arrowActive = new Texture(Constants.backArrowActiveIconPath);
     public CreditsScene(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
-        creditPng = new Texture("credits\\credits.png");
+        creditPng = new Texture(Constants.creditImgPath);
     }
 
     @Override
@@ -71,7 +69,7 @@ public class CreditsScene implements Screen {
     
     public void drawArrow(){
         int arrowPositions = 50;
-        if(Gdx.input.getX() < arrowPositions + arrowEdge && Gdx.input.getX() > arrowPositions && GameConstant.screenHeight - Gdx.input.getY() < arrowPositions + arrowEdge && GameConstant.screenHeight - Gdx.input.getY() > arrowPositions){
+        if(Gdx.input.getX() < arrowPositions + arrowEdge && Gdx.input.getX() > arrowPositions && Constants.screenHeight - Gdx.input.getY() < arrowPositions + arrowEdge && Constants.screenHeight - Gdx.input.getY() > arrowPositions){
             myGdxGame.batch.draw(arrowActive, arrowPositions, arrowPositions, arrowEdge, arrowEdge);
             if(Gdx.input.isTouched()){
                 this.dispose();

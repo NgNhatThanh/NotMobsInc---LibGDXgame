@@ -2,6 +2,7 @@ package btck.com.model.entity.enemy.mushroom;
 
 import btck.com.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
+import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -33,7 +34,7 @@ public class Mushroom extends Enemy {
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/enemy/mushroom/mushroom.atlas"));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.mushroomAtlasPath));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, 80, 64);

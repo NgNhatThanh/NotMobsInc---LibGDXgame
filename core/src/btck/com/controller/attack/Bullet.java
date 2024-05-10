@@ -1,6 +1,6 @@
 package btck.com.controller.attack;
 
-import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class Bullet {
         this.hitbox.width = width;
         this.hitbox.height = height;
 
-        if(desX > x) this.desX = GameConstant.screenWidth + 10;
+        if(desX > x) this.desX = Constants.screenWidth + 10;
         else this.desX = -10;
 
         a = (y - desY) / (x - desX);

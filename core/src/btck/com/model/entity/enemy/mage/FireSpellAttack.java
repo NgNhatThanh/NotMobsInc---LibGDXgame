@@ -4,7 +4,7 @@ import btck.com.MyGdxGame;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.Bullet;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.Constants;
 import btck.com.model.entity.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,7 +29,7 @@ public class FireSpellAttack extends Attack {
         damage = 3;
 
         fireballs = new Array<>();
-        fireball = new Texture(Gdx.files.internal("atlas/enemy/mage/fireball.png"));
+        fireball = new Texture(Gdx.files.internal(Constants.fireballImgPath));
         hitbox = new Rectangle();
         hitbox.width = 32;
         hitbox.height = 32;
@@ -59,8 +59,8 @@ public class FireSpellAttack extends Attack {
             thisFireBall.move();
             Rectangle thisHitbox = thisFireBall.getHitbox();
 
-            if(thisHitbox.x < 0 || thisHitbox.x > GameConstant.screenWidth || thisHitbox.y < 0
-               || thisHitbox.y > GameConstant.screenHeight) fireballs.removeValue(thisFireBall, false);
+            if(thisHitbox.x < 0 || thisHitbox.x > Constants.screenWidth || thisHitbox.y < 0
+               || thisHitbox.y > Constants.screenHeight) fireballs.removeValue(thisFireBall, false);
             else MyGdxGame.batch.draw(fireball, thisHitbox.x, thisHitbox.y);
 
 //            shapeRenderer.begin();

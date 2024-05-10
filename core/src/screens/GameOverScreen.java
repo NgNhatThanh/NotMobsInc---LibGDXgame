@@ -2,6 +2,7 @@
     
     import btck.com.GameManager;
     import btck.com.MyGdxGame;
+    import btck.com.model.constant.Constants;
     import btck.com.model.constant.GameState;
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.Screen;
@@ -9,12 +10,12 @@
     import com.badlogic.gdx.graphics.Texture;
     
     public class GameOverScreen  implements Screen {
-        public static final int gameOverWidth = 400;
-        public static final int gameOverHeight = 100;
-        public static final int tryAgainWidth = 300;
-        public static final int tryAgainHeight = 70;
-        public static int WIDTH = Gdx.graphics.getWidth();
-        public static int HEIGHT = Gdx.graphics.getHeight();
+        public final int gameOverWidth = 400;
+        public final int gameOverHeight = 100;
+        public final int tryAgainWidth = 300;
+        public final int tryAgainHeight = 70;
+        public int WIDTH = Gdx.graphics.getWidth();
+        public int HEIGHT = Gdx.graphics.getHeight();
         MyGdxGame myGdxGame;
     
     
@@ -22,12 +23,12 @@
         Texture tryAgainInactive;
         Texture tryAgainActive;
         public GameOverScreen(MyGdxGame myGdxGame){
-            System.out.println(GameOverScreen.WIDTH);
-            System.out.println(GameOverScreen.HEIGHT);
+            System.out.println(WIDTH);
+            System.out.println(HEIGHT);
             this.myGdxGame = myGdxGame;
-            gameOver = new Texture("GameOverScreen/GameOver.png");
-            tryAgainActive = new Texture("GameOverScreen/TryAgainActive.png");
-            tryAgainInactive = new Texture("GameOverScreen/TryAgainInactive.png");
+            gameOver = new Texture(Constants.gameOverImgPath);
+            tryAgainActive = new Texture(Constants.tryAgainIconActivePath);
+            tryAgainInactive = new Texture(Constants.tryAgainIconInactivePath);
         }
     
         @Override
@@ -43,18 +44,18 @@
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             myGdxGame.batch.begin();
     
-            int gameOverX = (GameOverScreen.WIDTH - gameOverWidth)/2;
-            int gameOverY = (GameOverScreen.HEIGHT - gameOverHeight)/2;
+            int gameOverX = (WIDTH - gameOverWidth)/2;
+            int gameOverY = (HEIGHT - gameOverHeight)/2;
 //            System.out.println(gameOverX + " " + gameOverY);
 
             myGdxGame.batch.draw(gameOver, gameOverX, gameOverY, gameOverWidth, gameOverHeight);
 
-            int tryAgainX =  (GameOverScreen.WIDTH - tryAgainWidth)/2;;
+            int tryAgainX =  (WIDTH - tryAgainWidth)/2;;
             int tryAgainY = gameOverY - 70;
     
             if(Gdx.input.getX() < tryAgainX + tryAgainWidth && Gdx.input.getX() > tryAgainX &&
-                    GameOverScreen.HEIGHT - Gdx.input.getY() < tryAgainHeight + tryAgainY &&
-                    GameOverScreen.HEIGHT - Gdx.input.getY() > tryAgainY) {
+                    HEIGHT - Gdx.input.getY() < tryAgainHeight + tryAgainY &&
+                    HEIGHT - Gdx.input.getY() > tryAgainY) {
                 myGdxGame.batch.draw(tryAgainActive, tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight);
                 if(Gdx.input.isTouched()){
                     myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
@@ -71,7 +72,8 @@
     
         @Override
         public void resize(int width, int height) {
-    
+            this.WIDTH = width;
+            this.HEIGHT = height;
         }
     
         @Override

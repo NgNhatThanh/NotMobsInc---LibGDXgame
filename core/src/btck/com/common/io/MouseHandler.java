@@ -1,7 +1,6 @@
 package btck.com.common.io;
 
 import btck.com.GameManager;
-import btck.com.model.constant.GameConstant;
 import btck.com.model.constant.GameState;
 import com.badlogic.gdx.InputProcessor;
 
