@@ -2,6 +2,7 @@ package btck.com.controller.spawn;
 
 import btck.com.model.constant.GameConstant;
 import btck.com.model.entity.Enemy;
+import btck.com.model.entity.enemy.gladiator.Gladiator;
 import btck.com.model.entity.enemy.mage.Mage;
 import btck.com.model.entity.enemy.mushroom.Mushroom;
 import lombok.Setter;
@@ -42,6 +43,9 @@ public class Spawner {
                     break;
                 case MAGE:
                     spawnEnemy = new Mage();
+                    break;
+                case GLADIATOR:
+                    spawnEnemy = new Gladiator();
                     break;
             }
 
