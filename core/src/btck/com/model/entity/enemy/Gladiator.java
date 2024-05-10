@@ -1,6 +1,7 @@
 package btck.com.model.entity.enemy;
 
 import btck.com.GameManager;
+import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -37,7 +38,7 @@ public class Gladiator extends Enemy {
         width = 128;
         height = 160;
 
-        textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/enemy/gladiator/gladiator_atlas.atlas"));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.gladiatorAtlasPath));
         animations = new Animation[3];
 
         hitbox = new Rectangle(0, 0, 80, 64);

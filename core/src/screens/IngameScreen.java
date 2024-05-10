@@ -5,7 +5,7 @@ import btck.com.MyGdxGame;
 import btck.com.common.io.MouseHandler;
 import btck.com.common.io.sound.ConstantSound;
 import btck.com.controller.spawn.Spawner;
-import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.view.hud.HUD;
@@ -56,14 +56,15 @@ public class IngameScreen implements Screen {
         spawner = new Spawner(this, maxEnemyAmount, maxEnemySpawnAtOnce);
         this.myGdxGame = myGdxGame;
         cam = new OrthographicCamera();
-        viewport = new FitViewport(GameConstant.screenWidth, GameConstant.screenHeight, cam);
+        viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, cam);
         Gdx.input.setInputProcessor(new MouseHandler());
         ConstantSound.bgmIngame.play();
         hud = new HUD(myGdxGame.batch);
 
 
-        quitActive = new Texture("ingame/quit active-02.png");
-        quitInactive = new Texture("ingame/quit-02.png");
+        quitActive = new Texture(Constants.quitIconActivePath);
+        quitInactive = new Texture(Constants.quitIconInactivePath);
+        map = new Texture(Constants.mapPath);
 
 
 //        cam.position.set(GameConstant.screenWidth / 2, GameConstant.screenHeight / 2, 0);
@@ -77,13 +78,11 @@ public class IngameScreen implements Screen {
 
     Texture map;
 
-    int playerSpawnX = GameConstant.screenWidth / 2 - GameManager.getInstance().getCurrentPlayer().width / 2;
-    int playerSpawnY = GameConstant.screenHeight / 2 - GameManager.getInstance().getCurrentPlayer().height / 2;;
+    int playerSpawnX = Constants.screenWidth / 2 - GameManager.getInstance().getCurrentPlayer().width / 2;
+    int playerSpawnY = Constants.screenHeight / 2 - GameManager.getInstance().getCurrentPlayer().height / 2;;
 
     @Override
     public void show() {
-        map = new Texture("ingame/map.gif");
-
         spawnPlayer();
     }
 
@@ -102,7 +101,7 @@ public class IngameScreen implements Screen {
 
         myGdxGame.batch.begin();
 
-        myGdxGame.batch.draw(map, 0, 0, GameConstant.screenWidth, GameConstant.screenHeight);
+        myGdxGame.batch.draw(map, 0, 0, Constants.screenWidth, Constants.screenHeight);
 
         drawQuitLabel();
 //        System.out.println(enemies.size);
@@ -185,10 +184,10 @@ public class IngameScreen implements Screen {
     }
 
     public void drawQuitLabel(){
-        int labelX = GameConstant.screenWidth - 200, labelY = 50;
+        int labelX = Constants.screenWidth - 200, labelY = 50;
         int quitWidth = 135;
         int quitHeight = 50;
-        if(Gdx.input.getX() < labelX + quitWidth && Gdx.input.getX() > labelX && GameConstant.screenHeight - Gdx.input.getY() < labelY + quitHeight && GameConstant.screenHeight - Gdx.input.getY() > labelY){
+        if(Gdx.input.getX() < labelX + quitWidth && Gdx.input.getX() > labelX && Constants.screenHeight - Gdx.input.getY() < labelY + quitHeight && Constants.screenHeight - Gdx.input.getY() > labelY){
             myGdxGame.batch.draw(quitActive, labelX, labelY, quitWidth, quitHeight);
             if(Gdx.input.isTouched()){
                 ConstantSound.bgmIngame.dispose();

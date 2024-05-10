@@ -1,16 +1,15 @@
 package btck.com;
 
-import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.Constants;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import btck.com.MyGdxGame;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setWindowedMode(GameConstant.screenWidth, GameConstant.screenHeight);
+		config.setWindowedMode(Constants.screenWidth, Constants.screenHeight);
 //		config.setResizable(false);
 		config.setTitle("ProGamejam_BTCK");
 		new Lwjgl3Application(new MyGdxGame(), config);

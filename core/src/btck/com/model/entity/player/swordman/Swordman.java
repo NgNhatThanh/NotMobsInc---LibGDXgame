@@ -1,18 +1,15 @@
 package btck.com.model.entity.player.swordman;
 
-import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.io.sound.ConstantSound;
-import btck.com.model.constant.GameConstant;
+import btck.com.model.constant.Constants;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import lombok.Getter;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -42,7 +39,7 @@ public class Swordman extends Player {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        textureAtlas = new TextureAtlas("atlas/player/swordman/swordman.atlas");
+        textureAtlas = new TextureAtlas(Constants.swordmanAtlasPath);
         animations = new Animation[4];
 
         animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));
@@ -79,7 +76,7 @@ public class Swordman extends Player {
 
         if(!dead){
             if(!attacking){
-                move(Gdx.input.getX(), GameConstant.screenHeight - Gdx.input.getY());
+                move(Gdx.input.getX(), Constants.screenHeight - Gdx.input.getY());
             }
             else{
                 move(attackX, attackY);
@@ -110,7 +107,7 @@ public class Swordman extends Player {
             ConstantSound.slash.play(ConstantSound.getSoundVolume());
 
         if(!dead && !attacking){
-            attackX = x; attackY = GameConstant.screenHeight - y;
+            attackX = x; attackY = Constants.screenHeight - y;
             animationIdx = 2;
             attacking = true;
             statetime = 0;
