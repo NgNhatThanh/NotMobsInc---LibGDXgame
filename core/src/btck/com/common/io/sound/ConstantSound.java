@@ -6,7 +6,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 public class ConstantSound {
-    private static float soundVolume = 1.0f;
+    private static float soundVolume = 0.5f;
+    private static float bgmVolume = 0.5f;
     public static Music bgmIngame = Gdx.audio.newMusic(Gdx.files.internal(Constants.ingameBGMPath));
     public static Sound slash = Gdx.audio.newSound(Gdx.files.internal(Constants.attackSFXPath));
 
@@ -15,6 +16,14 @@ public class ConstantSound {
         bgm.dispose();
         bgmIngame.dispose();
         slash.dispose();
+    }
+
+    public static float getBgmVolume() {
+        return bgmVolume;
+    }
+
+    public static void setBgmVolume(float bgmVolume) {
+        ConstantSound.bgmVolume = bgmVolume;
     }
 
     public static float getSoundVolume() {
