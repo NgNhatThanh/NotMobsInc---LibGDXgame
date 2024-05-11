@@ -24,6 +24,8 @@ public class Constants {
     static public final String gameOverImgPath = "GameOverScreen/GameOver.png";
     static public final String tryAgainIconActivePath = "GameOverScreen/TryAgainActive.png";
     static public final String tryAgainIconInactivePath = "GameOverScreen/TryAgainInactive.png";
+    static public final String mainMenuIconActivePath = "GameOverScreen/MainMenuActive.png";
+    static public final String mainMenuIconInactivePath = "GameOverScreen/MainMenuInactive.png";
 
     static public final String quitIconActivePath = "ingame/quit active-02.png";
     static public final String quitIconInactivePath = "ingame/quit-02.png";

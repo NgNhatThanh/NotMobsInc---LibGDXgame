@@ -12,7 +12,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.sun.tools.jconsole.JConsoleContext;
+//import com.sun.tools.jconsole.JConsoleContext;
 
 public class MainMenuScreen  implements Screen {
     public static final int newGameWidth = 500;
