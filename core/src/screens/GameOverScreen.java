@@ -6,11 +6,11 @@
     import btck.com.model.constant.Constants;
     import btck.com.model.constant.GameState;
     import btck.com.model.entity.player.swordman.Swordman;
+    import btck.com.ui.Button;
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.Screen;
     import com.badlogic.gdx.graphics.GL20;
-    import com.badlogic.gdx.graphics.Texture;
-    
+
     public class GameOverScreen  implements Screen {
         public final int gameOverWidth = 450;
         public final int gameOverHeight = 100;
@@ -22,22 +22,13 @@
         public int HEIGHT = Gdx.graphics.getHeight();
         MyGdxGame myGdxGame;
         int gameOverX, gameOverY, tryAgainX, tryAgainY, mainMenuX, mainMenuY;
-    
-        Texture gameOver;
-        Texture tryAgainInactive;
-        Texture tryAgainActive;
-        Texture mainMenuInactive;
-        Texture mainMenuActive;
+        Button btnGameOver;
+        Button btnTryAgain;
+        Button btnMainMenu;
         public GameOverScreen(MyGdxGame myGdxGame){
             System.out.println(WIDTH);
             System.out.println(HEIGHT);
             this.myGdxGame = myGdxGame;
-            gameOver = new Texture(Constants.gameOverImgPath);
-            tryAgainActive = new Texture(Constants.tryAgainIconActivePath);
-            tryAgainInactive = new Texture(Constants.tryAgainIconInactivePath);
-            mainMenuActive = new Texture(Constants.mainMenuIconActivePath);
-            mainMenuInactive = new Texture(Constants.mainMenuIconInactivePath);
-
             ConstantSound.bgm.play();
         }
     
@@ -56,51 +47,44 @@
     
             gameOverX = (WIDTH - gameOverWidth)/2;
             gameOverY = (HEIGHT - gameOverHeight)/2;
-//            System.out.println(gameOverX + " " + gameOverY);
 
-            myGdxGame.batch.draw(gameOver, gameOverX, gameOverY, gameOverWidth, gameOverHeight);
+            btnGameOver = new Button (gameOverX, gameOverY, gameOverWidth, gameOverHeight, Constants.gameOverImgPath, Constants.gameOverImgPath);
+            btnGameOver.draw(myGdxGame.batch);
 
             mainMenuX = (WIDTH - mainMenuWidth)/2;
             mainMenuY = gameOverY - 100;
-
-            if(Gdx.input.getX() < mainMenuX  + mainMenuWidth && Gdx.input.getX() > mainMenuX &&
-                    HEIGHT - Gdx.input.getY() < mainMenuHeight + mainMenuY &&
-                    HEIGHT - Gdx.input.getY() > mainMenuY) {
-                myGdxGame.batch.draw(mainMenuActive, mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight);
-                if(Gdx.input.isTouched()){
-                    this.dispose();
-                    myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
-                }
-            }
-            else{
-                myGdxGame.batch.draw(mainMenuInactive, mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight);
-            }
-
+            btnMainMenu = new Button(mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight, Constants.mainMenuIconInactivePath, Constants.mainMenuIconActivePath);
+            updateMainMenu();
 
             tryAgainX =  (WIDTH - tryAgainWidth)/2;;
             tryAgainY = mainMenuY - 100;
-    
-            if(Gdx.input.getX() < tryAgainX + tryAgainWidth && Gdx.input.getX() > tryAgainX &&
-                    HEIGHT - Gdx.input.getY() < tryAgainHeight + tryAgainY &&
-                    HEIGHT - Gdx.input.getY() > tryAgainY) {
-                myGdxGame.batch.draw(tryAgainActive, tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight);
-                if(Gdx.input.isTouched()){
-                    this.dispose();
-                    ConstantSound.dispose();
-                    GameManager.getInstance().setCurrentPlayer(new Swordman());
-                    GameManager.getInstance().gameState = GameState.INGAME;
-                    myGdxGame.setScreen(new IngameScreen(myGdxGame));
-                }
-            }
-            else{
-                myGdxGame.batch.draw(tryAgainInactive, tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight);
-            }
-
+            btnTryAgain = new Button(tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight, Constants.tryAgainIconInactivePath, Constants.tryAgainIconActivePath);
+            updateTryAgain();
 
 
             myGdxGame.batch.end();
         }
-    
+        public void updateMainMenu(){
+            btnMainMenu.update();
+            btnMainMenu.draw(myGdxGame.batch);
+            if(btnMainMenu.isClicked()){
+                btnMainMenu.setClicked(false);
+                this.dispose();
+                myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+            }
+        }
+        public void updateTryAgain(){
+            btnTryAgain.update();
+            btnTryAgain.draw(myGdxGame.batch);
+            if(btnTryAgain.isClicked()){
+                btnTryAgain.setClicked(false);
+                this.dispose();
+                ConstantSound.dispose();
+                GameManager.getInstance().setCurrentPlayer(new Swordman());
+                GameManager.getInstance().gameState = GameState.INGAME;
+                myGdxGame.setScreen(new IngameScreen(myGdxGame));
+            }
+        }
         @Override
         public void resize(int width, int height) {
             this.WIDTH = width;
@@ -124,11 +108,9 @@
     
         @Override
         public void dispose() {
-            this.gameOver.dispose();
-            this.tryAgainActive.dispose();
-            this.tryAgainInactive.dispose();
-            this.mainMenuActive.dispose();
-            this.mainMenuInactive.dispose();
+            btnGameOver.dispose();
+            btnMainMenu.dispose();
+            btnTryAgain.dispose();
         }
     }
     
