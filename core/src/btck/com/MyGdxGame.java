@@ -1,31 +1,29 @@
 package btck.com;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import btck.com.common.io.MouseHandler;
+import btck.com.model.constant.GameState;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import screens.MainMenuScreen;
 
-public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+public class MyGdxGame extends Game {
+
+	public static SpriteBatch batch;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		Gdx.input.setInputProcessor(MouseHandler.getInstance());
+		GameManager.getInstance().gameState = GameState.MENU;
+		this.setScreen(new MainMenuScreen(this));
 	}
 
-	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
 	}
-	
-	@Override
+
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }
