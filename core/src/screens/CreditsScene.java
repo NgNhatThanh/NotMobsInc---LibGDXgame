@@ -2,25 +2,34 @@ package screens;
 
 import btck.com.MyGdxGame;
 import btck.com.model.constant.Constants;
+import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 public class CreditsScene implements Screen {
 
     public static final int creditWidth = 700;
     public static final int creditHeight = 350;
-    public static final int arrowEdge = 50;
-    MyGdxGame myGdxGame;
 
+    MyGdxGame myGdxGame;
     Texture creditPng;
-    public static Texture arrowInactive = new Texture(Constants.backArrowInactiveIconPath);
-    public static Texture arrowActive = new Texture(Constants.backArrowActiveIconPath);
+    Button btnArrow;
+    int arrowPositions = 50;
+    int arrowEdge = 50;
+
     public CreditsScene(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         creditPng = new Texture(Constants.creditImgPath);
+        btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.backArrowInactiveIconPath, Constants.backArrowActiveIconPath);
+
     }
 
     @Override
@@ -34,8 +43,9 @@ public class CreditsScene implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         myGdxGame.batch.begin();
 
-        drawArrow();
-        myGdxGame.batch.draw(creditPng, (MainMenuScreen.WIDTH - creditWidth) / 2, (MainMenuScreen.HEIGHT - creditHeight) / 2, creditWidth, creditHeight);
+        updateArrow();
+        myGdxGame.batch.draw(creditPng, (Constants.screenWidth - creditWidth) / 2, (Constants.screenHeight - creditHeight) / 2, creditWidth, creditHeight);
+
 
         myGdxGame.batch.end();
     }
@@ -62,21 +72,14 @@ public class CreditsScene implements Screen {
 
     @Override
     public void dispose() {
-        arrowInactive.dispose();
-        arrowActive.dispose();
-        creditPng.dispose();
     }
-    
-    public void drawArrow(){
-        int arrowPositions = 50;
-        if(Gdx.input.getX() < arrowPositions + arrowEdge && Gdx.input.getX() > arrowPositions && Constants.screenHeight - Gdx.input.getY() < arrowPositions + arrowEdge && Constants.screenHeight - Gdx.input.getY() > arrowPositions){
-            myGdxGame.batch.draw(arrowActive, arrowPositions, arrowPositions, arrowEdge, arrowEdge);
-            if(Gdx.input.isTouched()){
-                this.dispose();
-                myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
-            }
-        }else{
-            myGdxGame.batch.draw(arrowInactive, arrowPositions, arrowPositions, arrowEdge, arrowEdge);
+
+    public void updateArrow(){
+        btnArrow.update();
+        btnArrow.draw(myGdxGame.batch);
+        if(btnArrow.isClicked()){
+            btnArrow.setClicked(false);
+            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
         }
     }
 }
