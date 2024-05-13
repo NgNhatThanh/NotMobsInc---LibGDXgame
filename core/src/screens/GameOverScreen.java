@@ -14,9 +14,9 @@
     public class GameOverScreen  implements Screen {
         public final int gameOverWidth = 450;
         public final int gameOverHeight = 100;
-        public final int tryAgainWidth = 350;
+        public final int tryAgainWidth = 320;
         public final int tryAgainHeight = 90;
-        public final int mainMenuWidth = 350;
+        public final int mainMenuWidth = 320;
         public final int mainMenuHeight = 90;
         public int WIDTH = Gdx.graphics.getWidth();
         public int HEIGHT = Gdx.graphics.getHeight();
@@ -51,15 +51,17 @@
             btnGameOver = new Button (gameOverX, gameOverY, gameOverWidth, gameOverHeight, Constants.gameOverImgPath, Constants.gameOverImgPath);
             btnGameOver.draw(myGdxGame.batch);
 
+            tryAgainX =  (WIDTH - tryAgainWidth)/2;;
+            tryAgainY = gameOverY - 110;
+            btnTryAgain = new Button(tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight, Constants.tryAgainIconInactivePath, Constants.tryAgainIconActivePath);
+            updateTryAgain();
+
             mainMenuX = (WIDTH - mainMenuWidth)/2;
-            mainMenuY = gameOverY - 100;
+            mainMenuY = tryAgainY - 90;
             btnMainMenu = new Button(mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight, Constants.mainMenuIconInactivePath, Constants.mainMenuIconActivePath);
             updateMainMenu();
 
-            tryAgainX =  (WIDTH - tryAgainWidth)/2;;
-            tryAgainY = mainMenuY - 100;
-            btnTryAgain = new Button(tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight, Constants.tryAgainIconInactivePath, Constants.tryAgainIconActivePath);
-            updateTryAgain();
+
 
 
             myGdxGame.batch.end();
@@ -79,7 +81,7 @@
             if(btnTryAgain.isClicked()){
                 btnTryAgain.setClicked(false);
                 this.dispose();
-                ConstantSound.dispose();
+                ConstantSound.bgm.dispose();
                 GameManager.getInstance().setCurrentPlayer(new Swordman());
                 GameManager.getInstance().gameState = GameState.INGAME;
                 myGdxGame.setScreen(new IngameScreen(myGdxGame));
