@@ -1,5 +1,8 @@
 package btck.com.model.constant;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 public class Constants {
 
     static public final int screenWidth = 1400;
@@ -24,6 +27,8 @@ public class Constants {
     static public final String gameOverImgPath = "GameOverScreen/GameOver.png";
     static public final String tryAgainIconActivePath = "GameOverScreen/TryAgainActive.png";
     static public final String tryAgainIconInactivePath = "GameOverScreen/TryAgainInactive.png";
+    static public final String mainMenuIconActivePath = "GameOverScreen/MainMenuActive.png";
+    static public final String mainMenuIconInactivePath = "GameOverScreen/MainMenuInactive.png";
 
     static public final String quitIconActivePath = "ingame/quit active-02.png";
     static public final String quitIconInactivePath = "ingame/quit-02.png";
