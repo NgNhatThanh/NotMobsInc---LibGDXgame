@@ -8,6 +8,8 @@ import btck.com.controller.spawn.Spawner;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
+import btck.com.utils.DEBUG_MODE;
+import btck.com.utils.Debugger;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -32,8 +34,6 @@ public class IngameScreen implements Screen {
     private Viewport viewport;
 
     HUD hud;
-    
-    Array<Enemy> enemies;
 
     int maxEnemyAmount = 7;
     int maxEnemySpawnAtOnce = 3;
@@ -53,7 +53,7 @@ public class IngameScreen implements Screen {
         rand = new Random();
         player = GameManager.getInstance().getCurrentPlayer();
 
-        spawner = new Spawner(this, maxEnemyAmount, maxEnemySpawnAtOnce);
+        spawner = new Spawner( maxEnemyAmount, maxEnemySpawnAtOnce);
         this.myGdxGame = myGdxGame;
         cam = new OrthographicCamera();
         viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, cam);
@@ -68,7 +68,6 @@ public class IngameScreen implements Screen {
 
 
 //        cam.position.set(GameConstant.screenWidth / 2, GameConstant.screenHeight / 2, 0);
-        enemies = new Array<>();
         //        viewport.apply(true);
 //        cam.position.set(0, 0, 0);
 //        cam.update();
@@ -106,7 +105,7 @@ public class IngameScreen implements Screen {
         drawQuitLabel();
 //        System.out.println(enemies.size);
 
-        for (Iterator<Enemy> enemyIterator = enemies.iterator(); enemyIterator.hasNext(); ) {
+        for (Iterator<Enemy> enemyIterator = GameManager.getInstance().getEnemies().iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
 
             tmp.draw(myGdxGame.batch);
@@ -132,6 +131,8 @@ public class IngameScreen implements Screen {
         hud.update();
         hud.stage.draw();
 
+        if(Debugger.debugMode == DEBUG_MODE.ON) Debugger.getInstance().debug();
+
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
             System.out.println("chet");
             this.dispose();
@@ -142,14 +143,6 @@ public class IngameScreen implements Screen {
     public void spawnPlayer(){
         GameManager.getInstance().getCurrentPlayer().setX(playerSpawnX);
         GameManager.getInstance().getCurrentPlayer().setY(playerSpawnY);
-    }
-
-    public void addEnemy(Enemy enemy){
-        enemies.add(enemy);
-    }
-
-    public int getCurrentEnemyAmount(){
-        return enemies.size;
     }
 
     @Override
