@@ -10,6 +10,7 @@ import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.utils.DEBUG_MODE;
 import btck.com.utils.Debugger;
+import btck.com.ui.Button;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -45,25 +46,27 @@ public class IngameScreen implements Screen {
     long lastEnemySpawntime;
 
     Spawner spawner;
-
-    Texture quitInactive;
-    Texture quitActive;
+    Button btnQuit;
+    int quitX = Constants.screenWidth - 200, quitY = 50;
+    int quitWidth = 135;
+    int quitHeight = 50;
 
     public IngameScreen(MyGdxGame myGdxGame){
         rand = new Random();
         player = GameManager.getInstance().getCurrentPlayer();
 
+        btnQuit = new Button(quitX, quitY, quitWidth, quitHeight, Constants.quitIconInactivePath, Constants.quitIconActivePath);
+
+        spawner = new Spawner(maxEnemyAmount, maxEnemySpawnAtOnce);
         spawner = new Spawner( maxEnemyAmount, maxEnemySpawnAtOnce);
         this.myGdxGame = myGdxGame;
         cam = new OrthographicCamera();
         viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, cam);
         Gdx.input.setInputProcessor(new MouseHandler());
+        ConstantSound.bgmIngame.setVolume(ConstantSound.getBgmVolume());
         ConstantSound.bgmIngame.play();
         hud = new HUD(myGdxGame.batch);
 
-
-        quitActive = new Texture(Constants.quitIconActivePath);
-        quitInactive = new Texture(Constants.quitIconInactivePath);
         map = new Texture(Constants.mapPath);
 
 
@@ -102,7 +105,7 @@ public class IngameScreen implements Screen {
 
         myGdxGame.batch.draw(map, 0, 0, Constants.screenWidth, Constants.screenHeight);
 
-        drawQuitLabel();
+        updateBtnQuit();
 //        System.out.println(enemies.size);
 
         for (Iterator<Enemy> enemyIterator = GameManager.getInstance().getEnemies().iterator(); enemyIterator.hasNext(); ) {
@@ -167,28 +170,18 @@ public class IngameScreen implements Screen {
 
     @Override
     public void dispose() {
-        quitInactive.dispose();
-        quitActive.dispose();
-
         ConstantSound.bgmIngame.dispose();
-        ConstantSound.slash.dispose();
         hud.dispose();
         map.dispose();
     }
 
-    public void drawQuitLabel(){
-        int labelX = Constants.screenWidth - 200, labelY = 50;
-        int quitWidth = 135;
-        int quitHeight = 50;
-        if(Gdx.input.getX() < labelX + quitWidth && Gdx.input.getX() > labelX && Constants.screenHeight - Gdx.input.getY() < labelY + quitHeight && Constants.screenHeight - Gdx.input.getY() > labelY){
-            myGdxGame.batch.draw(quitActive, labelX, labelY, quitWidth, quitHeight);
-            if(Gdx.input.isTouched()){
-                ConstantSound.bgmIngame.dispose();
-                this.dispose();
-                myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
-            }
-        }else{
-            myGdxGame.batch.draw(quitInactive, labelX, labelY, quitWidth, quitHeight);
+    public void updateBtnQuit(){
+        btnQuit.update();
+        btnQuit.draw(myGdxGame.batch);
+        if(btnQuit.isClicked()){
+            btnQuit.setClicked(false);
+            this.dispose();
+            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
         }
     }
 }
