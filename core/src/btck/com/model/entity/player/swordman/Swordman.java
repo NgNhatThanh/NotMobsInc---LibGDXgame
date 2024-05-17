@@ -31,7 +31,7 @@ public class Swordman extends Player {
 
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        health = 10;
+        health = 100;
         width = 124;
         height = 84;
 

@@ -19,6 +19,8 @@ public abstract class Attack {
     protected boolean[] dealed;
     protected int[] frameToDealDamage;
     protected int frameToDealDamageIdx;
+    public long coolDown;
+    public long lastAttackTime = 0;
     protected Rectangle hitbox;
     protected float statetime;
 
@@ -59,5 +61,4 @@ public abstract class Attack {
         hitEntities.clear();
         if(dealed != null) for(boolean deal : dealed) deal = false;
     }
-
 }

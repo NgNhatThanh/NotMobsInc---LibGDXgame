@@ -1,6 +1,7 @@
 package btck.com.model.entity.enemy.gladiator;
 
 import btck.com.GameManager;
+import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
@@ -19,24 +20,27 @@ public class Gladiator extends Enemy {
     private float a, b, x1, y1 ,deltaSP;
 
     public Gladiator(){
-        attackRange = 100;
-        health = 2;
+        attackRange = 150;
+        health = 3;
         exp = 5;
-        width = 64;
-        height = 64;
+        width = 100;
+        height = 100;
 
         normalSpeed = 100;
         currentSpeed = 100;
 
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.gladiatorAtlasPath));
-        animations = new Animation[3];
+        animations = new Animation[5];
 
-        hitbox = new Rectangle(0, 0, width, height);
+        hitbox = new Rectangle(0, 0, 124, 64);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("run"));
-        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("attack"));
-        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("dead"));
-        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spawn"));
+        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
+        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
+        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("run"));
+        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("dead"));
+        animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("attack"));
+
+        attack = new TeleportationAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }
 
 
@@ -44,37 +48,56 @@ public class Gladiator extends Enemy {
     public void draw(SpriteBatch spriteBatch) {
         statetime += Gdx.graphics.getDeltaTime();
 
-        width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
-        height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
+//        shapeRenderer.begin();
+//        shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2);
+//        shapeRenderer.end();
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1: 1) * width, height);
+        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         hitbox.x = x;
         hitbox.y = y;
 
-        attack.update(statetime);
+        if(attacking) attack.update(statetime);
+
+        if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
+            animationIdx = 2;
+
+            if(attacking){
+                attacking = false;
+                attack.end();
+            }
+        }
+
+        if(dead && animations[animationIdx].isAnimationFinished(statetime)) exist = false;
+
+        if(animationIdx > 0 && animationIdx < 3){
+            move(GameManager.getInstance().getCurrentPlayer().getX(), GameManager.getInstance().getCurrentPlayer().getY());
+        }
+        if(!dead) update();
 
     }
 
     @Override
     public void update() {
-
-    }
-
-    @Override
-    public void attack(int x, int y) {
-
+        if(health <= 0){
+            dead = true;
+            statetime = 0;
+            animationIdx = 3;
+        }
     }
 
     @Override
     public void move(float desX, float desY) {
         if(abs(x - desX) < attackRange && abs(y - desY) < attackRange) {
-//            attack((int) desX, (int) desY);
+            if(System.currentTimeMillis() - attack.lastAttackTime > attack.coolDown){
+                attack((int) desX, (int) desY);
+                attack.lastAttackTime = System.currentTimeMillis();
+            }
             return;
         }
 
-        if(desX < x) flip = false;
-        else flip = true;
+        if(desX < x) flip = true;
+        else flip = false;
 
         deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
 
@@ -104,4 +127,16 @@ public class Gladiator extends Enemy {
         x = x1;
         y = y1;
     }
+
+    @Override
+    public void attack(int x, int y) {
+        if(!dead && !attacking){
+            attackX = x; attackY = Constants.screenHeight - y;
+            animationIdx = 4;
+            attacking = true;
+            statetime = 0;
+            attack.start();
+        }
+    }
+
 }
