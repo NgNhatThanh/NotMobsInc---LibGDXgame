@@ -22,8 +22,6 @@ public class Swordman extends Player {
 
     private float a, b, x1, y1 ,deltaSP;
 
-    ShapeRenderer shapeRenderer;
-
     public Swordman(){
         nextLevelExp = 5;
         expToLevelUp = 6;
@@ -35,9 +33,7 @@ public class Swordman extends Player {
         width = 124;
         height = 84;
 
-        hitbox = new Rectangle(x, y, 124, 84);
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
+        hitbox = new Rectangle(x, y, width, height);
 
         textureAtlas = new TextureAtlas(Constants.swordmanAtlasPath);
         animations = new Animation[4];
@@ -53,12 +49,9 @@ public class Swordman extends Player {
     @Override
     public void draw(SpriteBatch spriteBatch) {
         statetime += Gdx.graphics.getDeltaTime();
-//        shapeRenderer.begin();
-//        shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2);
-//        shapeRenderer.end();
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? 62 : -62) + x, y, (flip ? -1 : 1) * width, height);
-        hitbox.x = x;
+        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
+        hitbox.x =  x - width / 2;
         hitbox.y = y;
 
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){

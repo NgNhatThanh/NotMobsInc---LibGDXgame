@@ -56,8 +56,8 @@ public class Mage extends Enemy {
 
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
-        hitbox.x = x;
-        hitbox.y = y;
+        hitbox.x = x - width / 2;
+        hitbox.y = y - 10;
 
         attack.update(statetime);
 
