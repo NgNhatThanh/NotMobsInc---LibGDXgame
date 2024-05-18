@@ -14,20 +14,23 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
-public class FireSpellAttack extends Attack {
+public class ArrowShoot extends Attack {
 
     Texture fireball;
     Array<Bullet> fireballs;
     int fireballSpeed = 600;
 
+    int frameToShoot;
+    boolean shoot = false;
     ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    public FireSpellAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
+    public ArrowShoot(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         shapeRenderer.setAutoShapeType(true);
 
         damage = 3;
 
+        frameToShoot = 6;
         fireballs = new Array<>();
         fireball = new Texture(Gdx.files.internal(Constants.fireballImgPath));
         hitbox = new Rectangle();
@@ -38,11 +41,14 @@ public class FireSpellAttack extends Attack {
     @Override
     public void start() {
         owner.currentSpeed = 0;
-        fireballs.add(new Bullet(owner.getX(), owner.getY(), owner.getAttackX(), owner.getAttackY(), fireballSpeed, this.hitbox.width, this.hitbox.height));
     }
 
     @Override
     public void update(float statetime) {
+        if(!shoot && animation.getKeyFrameIndex(statetime) == frameToShoot){
+            fireballs.add(new Bullet(owner.getX(), owner.getY(), owner.getAttackX(), owner.getAttackY(), fireballSpeed, this.hitbox.width, this.hitbox.height));
+            shoot = true;
+        }
         updateHitbox();
     }
 
@@ -81,4 +87,8 @@ public class FireSpellAttack extends Attack {
         return false;
     }
 
+    public void end(){
+        super.end();
+        shoot = false;
+    }
 }

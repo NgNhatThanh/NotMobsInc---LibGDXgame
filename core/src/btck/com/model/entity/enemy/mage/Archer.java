@@ -5,27 +5,30 @@ import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
-public class Mage extends Enemy {
+public class Archer extends Enemy {
 
     float FRAME_SPEED = 0.1f;
 
     private float a, b, x1, y1 ,deltaSP;
 
-    public Mage(){
+    public Archer(){
         attackRange = 200;
         health = 3;
         exp = 5;
-        width = 64;
-        height = 64;
+
+        sampleTexture = new Texture(Constants.archerSampleTTPath);
+
+        width = sampleTexture.getWidth();
+        height = sampleTexture.getHeight();
 
         normalSpeed = 100;
         currentSpeed = 100;
@@ -40,7 +43,7 @@ public class Mage extends Enemy {
         animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_die"));
         animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_attack"));
 
-        attack = new FireSpellAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
+        attack = new ArrowShoot(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }
 
     @Override
@@ -54,10 +57,15 @@ public class Mage extends Enemy {
 //        shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2);
 //        shapeRenderer.end();
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
-
         hitbox.x = x - width / 2;
         hitbox.y = y - 10;
+
+        if(dead && animations[animationIdx].isAnimationFinished(statetime)){
+            exist = false;
+            return;
+        }
+
+        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         attack.update(statetime);
 
@@ -69,8 +77,6 @@ public class Mage extends Enemy {
                 attack.end();
             }
         }
-
-        if(dead && animations[animationIdx].isAnimationFinished(statetime)) exist = false;
 
         if(animationIdx > 0 && animationIdx < 3){
             move(GameManager.getInstance().getCurrentPlayer().getX(), GameManager.getInstance().getCurrentPlayer().getY());

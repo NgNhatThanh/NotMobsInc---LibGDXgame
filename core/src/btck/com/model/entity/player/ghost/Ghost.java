@@ -1,20 +1,20 @@
-package btck.com.model.entity.player.swordman;
+package btck.com.model.entity.player.ghost;
 
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
-public class Swordman extends Player {
+public class Ghost extends Player {
 
     final int NORMAL_SPEED = 200;
 
@@ -22,20 +22,22 @@ public class Swordman extends Player {
 
     private float a, b, x1, y1 ,deltaSP;
 
-    public Swordman(){
+    public Ghost(){
         nextLevelExp = 5;
         expToLevelUp = 6;
         exist = true;
 
+        sampleTexture = new Texture(Constants.ghost1SampleTTPath);
+
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        health = 10;
-        width = 124;
-        height = 84;
+        health = 10000;
+        width = sampleTexture.getWidth();
+        height = sampleTexture.getHeight();
 
         hitbox = new Rectangle(x, y, width, height);
 
-        textureAtlas = new TextureAtlas(Constants.swordmanAtlasPath);
+        textureAtlas = new TextureAtlas(Constants.ghost1AtlasPath);
         animations = new Animation[4];
 
         animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));
@@ -50,9 +52,14 @@ public class Swordman extends Player {
     public void draw(SpriteBatch spriteBatch) {
         statetime += Gdx.graphics.getDeltaTime();
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
-        hitbox.x =  x - width / 2;
+        width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
+        height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
+
+        hitbox.x =  x - width / 2 + 10;
         hitbox.y = y;
+
+        hitbox.width = width - 10;
+        hitbox.height = height / 2;
 
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
             exist = false;
@@ -66,6 +73,8 @@ public class Swordman extends Player {
             attacking = false;
             attack.end();
         }
+
+        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if(!dead){
             if(!attacking){
@@ -116,8 +125,8 @@ public class Swordman extends Player {
         }
         else if(!attacking) animationIdx = 1;
 
-        if(desX < x) flip = true;
-        else flip = false;
+        if(desX < x) flip = false;
+        else flip = true;
 
         deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
 

@@ -3,10 +3,9 @@ package btck.com.controller.spawn;
 import btck.com.GameManager;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
-import btck.com.model.entity.enemy.mage.Mage;
+import btck.com.model.entity.enemy.mage.Archer;
 import btck.com.model.entity.enemy.mushroom.Mushroom;
 import lombok.Setter;
-import screens.IngameScreen;
 
 import java.util.Random;
 
@@ -39,7 +38,7 @@ public class Spawner {
                     spawnEnemy = new Mushroom();
                     break;
                 case MAGE:
-                    spawnEnemy = new Mage();
+                    spawnEnemy = new Archer();
                     break;
             }
 

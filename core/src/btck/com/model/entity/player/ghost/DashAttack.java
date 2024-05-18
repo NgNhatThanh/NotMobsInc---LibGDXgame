@@ -1,4 +1,4 @@
-package btck.com.model.entity.player.swordman;
+package btck.com.model.entity.player.ghost;
 
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
