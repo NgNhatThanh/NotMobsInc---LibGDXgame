@@ -37,7 +37,7 @@ public class Mushroom extends Enemy {
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.mushroomAtlasPath));
         animations = new Animation[5];
 
-        hitbox = new Rectangle(0, 0, 80, 64);
+        hitbox = new Rectangle(0, 0, width, height);
 
         animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_spawn"));
         animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_idle"));
@@ -53,13 +53,12 @@ public class Mushroom extends Enemy {
 //        System.out.println(health);
         statetime += Gdx.graphics.getDeltaTime();
 
-//        shapeRenderer.begin();
-//        shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2);
-//        shapeRenderer.end();
+        width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
+        height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? 62 : -62) + x, y, (flip ? -1 : 1) * width, height);
+        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
-        hitbox.x = x;
+        hitbox.x = x - width / 2;
         hitbox.y = y;
 
         if(attacking) attack.update(statetime);

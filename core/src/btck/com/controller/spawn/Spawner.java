@@ -1,5 +1,6 @@
 package btck.com.controller.spawn;
 
+import btck.com.GameManager;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.enemy.gladiator.Gladiator;
@@ -16,13 +17,10 @@ public class Spawner {
     int maxEnemyAmount = 5;
     int maxEnemySpawnAtOnce;
 
-    IngameScreen ingameScreen;
-
     Random rand;
 
-    public Spawner(IngameScreen ingameScreen, int maxEnemyAmount, int maxEnemySpawnAtOnce){
+    public Spawner(int maxEnemyAmount, int maxEnemySpawnAtOnce){
         this.maxEnemyAmount = maxEnemyAmount;
-        this.ingameScreen = ingameScreen;
         this.maxEnemySpawnAtOnce = maxEnemySpawnAtOnce;
         rand = new Random();
     }
@@ -30,7 +28,7 @@ public class Spawner {
     public void spawnEnemy(){
         int spawnAmount = rand.nextInt( maxEnemySpawnAtOnce) + 1;
 
-        int current = ingameScreen.getCurrentEnemyAmount();
+        int current = GameManager.getInstance().getCurrentEnemyAmount();
 
         if(current + spawnAmount > maxEnemyAmount) spawnAmount = maxEnemyAmount - current;
 
@@ -53,7 +51,7 @@ public class Spawner {
             float randomY = rand.nextInt((int) (Constants.screenHeight - spawnEnemy.height));
             spawnEnemy.setX(randomX);
             spawnEnemy.setY(randomY);
-            ingameScreen.addEnemy(spawnEnemy);
+            GameManager.getInstance().addEnemy(spawnEnemy);
         }
     }
 
