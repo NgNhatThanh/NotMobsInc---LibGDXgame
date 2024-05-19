@@ -3,7 +3,7 @@ package btck.com.controller.spawn;
 import java.util.Random;
 
 public enum EnemyEnum {
-    MUSHROOM, MAGE;
+    MUSHROOM, MAGE, GLADIATOR;
 
     private static final EnemyEnum[] enemies = values();
 

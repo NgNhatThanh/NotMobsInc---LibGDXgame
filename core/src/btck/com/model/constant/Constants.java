@@ -19,7 +19,7 @@ public class Constants {
     static public final String arrowImgPath = "atlas/enemy/archer/arrow.png";
     static public final String archerAtlasPath = "atlas/enemy/archer/archer.atlas";
     static public final String knightAtlasPath = "atlas/enemy/knight/knight.atlas";
-    static public final String gladiatorAtlasPath = "atlas/enemy/gladiator/gladiator_atlas.atlas";
+    static public final String gladiatorAtlasPath = "atlas/enemy/gladiator/gladiator.atlas";
 
     static public final String ghost1AtlasPath = "atlas/player/ghost1/ghost1.atlas";
     static public final String ghost4AtlasPath = "atlas/player/ghost4/ghost4.atlas";

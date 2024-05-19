@@ -5,6 +5,7 @@ import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.enemy.archer.Archer;
 import btck.com.model.entity.enemy.knight.Knight;
+import btck.com.model.entity.enemy.gladiator.Gladiator;
 import lombok.Setter;
 
 import java.util.Random;
@@ -39,6 +40,9 @@ public class Spawner {
                     break;
                 case MAGE:
                     spawnEnemy = new Archer();
+                    break;
+                case GLADIATOR:
+                    spawnEnemy = new Gladiator();
                     break;
             }
 
