@@ -32,7 +32,7 @@ public class Archer extends Enemy {
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.mageAtlasPath));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.archerAtlasPath));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height);
@@ -53,10 +53,6 @@ public class Archer extends Enemy {
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
         height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
 
-//        shapeRenderer.begin();
-//        shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2);
-//        shapeRenderer.end();
-
         hitbox.x = x - width / 2;
         hitbox.y = y - 10;
 
@@ -64,18 +60,14 @@ public class Archer extends Enemy {
             exist = false;
             return;
         }
+        attack.update(statetime);
 
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
-        attack.update(statetime);
-
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
+            statetime = 0;
             animationIdx = 2;
-
-            if(attacking){
-                attack.start();
-                attack.end();
-            }
+            if(attacking) attack.end();
         }
 
         if(animationIdx > 0 && animationIdx < 3){
@@ -100,6 +92,7 @@ public class Archer extends Enemy {
         attackX = x;
         attackY = y;
         attacking = true;
+        attack.start();
     }
 
     @Override

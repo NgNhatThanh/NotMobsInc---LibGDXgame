@@ -16,12 +16,12 @@ import com.badlogic.gdx.utils.Array;
 
 public class ArrowShoot extends Attack {
 
-    Texture fireball;
+    Texture arrow;
     Array<Bullet> fireballs;
     int fireballSpeed = 600;
 
     int frameToShoot;
-    boolean shoot = false;
+    boolean shoot = true;
     ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     public ArrowShoot(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
@@ -32,15 +32,16 @@ public class ArrowShoot extends Attack {
 
         frameToShoot = 6;
         fireballs = new Array<>();
-        fireball = new Texture(Gdx.files.internal(Constants.fireballImgPath));
+        arrow = new Texture(Gdx.files.internal(Constants.arrowImgPath));
         hitbox = new Rectangle();
-        hitbox.width = 32;
-        hitbox.height = 32;
+        hitbox.width = arrow.getWidth();
+        hitbox.height = arrow.getHeight();
     }
 
     @Override
     public void start() {
         owner.currentSpeed = 0;
+        shoot = false;
     }
 
     @Override
@@ -67,7 +68,7 @@ public class ArrowShoot extends Attack {
 
             if(thisHitbox.x < 0 || thisHitbox.x > Constants.screenWidth || thisHitbox.y < 0
                || thisHitbox.y > Constants.screenHeight) fireballs.removeValue(thisFireBall, false);
-            else MyGdxGame.batch.draw(fireball, thisHitbox.x, thisHitbox.y);
+            else MyGdxGame.batch.draw(arrow, thisHitbox.x, thisHitbox.y);
 
 //            shapeRenderer.begin();
 //            shapeRenderer.rect(thisHitbox.x, thisHitbox.y, hitbox.width, hitbox.height);

@@ -7,17 +7,18 @@ public class Constants {
 
     static public final String attackSFXPath = "sound/sound ingame/dash.mp3";
 
-    static public final String ingameBGMPath = "sound\\bgmusic\\Hitman(chosic.com).mp3";
-    static public final String menuBGMPath = "sound\\bgmusic\\makai-symphony-dragon-slayer(chosic.com).mp3";
+    static public final String ingameBGMPath = "sound\\bgmusic\\music-ingame.mp3";
+    static public final String menuBGMPath = "sound\\bgmusic\\music-menu.mp3";
 
     static public final String ghost1SampleTTPath = "atlas/player/ghost1/sample.png";
     static public final String ghost4SampleTTPath = "atlas/player/ghost4/sample.png";
 
     static public final String archerSampleTTPath = "atlas/enemy/archer/sample.png";
+    static public final String knightSampleTTPath = "atlas/enemy/knight/sample.png";
 
-    static public final String fireballImgPath = "atlas/enemy/archer/fireball.png";
-    static public final String mageAtlasPath = "atlas/enemy/archer/archer.atlas";
-    static public final String mushroomAtlasPath = "atlas/enemy/mushroom/mushroom.atlas";
+    static public final String arrowImgPath = "atlas/enemy/archer/arrow.png";
+    static public final String archerAtlasPath = "atlas/enemy/archer/archer.atlas";
+    static public final String knightAtlasPath = "atlas/enemy/knight/knight.atlas";
     static public final String gladiatorAtlasPath = "atlas/enemy/gladiator/gladiator_atlas.atlas";
 
     static public final String ghost1AtlasPath = "atlas/player/ghost1/ghost1.atlas";

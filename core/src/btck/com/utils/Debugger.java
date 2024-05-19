@@ -27,13 +27,17 @@ public class Debugger {
 
     public static void debug(){
         Rectangle playerHitbox = GameManager.getInstance().getCurrentPlayer().getHitbox();
+        Rectangle playerAttackHB = GameManager.getInstance().getCurrentPlayer().getAttack().getHitbox();
 
         shapeRenderer.begin();
         shapeRenderer.rect(playerHitbox.x, playerHitbox.y, playerHitbox.width, playerHitbox.height);
+        shapeRenderer.rect(playerAttackHB.x, playerAttackHB.y, playerAttackHB.width, playerAttackHB.height);
 
         for(Enemy enemy : GameManager.getInstance().enemies){
             Rectangle enemyHitbox = enemy.getHitbox();
+            Rectangle enemyAttackHB = enemy.getAttack().getHitbox();
             shapeRenderer.rect(enemyHitbox.x, enemyHitbox.y, enemyHitbox.width, enemyHitbox.height);
+            shapeRenderer.rect(enemyAttackHB.x, enemyAttackHB.y, enemyAttackHB.width, enemyAttackHB.height);
         }
 
         shapeRenderer.end();

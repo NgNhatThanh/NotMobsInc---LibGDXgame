@@ -113,6 +113,7 @@ public class IngameScreen implements Screen {
 
             tmp.draw(myGdxGame.batch);
             if(player.isAttacking() && player.getAttack().hit(tmp)){
+
                 player.getAttack().addHitEntity(tmp);
             }
 

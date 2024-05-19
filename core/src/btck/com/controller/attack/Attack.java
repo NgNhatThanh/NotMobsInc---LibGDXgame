@@ -19,7 +19,7 @@ public abstract class Attack {
     protected boolean[] dealed;
     protected int[] frameToDealDamage;
     protected int frameToDealDamageIdx;
-    protected Rectangle hitbox;
+    @Getter protected Rectangle hitbox;
     protected float statetime;
 
     public Attack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType){

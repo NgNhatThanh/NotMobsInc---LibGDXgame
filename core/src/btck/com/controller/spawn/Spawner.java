@@ -4,7 +4,7 @@ import btck.com.GameManager;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.enemy.mage.Archer;
-import btck.com.model.entity.enemy.mushroom.Mushroom;
+import btck.com.model.entity.enemy.mushroom.Knight;
 import lombok.Setter;
 
 import java.util.Random;
@@ -35,7 +35,7 @@ public class Spawner {
             EnemyEnum enemyEnum = EnemyEnum.getRandom();
             switch (enemyEnum){
                 case MUSHROOM :
-                    spawnEnemy = new Mushroom();
+                    spawnEnemy = new Knight();
                     break;
                 case MAGE:
                     spawnEnemy = new Archer();

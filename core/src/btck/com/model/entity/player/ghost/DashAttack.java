@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class DashAttack extends Attack {
 
-    final int DASH_SPEED = 450;
+    final int DASH_SPEED = 600;
 
     float attackX, attackY;
 
