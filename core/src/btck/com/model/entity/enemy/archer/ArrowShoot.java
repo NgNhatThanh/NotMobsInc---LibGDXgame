@@ -1,4 +1,4 @@
-package btck.com.model.entity.enemy.mage;
+package btck.com.model.entity.enemy.archer;
 
 import btck.com.MyGdxGame;
 import btck.com.controller.attack.Attack;

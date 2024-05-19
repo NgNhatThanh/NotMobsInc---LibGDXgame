@@ -1,4 +1,4 @@
-package btck.com.model.entity.enemy.mushroom;
+package btck.com.model.entity.enemy.knight;
 
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;

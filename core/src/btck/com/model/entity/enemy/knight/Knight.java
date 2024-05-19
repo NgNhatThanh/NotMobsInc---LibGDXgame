@@ -1,4 +1,4 @@
-package btck.com.model.entity.enemy.mage;
+package btck.com.model.entity.enemy.knight;
 
 import btck.com.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
@@ -9,30 +9,34 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
-public class Archer extends Enemy {
+public class Knight extends Enemy {
+
+    ShapeRenderer shapeRenderer;
 
     float FRAME_SPEED = 0.1f;
-
     private float a, b, x1, y1 ,deltaSP;
 
-    public Archer(){
-        attackRange = 200;
+    public Knight(){
+        shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setAutoShapeType(true);
+
+        sampleTexture = new Texture(Constants.knightSampleTTPath);
+
+        attackRange = 70;
         health = 3;
-        exp = 5;
-
-        sampleTexture = new Texture(Constants.archerSampleTTPath);
-
+        exp = 4;
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.archerAtlasPath));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.knightAtlasPath));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height);
@@ -43,31 +47,35 @@ public class Archer extends Enemy {
         animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_die"));
         animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_attack"));
 
-        attack = new ArrowShoot(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
+        attack = new EarthAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
+//        System.out.println(health);
         statetime += Gdx.graphics.getDeltaTime();
 
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
         height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
 
-        hitbox.x = x - width / 2;
-        hitbox.y = y - 10;
-
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
             exist = false;
             return;
         }
-        attack.update(statetime);
 
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
+        hitbox.x = x - width / 2;
+        hitbox.y = y;
+
+        if(attacking) attack.update(statetime);
+
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
-            statetime = 0;
             animationIdx = 2;
-            if(attacking) attack.end();
+            if(attacking){
+                attacking = false;
+                attack.end();
+            }
         }
 
         if(animationIdx > 0 && animationIdx < 3){
@@ -86,17 +94,7 @@ public class Archer extends Enemy {
     }
 
     @Override
-    public void attack(int x, int y) {
-        animationIdx = 4;
-        statetime = 0;
-        attackX = x;
-        attackY = y;
-        attacking = true;
-        attack.start();
-    }
-
-    @Override
-    public void move(float desX, float desY) {
+    public void move(float desX, float desY){
         if(abs(x - desX) < attackRange && abs(y - desY) < attackRange) {
             attack((int) desX, (int) desY);
             return;
@@ -132,5 +130,13 @@ public class Archer extends Enemy {
 
         x = x1;
         y = y1;
+    }
+
+    @Override
+    public void attack(int x, int y) {
+        animationIdx = 4;
+        statetime = 0;
+        attacking = true;
+        attack.start();
     }
 }

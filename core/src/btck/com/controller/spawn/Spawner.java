@@ -3,8 +3,8 @@ package btck.com.controller.spawn;
 import btck.com.GameManager;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
-import btck.com.model.entity.enemy.mage.Archer;
-import btck.com.model.entity.enemy.mushroom.Knight;
+import btck.com.model.entity.enemy.archer.Archer;
+import btck.com.model.entity.enemy.knight.Knight;
 import lombok.Setter;
 
 import java.util.Random;
