@@ -90,6 +90,6 @@ public class ArrowShoot extends Attack {
 
     public void end(){
         super.end();
-        shoot = false;
+        shoot = true;
     }
 }
