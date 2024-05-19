@@ -16,7 +16,7 @@ public class TeleportationAttack extends Attack {
     final int teleportSpeed = 450;
     private float targetX, targetY;
     private float a, b, x1, y1 ,deltaSP;
-    int frameToTeleport = 1;
+    int frameToTeleport = 2;
 
     public TeleportationAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);

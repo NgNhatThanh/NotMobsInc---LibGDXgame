@@ -32,7 +32,7 @@ public class Gladiator extends Enemy {
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.gladiatorAtlasPath));
         animations = new Animation[5];
 
-        hitbox = new Rectangle(0, 0, 124, 64);
+        hitbox = new Rectangle(0, 0, 124, 100);
 
         animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
         animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
