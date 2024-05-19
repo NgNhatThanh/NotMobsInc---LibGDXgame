@@ -24,6 +24,7 @@ public abstract class Attack {
     protected Rectangle hitbox;
     protected float statetime;
 
+
     public Attack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType){
         this.owner = owner;
         this.animation = animation;

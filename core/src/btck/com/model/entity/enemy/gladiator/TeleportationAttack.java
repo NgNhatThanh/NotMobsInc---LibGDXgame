@@ -16,10 +16,8 @@ public class TeleportationAttack extends Attack {
     final int teleportSpeed = 450;
     private float targetX, targetY;
     private float a, b, x1, y1 ,deltaSP;
-    protected int[] frameToTeleport;
-    protected int frameToTeleportIdx;
+    int frameToTeleport = 1;
 
-    private boolean finishAttack;
     public TeleportationAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         hitbox = owner.getHitbox();
@@ -29,7 +27,6 @@ public class TeleportationAttack extends Attack {
         damage = 2;
         coolDown = 1000;
         lastAttackTime = 0;
-        finishAttack = true;
     }
 
     @Override
@@ -38,18 +35,21 @@ public class TeleportationAttack extends Attack {
         targetX = GameManager.getInstance().getCurrentPlayer().getX();
         targetY = GameManager.getInstance().getCurrentPlayer().getY();
         owner.currentSpeed = teleportSpeed;
-        finishAttack = false;
     }
 
     @Override
     public void update(float statetime) {
         if(owner.isDead()) return;
 
-        moveTowardsTarget();
+        int currentFrame = animation.getKeyFrameIndex(statetime);
+        if(currentFrame > frameToTeleport){
+            moveTowardsTarget();
+        }
 
         if(frameToDealDamageIdx < frameToDealDamage.length && animation.getKeyFrameIndex(statetime) == frameToDealDamage[frameToDealDamageIdx]){
             dealDamage();
         }
+
 
     }
 
