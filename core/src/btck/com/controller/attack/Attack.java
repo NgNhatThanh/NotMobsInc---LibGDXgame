@@ -19,8 +19,11 @@ public abstract class Attack {
     protected boolean[] dealed;
     protected int[] frameToDealDamage;
     protected int frameToDealDamageIdx;
+    public long coolDown;
+    public long lastAttackTime = 0;
     protected Rectangle hitbox;
     protected float statetime;
+
 
     public Attack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType){
         this.owner = owner;
@@ -59,5 +62,4 @@ public abstract class Attack {
         hitEntities.clear();
         if(dealed != null) for(boolean deal : dealed) deal = false;
     }
-
 }
