@@ -14,7 +14,7 @@ public class EarthAttack extends Attack {
         super(animation, owner, dealDamageType);
         hitbox = new Rectangle();
         hitbox.width = 200;
-        hitbox.height = owner.getHitbox().height / 2;
+        hitbox.height = owner.getHitbox().height;
         frameToDealDamage = new int[1];
         frameToDealDamage[0] = 12;
         dealed = new boolean[1];
@@ -47,6 +47,6 @@ public class EarthAttack extends Attack {
     @Override
     public void updateHitbox() {
         hitbox.x = owner.getX() - 100;
-        hitbox.y = owner.getY();
+        hitbox.y = owner.getY() - 50;
     }
 }
