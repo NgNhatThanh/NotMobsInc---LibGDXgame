@@ -2,18 +2,15 @@ package screens;
 
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
-import btck.com.common.io.MouseHandler;
 import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.Constants;
 import btck.com.model.constant.GameState;
-import btck.com.model.entity.player.swordman.Swordman;
+import btck.com.model.entity.player.ghost.Ghost;
 import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 //import com.sun.tools.jconsole.JConsoleContext;
 
 public class MainMenuScreen  implements Screen {
@@ -111,7 +108,7 @@ public class MainMenuScreen  implements Screen {
                     case "New game":
                         ConstantSound.bgm.dispose();
                         this.dispose();
-                        GameManager.getInstance().setCurrentPlayer(new Swordman());
+                        GameManager.getInstance().setCurrentPlayer(new Ghost());
                         GameManager.getInstance().gameState = GameState.INGAME;
                         myGdxGame.setScreen(new IngameScreen(myGdxGame));
                         break;

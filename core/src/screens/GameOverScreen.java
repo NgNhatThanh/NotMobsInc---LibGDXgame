@@ -5,7 +5,7 @@
     import btck.com.common.io.sound.ConstantSound;
     import btck.com.model.constant.Constants;
     import btck.com.model.constant.GameState;
-    import btck.com.model.entity.player.swordman.Swordman;
+    import btck.com.model.entity.player.ghost.Ghost;
     import btck.com.ui.Button;
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.Screen;
@@ -82,7 +82,7 @@
                 btnTryAgain.setClicked(false);
                 this.dispose();
                 ConstantSound.bgm.dispose();
-                GameManager.getInstance().setCurrentPlayer(new Swordman());
+                GameManager.getInstance().setCurrentPlayer(new Ghost());
                 GameManager.getInstance().gameState = GameState.INGAME;
                 myGdxGame.setScreen(new IngameScreen(myGdxGame));
             }

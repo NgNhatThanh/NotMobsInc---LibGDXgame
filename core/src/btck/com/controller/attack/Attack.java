@@ -21,7 +21,7 @@ public abstract class Attack {
     protected int frameToDealDamageIdx;
     public long coolDown;
     public long lastAttackTime = 0;
-    protected Rectangle hitbox;
+    @Getter protected Rectangle hitbox;
     protected float statetime;
 
 

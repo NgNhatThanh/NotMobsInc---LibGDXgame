@@ -3,11 +3,10 @@ package btck.com.controller.spawn;
 import btck.com.GameManager;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
+import btck.com.model.entity.enemy.archer.Archer;
+import btck.com.model.entity.enemy.knight.Knight;
 import btck.com.model.entity.enemy.gladiator.Gladiator;
-import btck.com.model.entity.enemy.mage.Mage;
-import btck.com.model.entity.enemy.mushroom.Mushroom;
 import lombok.Setter;
-import screens.IngameScreen;
 
 import java.util.Random;
 
@@ -37,10 +36,10 @@ public class Spawner {
             EnemyEnum enemyEnum = EnemyEnum.getRandom();
             switch (enemyEnum){
                 case MUSHROOM :
-                    spawnEnemy = new Mushroom();
+                    spawnEnemy = new Knight();
                     break;
                 case MAGE:
-                    spawnEnemy = new Mage();
+                    spawnEnemy = new Archer();
                     break;
                 case GLADIATOR:
                     spawnEnemy = new Gladiator();
