@@ -1,6 +1,7 @@
 package btck.com.model.entity;
 
 import btck.com.controller.attack.Attack;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -31,6 +32,7 @@ public abstract class Entity {
     protected Attack attack;
     protected TextureAtlas textureAtlas;
     protected Animation<TextureRegion>[] animations;
+    protected Texture sampleTexture;
     protected float statetime;
     protected int animationIdx;
     public abstract void draw(SpriteBatch spriteBatch);
