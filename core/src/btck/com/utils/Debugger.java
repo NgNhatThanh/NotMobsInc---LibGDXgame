@@ -12,6 +12,9 @@ public class Debugger {
 
     public static Debugger debugger;
 
+    @Setter
+    public static DEBUG_MODE debugMode = DEBUG_MODE.OFF;
+
     public static Debugger getInstance(){
         if(debugger == null) debugger = new Debugger();
         return debugger;
@@ -21,9 +24,6 @@ public class Debugger {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
     }
-
-    @Setter
-    public static DEBUG_MODE debugMode = DEBUG_MODE.OFF;
 
     public static void debug(){
         Rectangle playerHitbox = GameManager.getInstance().getCurrentPlayer().getHitbox();

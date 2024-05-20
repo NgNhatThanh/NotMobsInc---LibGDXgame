@@ -5,6 +5,7 @@ import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.constant.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,10 +22,13 @@ public class Gladiator extends Enemy {
 
     public Gladiator(){
         attackRange = 150;
-        health = 3;
+        health = 4;
         exp = 5;
-        width = 100;
-        height = 100;
+        sampleTexture = new Texture(Constants.gladiatorSampleTTPath);
+
+        width = sampleTexture.getWidth();
+        height = sampleTexture.getHeight();
+        sampleTexture.dispose();
 
         normalSpeed = 100;
         currentSpeed = 100;
@@ -32,9 +36,9 @@ public class Gladiator extends Enemy {
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.gladiatorAtlasPath));
         animations = new Animation[5];
 
-        hitbox = new Rectangle(0, 0, 100, 100);
+        hitbox = new Rectangle(0, 0, width, height);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
+        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spawn"));
         animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
         animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("run"));
         animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("dead"));
@@ -48,12 +52,20 @@ public class Gladiator extends Enemy {
     public void draw(SpriteBatch spriteBatch) {
         statetime += Gdx.graphics.getDeltaTime();
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
+        width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
+        height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
 
         hitbox.x = x - width / 2;
         hitbox.y = y;
 
+        if(dead && animations[animationIdx].isAnimationFinished(statetime)){
+            exist = false;
+            return;
+        }
+
         if(attacking) attack.update(statetime);
+
+        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
             animationIdx = 2;
@@ -64,13 +76,10 @@ public class Gladiator extends Enemy {
             }
         }
 
-        if(dead && animations[animationIdx].isAnimationFinished(statetime)) exist = false;
-
         if(animationIdx > 0 && animationIdx < 3){
             move(GameManager.getInstance().getCurrentPlayer().getX(), GameManager.getInstance().getCurrentPlayer().getY());
         }
         if(!dead) update();
-
     }
 
     @Override

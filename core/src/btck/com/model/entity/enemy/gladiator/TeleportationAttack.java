@@ -33,6 +33,8 @@ public class TeleportationAttack extends Attack {
         targetX = GameManager.getInstance().getCurrentPlayer().getX();
         targetY = GameManager.getInstance().getCurrentPlayer().getY();
         damage = 0;
+        if(targetX > owner.getX()) owner.setFlip(false);
+        else owner.setFlip(true);
         owner.currentSpeed = teleportSpeed;
     }
 
@@ -64,6 +66,8 @@ public class TeleportationAttack extends Attack {
 
     private void moveTowardsTarget() {
         deltaSP = owner.currentSpeed * Gdx.graphics.getDeltaTime();
+
+        if(abs(owner.getX() - targetX) < 5 && abs(owner.getY() - targetY) < 5) return;
 
         if(abs(owner.getX() - targetX) < 5){
             if(targetY > owner.getY()) owner.setY(owner.getY() + deltaSP);
