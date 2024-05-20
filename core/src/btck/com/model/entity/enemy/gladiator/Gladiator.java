@@ -32,7 +32,7 @@ public class Gladiator extends Enemy {
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.gladiatorAtlasPath));
         animations = new Animation[5];
 
-        hitbox = new Rectangle(0, 0, 124, 100);
+        hitbox = new Rectangle(0, 0, 100, 100);
 
         animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
         animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
@@ -48,13 +48,9 @@ public class Gladiator extends Enemy {
     public void draw(SpriteBatch spriteBatch) {
         statetime += Gdx.graphics.getDeltaTime();
 
-//        shapeRenderer.begin();
-//        shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width / 2, hitbox.height / 2);
-//        shapeRenderer.end();
-
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
-        hitbox.x = x;
+        hitbox.x = x - width / 2;
         hitbox.y = y;
 
         if(attacking) attack.update(statetime);

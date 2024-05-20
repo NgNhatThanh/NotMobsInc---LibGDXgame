@@ -23,7 +23,7 @@ public class Debugger {
     }
 
     @Setter
-    public static DEBUG_MODE debugMode = DEBUG_MODE.ON;
+    public static DEBUG_MODE debugMode = DEBUG_MODE.OFF;
 
     public static void debug(){
         Rectangle playerHitbox = GameManager.getInstance().getCurrentPlayer().getHitbox();

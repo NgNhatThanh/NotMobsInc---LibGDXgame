@@ -36,7 +36,7 @@ public class IngameScreen implements Screen {
 
     HUD hud;
 
-    int maxEnemyAmount = 7;
+    int maxEnemyAmount = 10;
     int maxEnemySpawnAtOnce = 3;
 
     Player player;
