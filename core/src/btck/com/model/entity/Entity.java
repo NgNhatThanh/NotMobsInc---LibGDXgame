@@ -17,7 +17,7 @@ import lombok.Setter;
 public abstract class Entity{
 
     protected Party party;
-    protected int health;
+    protected int health, maxHealth;
     protected float x, y;
     protected int attackX, attackY;
     public int width, height;

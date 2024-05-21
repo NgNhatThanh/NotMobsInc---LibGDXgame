@@ -84,6 +84,8 @@
                 ConstantSound.bgm.dispose();
                 GameManager.getInstance().setCurrentPlayer(new Ghost());
                 GameManager.getInstance().gameState = GameState.INGAME;
+                // Clear enemies
+                GameManager.getInstance().getEnemies().clear();
                 myGdxGame.setScreen(new IngameScreen(myGdxGame));
             }
         }

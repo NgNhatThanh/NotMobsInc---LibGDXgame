@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class HUD implements Disposable {
+public class    HUD implements Disposable {
     public Stage stage;
     Viewport viewport;
 
