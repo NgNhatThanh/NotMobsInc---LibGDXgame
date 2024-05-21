@@ -36,7 +36,7 @@ public class Gladiator extends Enemy {
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.gladiatorAtlasPath));
         animations = new Animation[5];
 
-        hitbox = new Rectangle(0, 0, width, height);
+        hitbox = new Rectangle(0, 0, width, height / 2);
 
         animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spawn"));
         animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
@@ -57,6 +57,9 @@ public class Gladiator extends Enemy {
 
         hitbox.x = x - width / 2;
         hitbox.y = y;
+
+        hitbox.width = width;
+        hitbox.height = height / 2;
 
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
             exist = false;

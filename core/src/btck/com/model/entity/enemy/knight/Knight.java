@@ -59,6 +59,12 @@ public class Knight extends Enemy {
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
         height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
 
+        hitbox.x = x - width / 2;
+        hitbox.y = y;
+
+        hitbox.width = width;
+        hitbox.height = height / 2;
+
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
             exist = false;
             return;
@@ -66,8 +72,7 @@ public class Knight extends Enemy {
 
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
-        hitbox.x = x - width / 2;
-        hitbox.y = y;
+
 
         if(attacking) attack.update(statetime);
 

@@ -22,7 +22,6 @@ public abstract class Attack {
     public long coolDown;
     public long lastAttackTime = 0;
     @Getter protected Rectangle hitbox;
-    protected float statetime;
 
 
     public Attack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType){
@@ -57,7 +56,6 @@ public abstract class Attack {
 
     public void end(){
         owner.currentSpeed = owner.normalSpeed;
-        statetime = 0;
         frameToDealDamageIdx = 0;
         hitEntities.clear();
         if(dealed != null) for(boolean deal : dealed) deal = false;

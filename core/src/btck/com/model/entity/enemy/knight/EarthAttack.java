@@ -37,9 +37,7 @@ public class EarthAttack extends Attack {
     @Override
     public void addHitEntity(Entity entity) {
         updateHitbox();
-        statetime += Gdx.graphics.getDeltaTime();
-//        System.out.println("add " + animation.getKeyFrameIndex(statetime));
-        if(frameToDealDamageIdx >= frameToDealDamage.length || animation.getKeyFrameIndex(statetime) != frameToDealDamage[frameToDealDamageIdx]) return;
+        if(frameToDealDamageIdx >= frameToDealDamage.length || animation.getKeyFrameIndex(owner.getStatetime()) != frameToDealDamage[frameToDealDamageIdx]) return;
         if(hitEntities.contains(entity, false)) return;
         hitEntities.add(entity);
     }

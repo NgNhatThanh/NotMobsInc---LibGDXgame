@@ -42,6 +42,7 @@ public class ArrowShoot extends Attack {
     public void start() {
         owner.currentSpeed = 0;
         shoot = false;
+        owner.setFlip(!(owner.getX() < owner.getAttackX()));
     }
 
     @Override

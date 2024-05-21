@@ -57,6 +57,9 @@ public class Archer extends Enemy {
         hitbox.x = x - width / 2;
         hitbox.y = y - 10;
 
+        hitbox.width = width;
+        hitbox.height = height / 2;
+
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
             exist = false;
             return;
