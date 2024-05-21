@@ -57,6 +57,9 @@ public class Archer extends Enemy {
         hitbox.x = x - width / 2;
         hitbox.y = y - 10;
 
+        hitbox.width = width;
+        hitbox.height = height / 2;
+
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
             exist = false;
             return;
@@ -75,15 +78,6 @@ public class Archer extends Enemy {
             move(GameManager.getInstance().getCurrentPlayer().getX(), GameManager.getInstance().getCurrentPlayer().getY());
         }
         if(!dead) update();
-    }
-
-    @Override
-    public void update() {
-        if(health <= 0){
-            dead = true;
-            statetime = 0;
-            animationIdx = 3;
-        }
     }
 
     @Override

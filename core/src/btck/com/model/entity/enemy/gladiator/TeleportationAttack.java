@@ -9,6 +9,7 @@ import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -22,7 +23,9 @@ public class TeleportationAttack extends Attack {
 
     public TeleportationAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
-        hitbox = owner.getHitbox();
+        hitbox = new Rectangle();
+        hitbox.width = owner.width;
+        hitbox.height = owner.height;
         damage = 2;
         coolDown = 1000;
         lastAttackTime = 0;
@@ -33,8 +36,7 @@ public class TeleportationAttack extends Attack {
         targetX = GameManager.getInstance().getCurrentPlayer().getX();
         targetY = GameManager.getInstance().getCurrentPlayer().getY();
         damage = 0;
-        if(targetX > owner.getX()) owner.setFlip(false);
-        else owner.setFlip(true);
+        owner.setFlip(!(targetX > owner.getX()));
         owner.currentSpeed = teleportSpeed;
     }
 
@@ -50,9 +52,9 @@ public class TeleportationAttack extends Attack {
 
     @Override
     public void addHitEntity(Entity entity) {
-        statetime += Gdx.graphics.getDeltaTime();
-        int currentFrame = animation.getKeyFrameIndex(statetime);
+        int currentFrame = animation.getKeyFrameIndex(owner.getStatetime());
         if(currentFrame > frameToTeleport){
+            updateHitbox();
             if(hitEntities.contains(entity, false)) return;
             entity.takeDamage(this.damage);
             hitEntities.add(entity);
@@ -61,7 +63,8 @@ public class TeleportationAttack extends Attack {
 
     @Override
     public void updateHitbox() {
-
+        hitbox.x = owner.getX() - owner.getWidth() / 2;
+        hitbox.y = owner.getY();
     }
 
     private void moveTowardsTarget() {

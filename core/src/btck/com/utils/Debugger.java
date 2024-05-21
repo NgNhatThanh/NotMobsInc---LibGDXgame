@@ -2,6 +2,7 @@ package btck.com.utils;
 
 import btck.com.GameManager;
 import btck.com.model.entity.Enemy;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import lombok.Setter;
@@ -13,7 +14,7 @@ public class Debugger {
     public static Debugger debugger;
 
     @Setter
-    public static DEBUG_MODE debugMode = DEBUG_MODE.OFF;
+    public static DEBUG_MODE debugMode = DEBUG_MODE.ON;
 
     public static Debugger getInstance(){
         if(debugger == null) debugger = new Debugger();
@@ -31,13 +32,17 @@ public class Debugger {
 
         shapeRenderer.begin();
         shapeRenderer.rect(playerHitbox.x, playerHitbox.y, playerHitbox.width, playerHitbox.height);
-        shapeRenderer.rect(playerAttackHB.x, playerAttackHB.y, playerAttackHB.width, playerAttackHB.height);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.rect(playerAttackHB.x, playerAttackHB.y, playerAttackHB.width, playerAttackHB.height, Color.RED, Color.RED, Color.RED, Color.RED);
+        shapeRenderer.setColor(Color.WHITE);
 
         for(Enemy enemy : GameManager.getInstance().enemies){
             Rectangle enemyHitbox = enemy.getHitbox();
             Rectangle enemyAttackHB = enemy.getAttack().getHitbox();
             shapeRenderer.rect(enemyHitbox.x, enemyHitbox.y, enemyHitbox.width, enemyHitbox.height);
+            shapeRenderer.setColor(Color.RED);
             shapeRenderer.rect(enemyAttackHB.x, enemyAttackHB.y, enemyAttackHB.width, enemyAttackHB.height);
+            shapeRenderer.setColor(Color.WHITE);
         }
 
         shapeRenderer.end();

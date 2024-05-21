@@ -90,12 +90,8 @@ public class Ghost extends Player {
 
     @Override
     public void update() {
-        if(health <= 0){
-            dead = true;
-            statetime = 0;
-            animationIdx = 3;
-        }
-        else{
+        super.update();
+        if(health > 0){
             while(currentExp >= expToLevelUp){
                 expToLevelUp += nextLevelExp;
                 nextLevelExp += 5;

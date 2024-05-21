@@ -7,6 +7,7 @@ import btck.com.model.entity.Entity;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 public class DashAttack extends Attack {
 
@@ -16,7 +17,9 @@ public class DashAttack extends Attack {
 
     public DashAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
-        hitbox = owner.getHitbox();
+        hitbox = new Rectangle();
+        hitbox.width = owner.width;
+        hitbox.height = owner.height;
         damage = 2;
     }
 
@@ -35,6 +38,7 @@ public class DashAttack extends Attack {
     }
 
     public void addHitEntity(Entity entity){
+        updateHitbox();
         if(hitEntities.contains(entity, false)) return;
         entity.takeDamage(this.damage);
         if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
@@ -43,5 +47,7 @@ public class DashAttack extends Attack {
 
     @Override
     public void updateHitbox() {
+        hitbox.x = owner.getX() - owner.getWidth() / 2;
+        hitbox.y = owner.getY();
     }
 }
