@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -36,7 +35,7 @@ public class IngameScreen implements Screen {
 
     HUD hud;
 
-    int maxEnemyAmount = 7;
+    int maxEnemyAmount = 10;
     int maxEnemySpawnAtOnce = 3;
 
     Player player;

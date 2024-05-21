@@ -37,7 +37,7 @@ public class DashAttack extends Attack {
     public void addHitEntity(Entity entity){
         if(hitEntities.contains(entity, false)) return;
         entity.takeDamage(this.damage);
-        if(entity.isDead() && owner instanceof Player) ((Player) owner).currentExp += ((Enemy)entity).exp;
+        if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
         hitEntities.add(entity);
     }
 

@@ -68,8 +68,24 @@ public class ArrowShoot extends Attack {
 
             if(thisHitbox.x < 0 || thisHitbox.x > Constants.screenWidth || thisHitbox.y < 0
                || thisHitbox.y > Constants.screenHeight) fireballs.removeValue(thisFireBall, false);
-            else MyGdxGame.batch.draw(arrow, thisHitbox.x, thisHitbox.y);
+            else MyGdxGame.batch.draw(arrow,
+                    thisHitbox.x,
+                    thisHitbox.y,
+                    thisHitbox.width / 2,
+                    thisHitbox.height / 2,
+                    thisHitbox.width,
+                    thisHitbox.height,
+                    1,
+                    1,
+                    thisFireBall.getRotation(),
+                    0,
+                    0,
+                    (int)thisHitbox.width,
+                    (int)thisHitbox.height,
+                    thisFireBall.isFlip(),
+                    false);
 
+            System.out.println(thisFireBall.getRotation());
 //            shapeRenderer.begin();
 //            shapeRenderer.rect(thisHitbox.x, thisHitbox.y, hitbox.width, hitbox.height);
 //            shapeRenderer.end();

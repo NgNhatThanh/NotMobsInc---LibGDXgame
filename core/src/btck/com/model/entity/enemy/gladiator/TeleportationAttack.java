@@ -3,7 +3,9 @@ package btck.com.model.entity.enemy.gladiator;
 import btck.com.GameManager;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
+import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
+import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,9 +23,6 @@ public class TeleportationAttack extends Attack {
     public TeleportationAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         hitbox = owner.getHitbox();
-        frameToDealDamage = new int[1];
-        frameToDealDamage[0] = 3;
-        dealed = new boolean[1];
         damage = 2;
         coolDown = 1000;
         lastAttackTime = 0;
@@ -31,35 +30,33 @@ public class TeleportationAttack extends Attack {
 
     @Override
     public void start() {
-        System.out.println(lastAttackTime + " " + System.currentTimeMillis());
         targetX = GameManager.getInstance().getCurrentPlayer().getX();
         targetY = GameManager.getInstance().getCurrentPlayer().getY();
+        damage = 0;
+        if(targetX > owner.getX()) owner.setFlip(false);
+        else owner.setFlip(true);
         owner.currentSpeed = teleportSpeed;
     }
 
     @Override
     public void update(float statetime) {
         if(owner.isDead()) return;
-
         int currentFrame = animation.getKeyFrameIndex(statetime);
         if(currentFrame > frameToTeleport){
+            damage = 2;
             moveTowardsTarget();
         }
-
-        if(frameToDealDamageIdx < frameToDealDamage.length && animation.getKeyFrameIndex(statetime) == frameToDealDamage[frameToDealDamageIdx]){
-            dealDamage();
-        }
-
-
     }
 
     @Override
     public void addHitEntity(Entity entity) {
         statetime += Gdx.graphics.getDeltaTime();
-//        System.out.println("add " + animation.getKeyFrameIndex(statetime));
-        if(frameToDealDamageIdx >= frameToDealDamage.length || animation.getKeyFrameIndex(statetime) != frameToDealDamage[frameToDealDamageIdx]) return;
-        if(hitEntities.contains(entity, false)) return;
-        hitEntities.add(entity);
+        int currentFrame = animation.getKeyFrameIndex(statetime);
+        if(currentFrame > frameToTeleport){
+            if(hitEntities.contains(entity, false)) return;
+            entity.takeDamage(this.damage);
+            hitEntities.add(entity);
+        }
     }
 
     @Override
@@ -69,6 +66,8 @@ public class TeleportationAttack extends Attack {
 
     private void moveTowardsTarget() {
         deltaSP = owner.currentSpeed * Gdx.graphics.getDeltaTime();
+
+        if(abs(owner.getX() - targetX) < 5 && abs(owner.getY() - targetY) < 5) return;
 
         if(abs(owner.getX() - targetX) < 5){
             if(targetY > owner.getY()) owner.setY(owner.getY() + deltaSP);

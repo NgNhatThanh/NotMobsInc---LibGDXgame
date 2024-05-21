@@ -29,10 +29,11 @@ public class Knight extends Enemy {
         sampleTexture = new Texture(Constants.knightSampleTTPath);
 
         attackRange = 70;
-        health = 3;
+        health = 6;
         exp = 4;
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
+        sampleTexture.dispose();
 
         normalSpeed = 100;
         currentSpeed = 100;

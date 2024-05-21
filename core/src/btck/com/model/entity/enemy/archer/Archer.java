@@ -29,6 +29,7 @@ public class Archer extends Enemy {
 
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
+        sampleTexture.dispose();
 
         normalSpeed = 100;
         currentSpeed = 100;

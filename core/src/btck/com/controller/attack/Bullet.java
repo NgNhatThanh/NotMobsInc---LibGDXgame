@@ -15,7 +15,10 @@ public class Bullet {
 
     @Getter
     Rectangle hitbox;
-
+    @Getter
+    float rotation;
+    @Getter
+    boolean flip = true;
     float a, b, x1, y1, deltaSP;
 
     public Bullet(float x, float y, float desX, float desY, int speed, float width, float height){
@@ -25,12 +28,16 @@ public class Bullet {
         this.hitbox.y = y;
         this.hitbox.width = width;
         this.hitbox.height = height;
+        if(desX < x) flip = false;
 
         if(desX > x) this.desX = Constants.screenWidth + 10;
         else this.desX = -10;
 
         a = (y - desY) / (x - desX);
         b = y - a * x;
+
+        rotation = (float) Math.atan(a);
+        rotation = rotation * (float)(180 / Math.PI);
 
         this.desY = a * this.desX + b;
     }

@@ -15,6 +15,7 @@ public class Constants {
 
     static public final String archerSampleTTPath = "atlas/enemy/archer/sample.png";
     static public final String knightSampleTTPath = "atlas/enemy/knight/sample.png";
+    static public final String gladiatorSampleTTPath = "atlas/enemy/gladiator/sample.png";
 
     static public final String arrowImgPath = "atlas/enemy/archer/arrow.png";
     static public final String archerAtlasPath = "atlas/enemy/archer/archer.atlas";
