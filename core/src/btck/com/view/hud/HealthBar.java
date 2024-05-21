@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class HUD_Actor extends Actor {
+public class HealthBar extends Actor {
     private ShapeRenderer shapeRenderer;
     private BitmapFont customFont;
     private GlyphLayout layout;
     private Player player;
 
-    public HUD_Actor(Player player) {
+    public HealthBar(Player player) {
         this.player = player;
         this.shapeRenderer = new ShapeRenderer();
         this.layout = new GlyphLayout();
@@ -23,7 +23,7 @@ public class HUD_Actor extends Actor {
     }
 
     private void initFont() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("HUD/Minecraft.ttf")); // Đường dẫn tới tệp font mới
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("HUD/Minecraft.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
         params.size = 24;
         params.color = Color.WHITE;
@@ -61,10 +61,6 @@ public class HUD_Actor extends Actor {
         layout.setText(customFont, labelText);
         customFont.draw(batch, layout, getX() - layout.width - 10, getY() + getHeight() / 2 + layout.height / 2);
 
-        // Vẽ "Level"
-        String levelText = "Level: " + player.getLevel();
-        layout.setText(customFont, levelText);
-        customFont.draw(batch, layout, 10, getY() + getHeight() / 2 + layout.height / 2);
     }
 
     @Override
