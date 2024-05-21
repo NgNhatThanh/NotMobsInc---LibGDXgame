@@ -83,15 +83,6 @@ public class Gladiator extends Enemy {
     }
 
     @Override
-    public void update() {
-        if(health <= 0){
-            dead = true;
-            statetime = 0;
-            animationIdx = 3;
-        }
-    }
-
-    @Override
     public void move(float desX, float desY) {
         if(abs(x - desX) < attackRange && abs(y - desY) < attackRange) {
             if(System.currentTimeMillis() - attack.lastAttackTime > attack.coolDown){

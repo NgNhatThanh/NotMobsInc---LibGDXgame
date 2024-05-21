@@ -23,6 +23,7 @@ public abstract class Entity{
     public int width, height;
     public int normalSpeed;
     public int currentSpeed;
+    protected boolean vulnerable = true;
     protected boolean attacking;
     protected boolean flip;
     protected boolean dead;
@@ -36,13 +37,21 @@ public abstract class Entity{
     protected float statetime;
     protected int animationIdx;
     public abstract void draw(SpriteBatch spriteBatch);
-    public abstract void update();
     public abstract void attack(int x, int y);
     public abstract void move(float desX, float desY);
 
     public void takeDamage(int damage){
         this.health -= damage;
         update();
+    }
+
+    public void update(){
+        if(health <= 0){
+            vulnerable = false;
+            dead = true;
+            statetime = 0;
+            animationIdx = 3;
+        }
     }
 
 }

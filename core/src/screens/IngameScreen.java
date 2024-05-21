@@ -111,12 +111,12 @@ public class IngameScreen implements Screen {
             Enemy tmp = enemyIterator.next();
 
             tmp.draw(myGdxGame.batch);
-            if(player.isAttacking() && player.getAttack().hit(tmp)){
+            if(tmp.isVulnerable() && player.isAttacking() && player.getAttack().hit(tmp)){
 
                 player.getAttack().addHitEntity(tmp);
             }
 
-            if(tmp.isAttacking() && tmp.getAttack().hit(player)){
+            if(player.isVulnerable() && tmp.isAttacking() && tmp.getAttack().hit(player)){
                 tmp.getAttack().addHitEntity(player);
             }
 

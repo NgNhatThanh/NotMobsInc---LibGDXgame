@@ -78,15 +78,6 @@ public class Archer extends Enemy {
     }
 
     @Override
-    public void update() {
-        if(health <= 0){
-            dead = true;
-            statetime = 0;
-            animationIdx = 3;
-        }
-    }
-
-    @Override
     public void attack(int x, int y) {
         animationIdx = 4;
         statetime = 0;
