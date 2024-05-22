@@ -16,8 +16,7 @@ public class EarthAttack extends Attack {
         hitbox.width = 200;
         hitbox.height = owner.getHitbox().height;
         frameToDealDamage = new int[1];
-        frameToDealDamage[0] = 12;
-        dealed = new boolean[1];
+        frameToDealDamage[0] = 10;
         damage = 2;
     }
 
@@ -28,18 +27,16 @@ public class EarthAttack extends Attack {
 
     @Override
     public void update(float statetime) {
-        if(owner.isDead()) return;
-        if(frameToDealDamageIdx < frameToDealDamage.length && animation.getKeyFrameIndex(statetime) == frameToDealDamage[frameToDealDamageIdx]){
-            dealDamage();
-        }
+
     }
 
     @Override
     public void addHitEntity(Entity entity) {
-        updateHitbox();
-        if(frameToDealDamageIdx >= frameToDealDamage.length || animation.getKeyFrameIndex(owner.getStatetime()) != frameToDealDamage[frameToDealDamageIdx]) return;
         if(hitEntities.contains(entity, false)) return;
-        hitEntities.add(entity);
+        if(animation.getKeyFrameIndex(owner.getStatetime()) >= frameToDealDamage[0]){
+            hitEntities.add(entity);
+            entity.takeDamage(this.damage);
+        }
     }
 
     @Override
