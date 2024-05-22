@@ -57,7 +57,7 @@ public class Button {
         } else {
             isHovered = false;
         }
-        if (isHovered && Gdx.input.isButtonPressed(0)) {
+        if (isHovered && Gdx.input.isButtonJustPressed(0)) {
             isClicked = true;
         } else {
             isClicked = false;

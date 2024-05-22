@@ -11,76 +11,75 @@ import btck.com.model.entity.Player;
 import btck.com.utils.DEBUG_MODE;
 import btck.com.utils.Debugger;
 import btck.com.ui.Button;
-import btck.com.view.hud.HUD;
+import btck.com.view.hud.HealthBar;
+import btck.com.view.hud.LevelDisplay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import java.util.Iterator;
 import java.util.Random;
 
-
 public class IngameScreen implements Screen {
-
-    MyGdxGame myGdxGame;
-
+    private MyGdxGame myGdxGame;
     private Camera cam;
-
     private Viewport viewport;
-
-    HUD hud;
-
-    int maxEnemyAmount = 10;
-    int maxEnemySpawnAtOnce = 3;
-
-    Player player;
-
-    Random rand;
-
-    long lastEnemySpawntime;
-
-    Spawner spawner;
-    Button btnQuit;
-    int quitX = Constants.screenWidth - 200, quitY = 50;
-    int quitWidth = 135;
-    int quitHeight = 50;
-
+    private Stage stage;
+    private ShapeRenderer shapeRenderer;
+    private int maxEnemyAmount = 10;
+    private int maxEnemySpawnAtOnce = 3;
+    private Player player;
+    private Random rand;
+    private long lastEnemySpawntime;
+    private Spawner spawner;
+    private Button btnQuit;
+    private int quitHeight = 50;
+    private int quitWidth = 135;
+    private int quitX = Constants.screenWidth - quitWidth - 60;
+    private int quitY = Constants.screenHeight - quitHeight - 30;
+    private HealthBar healthBar;
+    private LevelDisplay levelDisplay;
+    private Texture map;
+    private Texture hud;
     public IngameScreen(MyGdxGame myGdxGame){
-        rand = new Random();
-        player = GameManager.getInstance().getCurrentPlayer();
-
-        btnQuit = new Button(quitX, quitY, quitWidth, quitHeight, Constants.quitIconInactivePath, Constants.quitIconActivePath);
-
-        spawner = new Spawner(maxEnemyAmount, maxEnemySpawnAtOnce);
-        spawner = new Spawner( maxEnemyAmount, maxEnemySpawnAtOnce);
         this.myGdxGame = myGdxGame;
-        cam = new OrthographicCamera();
-        viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, cam);
+        this.rand = new Random();
+        this.player = GameManager.getInstance().getCurrentPlayer();
+
+        this.btnQuit = new Button(quitX, quitY, quitWidth, quitHeight, Constants.quitIconInactivePath, Constants.quitIconActivePath);
+        this.spawner = new Spawner(maxEnemyAmount, maxEnemySpawnAtOnce);
+
+        this.cam = new OrthographicCamera();
+        this.viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, cam);
         Gdx.input.setInputProcessor(new MouseHandler());
         ConstantSound.bgmIngame.setVolume(ConstantSound.getBgmVolume());
         ConstantSound.bgmIngame.play();
-        hud = new HUD(myGdxGame.batch);
 
+        this.stage = new Stage(viewport, myGdxGame.batch);
+        this.shapeRenderer = new ShapeRenderer();
+
+        // Thêm Health Bar vào stage
+        this.healthBar = new HealthBar(player);
+        healthBar.setSize(300, 30);
+        healthBar.setPosition(Constants.screenWidth - healthBar.getWidth() - 180, 30);
+        stage.addActor(healthBar);
+
+        // thêm Level
+        this.levelDisplay = new LevelDisplay(player);
+        stage.addActor(levelDisplay);
+
+        hud = new Texture(Constants.hud0Path);
         map = new Texture(Constants.mapPath);
-
-
-//        cam.position.set(GameConstant.screenWidth / 2, GameConstant.screenHeight / 2, 0);
-        //        viewport.apply(true);
-//        cam.position.set(0, 0, 0);
-//        cam.update();
-//        viewport.setScreenX(0);
-//        viewport.setScreenY(0);
     }
 
-    Texture map;
-
     int playerSpawnX = Constants.screenWidth / 2 - GameManager.getInstance().getCurrentPlayer().width / 2;
-    int playerSpawnY = Constants.screenHeight / 2 - GameManager.getInstance().getCurrentPlayer().height / 2;;
+    int playerSpawnY = Constants.screenHeight / 2 - GameManager.getInstance().getCurrentPlayer().height / 2;
 
     @Override
     public void show() {
@@ -98,21 +97,19 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-//        myGdxGame.batch.setProjectionMatrix(cam.combined);
+        myGdxGame.batch.setProjectionMatrix(cam.combined);
 
         myGdxGame.batch.begin();
-
         myGdxGame.batch.draw(map, 0, 0, Constants.screenWidth, Constants.screenHeight);
+        myGdxGame.batch.draw(hud, 0, 0, Constants.screenWidth, Constants.screenHeight);
 
         updateBtnQuit();
-//        System.out.println(enemies.size);
 
         for (Iterator<Enemy> enemyIterator = GameManager.getInstance().getEnemies().iterator(); enemyIterator.hasNext(); ) {
             Enemy tmp = enemyIterator.next();
 
             tmp.draw(myGdxGame.batch);
             if(tmp.isVulnerable() && player.isAttacking() && player.getAttack().hit(tmp)){
-
                 player.getAttack().addHitEntity(tmp);
             }
 
@@ -127,12 +124,10 @@ public class IngameScreen implements Screen {
         }
 
         GameManager.getInstance().getCurrentPlayer().draw(myGdxGame.batch);
-
         myGdxGame.batch.end();
 
-//        myGdxGame.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.update();
-        hud.stage.draw();
+        stage.act();
+        stage.draw();
 
         if(Debugger.debugMode == DEBUG_MODE.ON) Debugger.getInstance().debug();
 
@@ -171,8 +166,12 @@ public class IngameScreen implements Screen {
     @Override
     public void dispose() {
         ConstantSound.bgmIngame.dispose();
-        hud.dispose();
+        stage.dispose();
+        shapeRenderer.dispose();
+        levelDisplay.dispose();
+        healthBar.dispose();
         map.dispose();
+        hud.dispose();
     }
 
     public void updateBtnQuit(){
