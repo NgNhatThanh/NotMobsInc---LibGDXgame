@@ -40,7 +40,7 @@ public class IngameScreen implements Screen {
     private Spawner spawner;
     private Button btnQuit;
     private int quitHeight = 50;
-    private int quitWidth = 120;
+    private int quitWidth = 135;
     private int quitX = Constants.screenWidth - quitWidth - 60;
     private int quitY = Constants.screenHeight - quitHeight - 30;
     private HealthBar healthBar;
@@ -73,6 +73,7 @@ public class IngameScreen implements Screen {
         // thêm Level
         this.levelDisplay = new LevelDisplay(player);
         stage.addActor(levelDisplay);
+
         hud = new Texture(Constants.hud0Path);
         map = new Texture(Constants.mapPath);
     }
