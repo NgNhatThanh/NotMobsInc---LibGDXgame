@@ -101,7 +101,6 @@ public class IngameScreen implements Screen {
 
         myGdxGame.batch.begin();
         myGdxGame.batch.draw(map, 0, 0, Constants.screenWidth, Constants.screenHeight);
-        myGdxGame.batch.draw(hud, 0, 0, Constants.screenWidth, Constants.screenHeight);
 
         updateBtnQuit();
 
@@ -124,6 +123,8 @@ public class IngameScreen implements Screen {
         }
 
         GameManager.getInstance().getCurrentPlayer().draw(myGdxGame.batch);
+
+        myGdxGame.batch.draw(hud, 0, 0, Constants.screenWidth, Constants.screenHeight);
         myGdxGame.batch.end();
 
         stage.act();
