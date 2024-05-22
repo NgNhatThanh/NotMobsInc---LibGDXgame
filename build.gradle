@@ -45,6 +45,7 @@ project(":desktop") {
 
     dependencies {
         implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 
@@ -61,7 +62,8 @@ project(":core") {
 
 
     dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+//        api "com.badlogicgames.gdx:gdx:$gdxVersion
+        api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
     }
 }
