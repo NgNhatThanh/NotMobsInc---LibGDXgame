@@ -33,7 +33,7 @@ public class LevelDisplay extends Actor {
     private void initFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("HUD/Minecraft.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        params.size = 24;
+        params.size = 28;
         params.color = Color.WHITE;
         customFont = generator.generateFont(params);
         generator.dispose();
@@ -42,13 +42,10 @@ public class LevelDisplay extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        String labelText = "Level: " + player.getLevel();
+        String labelText = "LEVEL " + player.getLevel();
         layout.setText(customFont, labelText);
-        customFont.draw(batch, labelText, 20, Constants.screenHeight - layout.height);
+        customFont.draw(batch, labelText, 330, Constants.screenHeight - layout.height - 35);
     }
-
-
-
 
     public void render(float delta) {
         stage.act(delta);

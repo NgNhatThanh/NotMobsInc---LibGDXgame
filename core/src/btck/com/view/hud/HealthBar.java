@@ -56,10 +56,11 @@ public class HealthBar extends Actor {
         String healthText = player.getHealth() + " / " + player.getMaxHealth();
         layout.setText(customFont, healthText);
         customFont.draw(batch, layout, getX() + (getWidth() - layout.width) / 2, getY() + getHeight() / 2 + layout.height / 2);
+
         // Vẽ "HealthBar"
-        String labelText = "Health Bar";
-        layout.setText(customFont, labelText);
-        customFont.draw(batch, layout, getX() - layout.width - 10, getY() + getHeight() / 2 + layout.height / 2);
+//        String labelText = "HP";
+//        layout.setText(customFont, labelText);
+//        customFont.draw(batch, layout, getX() - layout.width - 10, getY() + getHeight() / 2 + layout.height / 2);
 
     }
 

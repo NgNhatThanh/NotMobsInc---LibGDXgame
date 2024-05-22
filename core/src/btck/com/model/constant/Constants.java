@@ -38,6 +38,7 @@ public class Constants {
     static public final String quitIconActivePath = "ingame/quit active-02.png";
     static public final String quitIconInactivePath = "ingame/quit-02.png";
     static public final String mapPath = "ingame/map.png";
+    static public final String hud0Path = "HUD/hud0.png";
 
     static public final String newGameIconActivePath = "MainMenuScreen\\new game active.png";
     static public final String newGameIconInactivePath = "MainMenuScreen\\white new game.png";

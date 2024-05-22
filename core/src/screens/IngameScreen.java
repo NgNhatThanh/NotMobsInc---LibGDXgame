@@ -39,13 +39,14 @@ public class IngameScreen implements Screen {
     private long lastEnemySpawntime;
     private Spawner spawner;
     private Button btnQuit;
-    private int quitX = Constants.screenWidth - 200, quitY = 50;
-    private int quitWidth = 135;
     private int quitHeight = 50;
+    private int quitWidth = 120;
+    private int quitX = Constants.screenWidth - quitWidth - 60;
+    private int quitY = Constants.screenHeight - quitHeight - 30;
     private HealthBar healthBar;
     private LevelDisplay levelDisplay;
     private Texture map;
-
+    private Texture hud;
     public IngameScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         this.rand = new Random();
@@ -65,14 +66,14 @@ public class IngameScreen implements Screen {
 
         // Thêm Health Bar vào stage
         this.healthBar = new HealthBar(player);
-        healthBar.setSize(200, 20);
-        healthBar.setPosition(Constants.screenWidth - 220, Constants.screenHeight - 40);
+        healthBar.setSize(300, 30);
+        healthBar.setPosition(Constants.screenWidth - healthBar.getWidth() - 180, 30);
         stage.addActor(healthBar);
 
         // thêm Level
         this.levelDisplay = new LevelDisplay(player);
         stage.addActor(levelDisplay);
-
+        hud = new Texture(Constants.hud0Path);
         map = new Texture(Constants.mapPath);
     }
 
@@ -99,6 +100,7 @@ public class IngameScreen implements Screen {
 
         myGdxGame.batch.begin();
         myGdxGame.batch.draw(map, 0, 0, Constants.screenWidth, Constants.screenHeight);
+        myGdxGame.batch.draw(hud, 0, 0, Constants.screenWidth, Constants.screenHeight);
 
         updateBtnQuit();
 
@@ -168,6 +170,7 @@ public class IngameScreen implements Screen {
         levelDisplay.dispose();
         healthBar.dispose();
         map.dispose();
+        hud.dispose();
     }
 
     public void updateBtnQuit(){
