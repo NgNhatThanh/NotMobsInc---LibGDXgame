@@ -11,6 +11,7 @@ import btck.com.model.entity.Player;
 import btck.com.utils.DEBUG_MODE;
 import btck.com.utils.Debugger;
 import btck.com.ui.Button;
+import btck.com.view.effect.Rumble;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.Iterator;
@@ -41,6 +43,8 @@ public class IngameScreen implements Screen {
     private Texture map;
     private Texture frame;
     private HUD hud;
+
+    Vector3 center = new Vector3(700, 425, 0);
 
     public IngameScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
@@ -73,9 +77,6 @@ public class IngameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        cam.position.set(Constants.screenWidth / 2, Constants.screenHeight / 2, 0);
-        cam.update();
-
         if(System.currentTimeMillis() - lastEnemySpawntime >= 5000){
             lastEnemySpawntime = System.currentTimeMillis();
             spawner.spawnEnemy();
@@ -96,6 +97,7 @@ public class IngameScreen implements Screen {
 
             tmp.draw(myGdxGame.batch);
             if(tmp.isVulnerable() && player.isAttacking() && player.getAttack().hit(tmp)){
+                Rumble.rumble();
                 player.getAttack().addHitEntity(tmp);
             }
 
@@ -110,6 +112,14 @@ public class IngameScreen implements Screen {
         }
 
         GameManager.getInstance().getCurrentPlayer().draw(myGdxGame.batch);
+
+//        if(Rumble.isRumbling()) cam.translate(Rumble.tick(Gdx.graphics.getDeltaTime()));
+//        else cam.position.set(Constants.screenWidth / 2, Constants.screenHeight / 2, 0);
+//        cam.update();
+
+        if(Rumble.isRumbling() && cam.position.equals(center)) cam.translate(Rumble.tick(Gdx.graphics.getDeltaTime()));
+        else cam.position.set(center);
+        cam.update();
 
         myGdxGame.batch.draw(frame, 0, 0, Constants.screenWidth, Constants.screenHeight);
         myGdxGame.batch.end();

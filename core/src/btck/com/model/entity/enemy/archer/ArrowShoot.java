@@ -85,11 +85,6 @@ public class ArrowShoot extends Attack {
                     (int)thisHitbox.height,
                     thisFireBall.isFlip(),
                     false);
-
-            System.out.println(thisFireBall.getRotation());
-//            shapeRenderer.begin();
-//            shapeRenderer.rect(thisHitbox.x, thisHitbox.y, hitbox.width, hitbox.height);
-//            shapeRenderer.end();
         }
     }
 
