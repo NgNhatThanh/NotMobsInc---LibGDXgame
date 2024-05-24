@@ -30,7 +30,7 @@ public class Bullet {
         this.hitbox.height = height;
         if(desX < x) flip = false;
 
-        if(desX > x) this.desX = Constants.screenWidth + 10;
+        if(desX > x) this.desX = Constants.SCREEN_WIDTH + 10;
         else this.desX = -10;
 
         a = (y - desY) / (x - desX);

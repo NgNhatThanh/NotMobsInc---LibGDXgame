@@ -32,10 +32,10 @@ public class SettingScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal(Constants.uiskinPath));
+        skin = new Skin(Gdx.files.internal(Constants.UISKIN_PATH));
         table = new Table();
 
-        btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.backArrowInactiveIconPath, Constants.backArrowActiveIconPath);
+        btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.BACK_ARROW_INACTIVE_ICON_PATH, Constants.BACK_ARROW_ACTIVE_ICON_PATH);
 
         adjustBgm();
         adjustSound();

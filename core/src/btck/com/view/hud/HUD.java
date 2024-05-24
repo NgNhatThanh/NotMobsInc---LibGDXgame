@@ -3,7 +3,6 @@ package btck.com.view.hud;
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.model.constant.Constants;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -17,13 +16,13 @@ public class HUD{
     Viewport viewport;
 
     public HUD(){
-        viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight);
+        viewport = new FitViewport(Constants.SCREEN_WIDTH, Constants.screenHeight);
         stage = new Stage(viewport, MyGdxGame.batch);
 
         //         Thêm Health Bar vào stage
         this.healthBar = new HealthBar(GameManager.getInstance().getCurrentPlayer());
         healthBar.setSize(300, 30);
-        healthBar.setPosition(Constants.screenWidth - healthBar.getWidth() - 180, 30);
+        healthBar.setPosition(Constants.SCREEN_WIDTH - healthBar.getWidth() - 180, 30);
         stage.addActor(healthBar);
 
         // thêm Level

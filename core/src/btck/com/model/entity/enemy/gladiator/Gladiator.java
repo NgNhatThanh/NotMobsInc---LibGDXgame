@@ -24,7 +24,7 @@ public class Gladiator extends Enemy {
         attackRange = 150;
         health = 4;
         exp = 5;
-        sampleTexture = new Texture(Constants.gladiatorSampleTTPath);
+        sampleTexture = new Texture(Constants.GLADIATOR_SAMPLE_TT_PATH);
 
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
@@ -33,7 +33,7 @@ public class Gladiator extends Enemy {
         normalSpeed = 100;
         currentSpeed = 100;
 
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.gladiatorAtlasPath));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height / 2);

@@ -22,7 +22,7 @@ public class MainMenuScreen  implements Screen {
     public final int creditHeight = 100;
     public final int settingWidth = 400;
     public final int settingHeight = 100;
-    int newGameX = (Constants.screenWidth - newGameWidth - 20);
+    int newGameX = (Constants.SCREEN_WIDTH - newGameWidth - 20);
     int newGameY = (Constants.screenHeight - newGameHeight - 50);
     int creditX = newGameX - 15;
     int creditY = newGameY - 120;
@@ -41,10 +41,10 @@ public class MainMenuScreen  implements Screen {
         Gdx.input.setInputProcessor(new InputAdapter());
         this.myGdxGame = myGdxGame;
 
-        btnNewGame = new Button(newGameX, newGameY, newGameWidth, newGameHeight, Constants.newGameIconInactivePath, Constants.newGameIconActivePath);
-        btnExit = new Button(exitX, exitY, exitWidth, exitHeight, Constants.exitIconInactivePath, Constants.exitIconActivePath);
-        btnSetting = new Button(settingX, settingY, settingWidth, settingHeight, Constants.settingIconInactivePath, Constants.settingIconActivePath);
-        btnCredit = new Button(creditX, creditY, creditWidth, creditHeight, Constants.creditIconInactivePath, Constants.creditIconActivePath);
+        btnNewGame = new Button(newGameX, newGameY, newGameWidth, newGameHeight, Constants.NEW_GAME_ICON_INACTIVE_PATH, Constants.NEW_GAME_ICON_ACTIVE_PATH);
+        btnExit = new Button(exitX, exitY, exitWidth, exitHeight, Constants.EXIT_ICON_INACTIVE_PATH, Constants.EXIT_ICON_ACTIVE_PATH);
+        btnSetting = new Button(settingX, settingY, settingWidth, settingHeight, Constants.SETTING_ICON_INACTIVE_PATH, Constants.SETTING_ICON_ACTIVE_PATH);
+        btnCredit = new Button(creditX, creditY, creditWidth, creditHeight, Constants.CREDIT_ICON_INACTIVE_PATH, Constants.CREDIT_ICON_ACTIVE_PATH);
 
         menuButtons[0] = btnNewGame;
         menuButtons[1] = btnSetting;

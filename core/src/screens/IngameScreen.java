@@ -13,7 +13,6 @@ import btck.com.utils.Debugger;
 import btck.com.ui.Button;
 import btck.com.view.effect.Rumble;
 import btck.com.view.hud.HUD;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -38,7 +37,7 @@ public class IngameScreen implements Screen {
     private Button btnQuit;
     private int quitHeight = 50;
     private int quitWidth = 135;
-    private int quitX = Constants.screenWidth - quitWidth - 60;
+    private int quitX = Constants.SCREEN_WIDTH - quitWidth - 60;
     private int quitY = Constants.screenHeight - quitHeight - 30;
     private Texture map;
     private Texture frame;
@@ -52,21 +51,21 @@ public class IngameScreen implements Screen {
         this.player = GameManager.getInstance().getCurrentPlayer();
         hud = new HUD();
 
-        this.btnQuit = new Button(quitX, quitY, quitWidth, quitHeight, Constants.quitIconInactivePath, Constants.quitIconActivePath);
+        this.btnQuit = new Button(quitX, quitY, quitWidth, quitHeight, Constants.QUIT_ICON_INACTIVE_PATH, Constants.QUIT_ICON_ACTIVE_PATH);
         this.spawner = new Spawner(maxEnemyAmount, maxEnemySpawnAtOnce);
 
         this.cam = new OrthographicCamera();
-        this.viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, cam);
+        this.viewport = new FitViewport(Constants.SCREEN_WIDTH, Constants.screenHeight, cam);
 
         Gdx.input.setInputProcessor(new MouseHandler());
         ConstantSound.getInstance().bgmIngame.setVolume(ConstantSound.getInstance().getBgmVolume());
         ConstantSound.getInstance().bgmIngame.play();
 
-        frame = new Texture(Constants.hud0Path);
-        map = new Texture(Constants.mapPath);
+        frame = new Texture(Constants.FRAME_0_PATH);
+        map = new Texture(Constants.MAP_PATH);
     }
 
-    int playerSpawnX = Constants.screenWidth / 2 - GameManager.getInstance().getCurrentPlayer().width / 2;
+    int playerSpawnX = Constants.SCREEN_WIDTH / 2 - GameManager.getInstance().getCurrentPlayer().width / 2;
     int playerSpawnY = Constants.screenHeight / 2 - GameManager.getInstance().getCurrentPlayer().height / 2;
 
     @Override
@@ -88,7 +87,7 @@ public class IngameScreen implements Screen {
         myGdxGame.batch.setProjectionMatrix(cam.combined);
 
         myGdxGame.batch.begin();
-        myGdxGame.batch.draw(map, 0, 0, Constants.screenWidth, Constants.screenHeight);
+        myGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.screenHeight);
 
         updateBtnQuit();
 
@@ -121,7 +120,7 @@ public class IngameScreen implements Screen {
         else cam.position.set(center);
         cam.update();
 
-        myGdxGame.batch.draw(frame, 0, 0, Constants.screenWidth, Constants.screenHeight);
+        myGdxGame.batch.draw(frame, 0, 0, Constants.SCREEN_WIDTH, Constants.screenHeight);
         myGdxGame.batch.end();
 
         hud.draw();

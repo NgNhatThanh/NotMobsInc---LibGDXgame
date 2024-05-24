@@ -48,17 +48,17 @@
             gameOverX = (WIDTH - gameOverWidth)/2;
             gameOverY = (HEIGHT - gameOverHeight)/2;
 
-            btnGameOver = new Button (gameOverX, gameOverY, gameOverWidth, gameOverHeight, Constants.gameOverImgPath, Constants.gameOverImgPath);
+            btnGameOver = new Button (gameOverX, gameOverY, gameOverWidth, gameOverHeight, Constants.GAME_OVER_IMG_PATH, Constants.GAME_OVER_IMG_PATH);
             btnGameOver.draw(myGdxGame.batch);
 
             tryAgainX =  (WIDTH - tryAgainWidth)/2;;
             tryAgainY = gameOverY - 110;
-            btnTryAgain = new Button(tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight, Constants.tryAgainIconInactivePath, Constants.tryAgainIconActivePath);
+            btnTryAgain = new Button(tryAgainX, tryAgainY, tryAgainWidth, tryAgainHeight, Constants.TRY_AGAIN_ICON_INACTIVE_PATH, Constants.TRY_AGAIN_ICON_ACTIVE_PATH);
             updateTryAgain();
 
             mainMenuX = (WIDTH - mainMenuWidth)/2;
             mainMenuY = tryAgainY - 90;
-            btnMainMenu = new Button(mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight, Constants.mainMenuIconInactivePath, Constants.mainMenuIconActivePath);
+            btnMainMenu = new Button(mainMenuX, mainMenuY, mainMenuWidth, mainMenuHeight, Constants.MAIN_MENU_ICON_INACTIVE_PATH, Constants.MAIN_MENU_ICON_ACTIVE_PATH);
             updateMainMenu();
 
 

@@ -27,7 +27,7 @@ public class Ghost extends Player {
         expToLevelUp = 6;
         exist = true;
 
-        sampleTexture = new Texture(Constants.ghost1SampleTTPath);
+        sampleTexture = new Texture(Constants.GHOST_1_SAMPLE_TT_PATH);
 
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
@@ -38,7 +38,7 @@ public class Ghost extends Player {
 
         hitbox = new Rectangle(x, y, width, height);
 
-        textureAtlas = new TextureAtlas(Constants.ghost1AtlasPath);
+        textureAtlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
         animations = new Animation[4];
 
         animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));

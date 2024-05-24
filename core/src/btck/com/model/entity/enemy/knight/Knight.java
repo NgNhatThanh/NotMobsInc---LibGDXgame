@@ -26,7 +26,7 @@ public class Knight extends Enemy {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        sampleTexture = new Texture(Constants.knightSampleTTPath);
+        sampleTexture = new Texture(Constants.KNIGHT_SAMPLE_TT_PATH);
 
         attackRange = 70;
         health = 6;
@@ -37,7 +37,7 @@ public class Knight extends Enemy {
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.knightAtlasPath));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.KNIGHT_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height);

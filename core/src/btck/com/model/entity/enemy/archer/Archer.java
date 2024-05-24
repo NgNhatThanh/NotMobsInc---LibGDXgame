@@ -25,7 +25,7 @@ public class Archer extends Enemy {
         health = 3;
         exp = 5;
 
-        sampleTexture = new Texture(Constants.archerSampleTTPath);
+        sampleTexture = new Texture(Constants.ARCHER_SAMPLE_TT_PATH);
 
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
@@ -33,7 +33,7 @@ public class Archer extends Enemy {
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.archerAtlasPath));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.ARCHER_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height);

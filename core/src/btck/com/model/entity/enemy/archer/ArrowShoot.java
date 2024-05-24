@@ -32,7 +32,7 @@ public class ArrowShoot extends Attack {
 
         frameToShoot = 6;
         fireballs = new Array<>();
-        arrow = new Texture(Gdx.files.internal(Constants.arrowImgPath));
+        arrow = new Texture(Gdx.files.internal(Constants.ARROW_IMG_PATH));
         hitbox = new Rectangle();
         hitbox.width = arrow.getWidth();
         hitbox.height = arrow.getHeight();
@@ -67,7 +67,7 @@ public class ArrowShoot extends Attack {
             thisFireBall.move();
             Rectangle thisHitbox = thisFireBall.getHitbox();
 
-            if(thisHitbox.x < 0 || thisHitbox.x > Constants.screenWidth || thisHitbox.y < 0
+            if(thisHitbox.x < 0 || thisHitbox.x > Constants.SCREEN_WIDTH || thisHitbox.y < 0
                || thisHitbox.y > Constants.screenHeight) fireballs.removeValue(thisFireBall, false);
             else MyGdxGame.batch.draw(arrow,
                     thisHitbox.x,
