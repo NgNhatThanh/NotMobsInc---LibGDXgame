@@ -18,7 +18,7 @@ public class ConstantSound {
     private float bgmVolume = 0.5f;
     public Music bgmIngame = Gdx.audio.newMusic(Gdx.files.internal(Constants.ingameBGMPath));
     public Sound slash = Gdx.audio.newSound(Gdx.files.internal(Constants.attackSFXPath));
-    public Music bgm = Gdx.audio.newMusic(Gdx.files.internal(Constants.menuBGMPath));
+    public Music bgmMenu = Gdx.audio.newMusic(Gdx.files.internal(Constants.menuBGMPath));
     public Sound[] enemyHitSFX;
     Random rand = new Random();
 
@@ -30,6 +30,8 @@ public class ConstantSound {
     }
 
     public ConstantSound(){
+        bgmIngame.setLooping(true);
+        bgmMenu.setLooping(true);
         enemyHitSFX = new Sound[3];
         enemyHitSFX[0] = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/enemy_hit_1.mp3"));
         enemyHitSFX[1] = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/enemy_hit_2.mp3"));
@@ -37,7 +39,7 @@ public class ConstantSound {
     }
 
     public void dispose(){
-        bgm.dispose();
+        bgmMenu.dispose();
         bgmIngame.dispose();
         slash.dispose();
     }

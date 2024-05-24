@@ -54,8 +54,8 @@ public class MainMenuScreen  implements Screen {
             menuButtons[i].setText(menuItems[i]);
         }
 
-        ConstantSound.getInstance().bgm.setVolume(ConstantSound.getInstance().getBgmVolume());
-        ConstantSound.getInstance().bgm.play();
+        ConstantSound.getInstance().bgmMenu.setVolume(ConstantSound.getInstance().getBgmVolume());
+        ConstantSound.getInstance().bgmMenu.play();
     }
 
     @Override
@@ -106,7 +106,7 @@ public class MainMenuScreen  implements Screen {
                 menuButton.setClicked(false);
                 switch (menuButton.getText()) {
                     case "New game":
-                        ConstantSound.getInstance().bgm.dispose();
+                        ConstantSound.getInstance().bgmMenu.dispose();
                         this.dispose();
                         GameManager.getInstance().setCurrentPlayer(new Ghost());
                         GameManager.getInstance().gameState = GameState.INGAME;
