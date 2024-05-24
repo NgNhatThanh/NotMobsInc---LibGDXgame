@@ -107,13 +107,13 @@ public class SettingScreen implements Screen {
         table.add(lBgm);
         bgmSlider = new Slider(0, 1, 0.1f, false, skin);
         table.add(bgmSlider).width(500).padLeft(10);
-        bgmSlider.setValue(ConstantSound.getBgmVolume());
+        bgmSlider.setValue(ConstantSound.getInstance().getBgmVolume());
         bgmSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ConstantSound.setBgmVolume(bgmSlider.getValue());
-                ConstantSound.bgm.setVolume(bgmSlider.getValue());
-                ConstantSound.bgmIngame.setVolume(bgmSlider.getValue());
+                ConstantSound.getInstance().setBgmVolume(bgmSlider.getValue());
+                ConstantSound.getInstance().bgm.setVolume(bgmSlider.getValue());
+                ConstantSound.getInstance().bgmIngame.setVolume(bgmSlider.getValue());
             }
         });
     }
@@ -127,12 +127,12 @@ public class SettingScreen implements Screen {
 
         table.add(lSound);
         table.add(soundSlider).width(500).padLeft(10);
-        soundSlider.setValue(ConstantSound.getSoundVolume());
+        soundSlider.setValue(ConstantSound.getInstance().getSoundVolume());
         soundSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ConstantSound.setSoundVolume(soundSlider.getValue());
-                ConstantSound.slash.play(soundSlider.getValue());
+                ConstantSound.getInstance().setSoundVolume(soundSlider.getValue());
+                ConstantSound.getInstance().slash.play(soundSlider.getValue());
             }
         });
     }

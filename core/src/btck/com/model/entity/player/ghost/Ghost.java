@@ -103,7 +103,7 @@ public class Ghost extends Player {
 
     public void attack(int x, int y) {
         if(!attacking)
-            ConstantSound.slash.play(ConstantSound.getSoundVolume());
+            ConstantSound.getInstance().slash.play(ConstantSound.getInstance().getSoundVolume());
 
         if(!dead && !attacking){
             attackX = x; attackY = Constants.screenHeight - y;

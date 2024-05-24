@@ -29,7 +29,7 @@
             System.out.println(WIDTH);
             System.out.println(HEIGHT);
             this.myGdxGame = myGdxGame;
-            ConstantSound.bgm.play();
+            ConstantSound.getInstance().bgm.play();
         }
     
         @Override
@@ -81,7 +81,7 @@
             if(btnTryAgain.isClicked()){
                 btnTryAgain.setClicked(false);
                 this.dispose();
-                ConstantSound.bgm.dispose();
+                ConstantSound.getInstance().bgm.dispose();
                 GameManager.getInstance().setCurrentPlayer(new Ghost());
                 GameManager.getInstance().gameState = GameState.INGAME;
                 // Clear enemies

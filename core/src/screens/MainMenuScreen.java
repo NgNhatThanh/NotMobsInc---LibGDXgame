@@ -54,8 +54,8 @@ public class MainMenuScreen  implements Screen {
             menuButtons[i].setText(menuItems[i]);
         }
 
-        ConstantSound.bgm.setVolume(ConstantSound.getBgmVolume());
-        ConstantSound.bgm.play();
+        ConstantSound.getInstance().bgm.setVolume(ConstantSound.getInstance().getBgmVolume());
+        ConstantSound.getInstance().bgm.play();
     }
 
     @Override
@@ -106,7 +106,7 @@ public class MainMenuScreen  implements Screen {
                 menuButton.setClicked(false);
                 switch (menuButton.getText()) {
                     case "New game":
-                        ConstantSound.bgm.dispose();
+                        ConstantSound.getInstance().bgm.dispose();
                         this.dispose();
                         GameManager.getInstance().setCurrentPlayer(new Ghost());
                         GameManager.getInstance().gameState = GameState.INGAME;
@@ -121,7 +121,7 @@ public class MainMenuScreen  implements Screen {
                         myGdxGame.setScreen(new CreditsScene(myGdxGame));
                         break;
                     case "Exit":
-                        ConstantSound.dispose();
+                        ConstantSound.getInstance().dispose();
                         Gdx.app.exit();
                         break;
                 }

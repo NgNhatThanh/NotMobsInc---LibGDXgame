@@ -59,8 +59,8 @@ public class IngameScreen implements Screen {
         this.viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, cam);
 
         Gdx.input.setInputProcessor(new MouseHandler());
-        ConstantSound.bgmIngame.setVolume(ConstantSound.getBgmVolume());
-        ConstantSound.bgmIngame.play();
+        ConstantSound.getInstance().bgmIngame.setVolume(ConstantSound.getInstance().getBgmVolume());
+        ConstantSound.getInstance().bgmIngame.play();
 
         frame = new Texture(Constants.hud0Path);
         map = new Texture(Constants.mapPath);
@@ -162,7 +162,7 @@ public class IngameScreen implements Screen {
 
     @Override
     public void dispose() {
-        ConstantSound.bgmIngame.dispose();
+        ConstantSound.getInstance().bgmIngame.dispose();
         hud.dispose();
         map.dispose();
         frame.dispose();

@@ -25,7 +25,6 @@ public class Rumble {
     public static Vector3 tick(float delta){
         if(currentTime <= rumbleDuration){
             ++cnt;
-            System.out.println(cnt + " " + pos);
             currentPower = power * ((rumbleDuration - currentTime) / rumbleDuration);
 
             pos.x = (random.nextFloat() - 0.5f) * 2 * currentPower;
