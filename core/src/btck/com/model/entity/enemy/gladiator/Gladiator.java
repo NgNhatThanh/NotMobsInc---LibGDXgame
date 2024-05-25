@@ -21,7 +21,7 @@ public class Gladiator extends Enemy {
     private float a, b, x1, y1 ,deltaSP;
 
     public Gladiator(){
-        attackRange = 150;
+        attackRange = 200;
         health = 4;
         exp = 5;
         sampleTexture = new Texture(Constants.GLADIATOR_SAMPLE_TT_PATH);

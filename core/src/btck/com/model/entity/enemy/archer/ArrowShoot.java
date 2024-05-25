@@ -17,8 +17,8 @@ import com.badlogic.gdx.utils.Array;
 public class ArrowShoot extends Attack {
 
     Texture arrow;
-    Array<Bullet> fireballs;
-    int fireballSpeed = 600;
+    Array<Bullet> arrows;
+    int arrowSpeed = 700;
 
     int frameToShoot;
     boolean shoot = true;
@@ -31,7 +31,7 @@ public class ArrowShoot extends Attack {
         damage = 3;
 
         frameToShoot = 6;
-        fireballs = new Array<>();
+        arrows = new Array<>();
         arrow = new Texture(Gdx.files.internal(Constants.ARROW_IMG_PATH));
         hitbox = new Rectangle();
         hitbox.width = arrow.getWidth();
@@ -48,7 +48,7 @@ public class ArrowShoot extends Attack {
     @Override
     public void update(float statetime) {
         if(!shoot && animation.getKeyFrameIndex(statetime) == frameToShoot){
-            fireballs.add(new Bullet(owner.getX(), owner.getY(), owner.getAttackX(), owner.getAttackY(), fireballSpeed, this.hitbox.width, this.hitbox.height));
+            arrows.add(new Bullet(owner.getX(), owner.getY(), owner.getAttackX(), owner.getAttackY(), arrowSpeed, this.hitbox.width, this.hitbox.height));
             shoot = true;
         }
         updateHitbox();
@@ -63,12 +63,12 @@ public class ArrowShoot extends Attack {
 
     @Override
     public void updateHitbox() {
-        for(Bullet thisFireBall : fireballs){
+        for(Bullet thisFireBall : arrows){
             thisFireBall.move();
             Rectangle thisHitbox = thisFireBall.getHitbox();
 
             if(thisHitbox.x < 0 || thisHitbox.x > Constants.SCREEN_WIDTH || thisHitbox.y < 0
-               || thisHitbox.y > Constants.screenHeight) fireballs.removeValue(thisFireBall, false);
+               || thisHitbox.y > Constants.screenHeight) arrows.removeValue(thisFireBall, false);
             else MyGdxGame.batch.draw(arrow,
                     thisHitbox.x,
                     thisHitbox.y,
@@ -90,9 +90,9 @@ public class ArrowShoot extends Attack {
 
     public boolean hit(Entity entity){
 
-        for(Bullet thisFireBall : fireballs){
+        for(Bullet thisFireBall : arrows){
             if(thisFireBall.getHitbox().overlaps(entity.getHitbox())){
-                fireballs.removeValue(thisFireBall, false);
+                arrows.removeValue(thisFireBall, false);
                 hitEntities.clear();
                 return true;
             }

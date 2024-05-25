@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import lombok.Getter;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -68,6 +69,8 @@ public class Ghost extends Player {
             return;
         }
 
+        attack.update(statetime);
+
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;
             animationIdx = 1;
@@ -118,6 +121,7 @@ public class Ghost extends Player {
     public void move(float desX, float desY){
         if(abs(x - desX) < 5 && abs(y - desY) < 5) {
             if(!attacking) animationIdx = 0;
+            angle = 0;
             return;
         }
         else if(!attacking) animationIdx = 1;
@@ -130,17 +134,22 @@ public class Ghost extends Player {
         if(abs(x - desX) < 5){
             if(desY > y) y += deltaSP;
             else y -= deltaSP;
+            angle = 0;
             return;
         }
 
         if(abs(y - desY) < 5){
             if(desX > x) x += deltaSP;
             else x -= deltaSP;
+            angle = 90;
             return;
         }
 
         a = (y - desY) / (x - desX);
         b = y - a * x;
+
+        angle = (float)Math.atan(a);
+        angle = angle * (float)(180 / Math.PI);
 
         x1 = x;
         y1 = y;

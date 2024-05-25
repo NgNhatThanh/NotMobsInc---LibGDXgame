@@ -31,6 +31,7 @@ public abstract class Entity{
     protected Rectangle hitbox;
     protected boolean isHit;
     protected Attack attack;
+    protected float angle;
     protected TextureAtlas textureAtlas;
     protected Animation<TextureRegion>[] animations;
     protected Texture sampleTexture;
