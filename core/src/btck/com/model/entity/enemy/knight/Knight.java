@@ -73,6 +73,7 @@ public class Knight extends Enemy {
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
+            vulnerable = true;
             animationIdx = 2;
             if(attacking){
                 attacking = false;

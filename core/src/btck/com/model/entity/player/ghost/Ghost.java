@@ -24,6 +24,7 @@ public class Ghost extends Player {
     private float a, b, x1, y1 ,deltaSP;
 
     public Ghost(){
+        vulnerable = true;
         nextLevelExp = 5;
         expToLevelUp = 6;
         exist = true;

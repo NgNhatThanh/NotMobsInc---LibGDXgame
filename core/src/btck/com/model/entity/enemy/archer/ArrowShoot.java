@@ -48,7 +48,7 @@ public class ArrowShoot extends Attack {
     @Override
     public void update(float statetime) {
         if(!shoot && animation.getKeyFrameIndex(statetime) == frameToShoot){
-            arrows.add(new Bullet(owner.getX(), owner.getY(), owner.getAttackX(), owner.getAttackY(), arrowSpeed, this.hitbox.width, this.hitbox.height));
+            arrows.add(new Bullet(owner.getX(), owner.getY() + owner.getHeight() / 2, owner.getAttackX(), owner.getAttackY(), arrowSpeed, this.hitbox.width, this.hitbox.height));
             shoot = true;
         }
         updateHitbox();
