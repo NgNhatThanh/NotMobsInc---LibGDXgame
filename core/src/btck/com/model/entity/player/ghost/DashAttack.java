@@ -39,7 +39,7 @@ public class DashAttack extends Attack {
         slices = new TextureAtlas(Gdx.files.internal("atlas/player/ghost1/slice.atlas"));
         hitbox = new Rectangle();
         hitbox.width = owner.width;
-        hitbox.height = owner.height;
+        hitbox.height = owner.height / 2f;
         damage = 2;
 
         sliceSample = new Texture(Gdx.files.internal("atlas/player/ghost1/slice_sample.png"));
@@ -84,6 +84,6 @@ public class DashAttack extends Attack {
     @Override
     public void updateHitbox() {
         hitbox.x = owner.getX() - owner.getWidth() / 2;
-        hitbox.y = owner.getY();
+        hitbox.y = owner.getY() + owner.getHeight() / 2;
     }
 }
