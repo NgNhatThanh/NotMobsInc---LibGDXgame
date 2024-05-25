@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
-import lombok.Getter;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -33,7 +32,7 @@ public class Ghost extends Player {
 
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        health = 100;
+        currentHealth = 100;
         maxHealth = 100;
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
@@ -96,7 +95,7 @@ public class Ghost extends Player {
     @Override
     public void update() {
         super.update();
-        if(health > 0){
+        if(currentHealth > 0){
             while(currentExp >= expToLevelUp){
                 expToLevelUp += nextLevelExp;
                 nextLevelExp += 5;

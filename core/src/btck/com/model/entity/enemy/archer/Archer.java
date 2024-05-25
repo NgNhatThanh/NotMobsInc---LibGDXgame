@@ -22,7 +22,7 @@ public class Archer extends Enemy {
 
     public Archer(){
         attackRange = 200;
-        health = 3;
+        currentHealth = 3;
         exp = 5;
 
         sampleTexture = new Texture(Constants.ARCHER_SAMPLE_TT_PATH);

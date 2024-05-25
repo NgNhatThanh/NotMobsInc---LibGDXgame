@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 //import com.sun.source.tree.WhileLoopTree;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +16,7 @@ import lombok.Setter;
 public abstract class Entity{
 
     protected Party party;
-    protected int health, maxHealth;
+    protected int currentHealth, maxHealth;
     protected float x, y;
     protected int attackX, attackY;
     public int width, height;
@@ -42,12 +41,12 @@ public abstract class Entity{
     public abstract void move(float desX, float desY);
 
     public void takeDamage(int damage){
-        this.health -= damage;
+        this.currentHealth -= damage;
         update();
     }
 
     public void update(){
-        if(health <= 0){
+        if(currentHealth <= 0){
             vulnerable = false;
             dead = true;
             statetime = 0;

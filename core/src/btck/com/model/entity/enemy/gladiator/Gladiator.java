@@ -22,7 +22,7 @@ public class Gladiator extends Enemy {
 
     public Gladiator(){
         attackRange = 200;
-        health = 4;
+        currentHealth = 4;
         exp = 5;
         sampleTexture = new Texture(Constants.GLADIATOR_SAMPLE_TT_PATH);
 
