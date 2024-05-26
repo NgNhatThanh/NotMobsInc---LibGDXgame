@@ -7,7 +7,6 @@ import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -33,10 +32,10 @@ public class SettingScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal(Constants.uiskinPath));
+        skin = new Skin(Gdx.files.internal(Constants.UISKIN_PATH));
         table = new Table();
 
-        btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.backArrowInactiveIconPath, Constants.backArrowActiveIconPath);
+        btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.BACK_ARROW_INACTIVE_ICON_PATH, Constants.BACK_ARROW_ACTIVE_ICON_PATH);
 
         adjustBgm();
         adjustSound();
@@ -107,13 +106,13 @@ public class SettingScreen implements Screen {
         table.add(lBgm);
         bgmSlider = new Slider(0, 1, 0.1f, false, skin);
         table.add(bgmSlider).width(500).padLeft(10);
-        bgmSlider.setValue(ConstantSound.getBgmVolume());
+        bgmSlider.setValue(ConstantSound.getInstance().getBgmVolume());
         bgmSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ConstantSound.setBgmVolume(bgmSlider.getValue());
-                ConstantSound.bgm.setVolume(bgmSlider.getValue());
-                ConstantSound.bgmIngame.setVolume(bgmSlider.getValue());
+                ConstantSound.getInstance().setBgmVolume(bgmSlider.getValue());
+                ConstantSound.getInstance().bgmMenu.setVolume(bgmSlider.getValue());
+                ConstantSound.getInstance().bgmIngame.setVolume(bgmSlider.getValue());
             }
         });
     }
@@ -127,12 +126,12 @@ public class SettingScreen implements Screen {
 
         table.add(lSound);
         table.add(soundSlider).width(500).padLeft(10);
-        soundSlider.setValue(ConstantSound.getSoundVolume());
+        soundSlider.setValue(ConstantSound.getInstance().getSoundVolume());
         soundSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                ConstantSound.setSoundVolume(soundSlider.getValue());
-                ConstantSound.slash.play(soundSlider.getValue());
+                ConstantSound.getInstance().setSoundVolume(soundSlider.getValue());
+                ConstantSound.getInstance().slash.play(soundSlider.getValue());
             }
         });
     }

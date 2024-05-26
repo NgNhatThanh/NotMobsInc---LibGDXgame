@@ -26,17 +26,18 @@ public class Knight extends Enemy {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        sampleTexture = new Texture(Constants.knightSampleTTPath);
+        sampleTexture = new Texture(Constants.KNIGHT_SAMPLE_TT_PATH);
 
         attackRange = 70;
-        health = 3;
+        currentHealth = 6;
         exp = 4;
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
+        sampleTexture.dispose();
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.knightAtlasPath));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.KNIGHT_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height);
@@ -58,6 +59,12 @@ public class Knight extends Enemy {
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
         height = animations[animationIdx].getKeyFrame(statetime).getRegionHeight();
 
+        hitbox.x = x - width / 2;
+        hitbox.y = y;
+
+        hitbox.width = width;
+        hitbox.height = height / 2;
+
         if(dead && animations[animationIdx].isAnimationFinished(statetime)){
             exist = false;
             return;
@@ -65,12 +72,8 @@ public class Knight extends Enemy {
 
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
-        hitbox.x = x - width / 2;
-        hitbox.y = y;
-
-        if(attacking) attack.update(statetime);
-
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
+            vulnerable = true;
             animationIdx = 2;
             if(attacking){
                 attacking = false;
@@ -82,15 +85,6 @@ public class Knight extends Enemy {
             move(GameManager.getInstance().getCurrentPlayer().getX(), GameManager.getInstance().getCurrentPlayer().getY());
         }
         if(!dead) update();
-    }
-
-    @Override
-    public void update() {
-        if(health <= 0){
-            dead = true;
-            statetime = 0;
-            animationIdx = 3;
-        }
     }
 
     @Override

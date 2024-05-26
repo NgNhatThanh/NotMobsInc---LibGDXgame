@@ -17,8 +17,8 @@ import com.badlogic.gdx.utils.Array;
 public class ArrowShoot extends Attack {
 
     Texture arrow;
-    Array<Bullet> fireballs;
-    int fireballSpeed = 600;
+    Array<Bullet> arrows;
+    int arrowSpeed = 700;
 
     int frameToShoot;
     boolean shoot = true;
@@ -31,8 +31,8 @@ public class ArrowShoot extends Attack {
         damage = 3;
 
         frameToShoot = 6;
-        fireballs = new Array<>();
-        arrow = new Texture(Gdx.files.internal(Constants.arrowImgPath));
+        arrows = new Array<>();
+        arrow = new Texture(Gdx.files.internal(Constants.ARROW_IMG_PATH));
         hitbox = new Rectangle();
         hitbox.width = arrow.getWidth();
         hitbox.height = arrow.getHeight();
@@ -42,12 +42,13 @@ public class ArrowShoot extends Attack {
     public void start() {
         owner.currentSpeed = 0;
         shoot = false;
+        owner.setFlip(!(owner.getX() < owner.getAttackX()));
     }
 
     @Override
     public void update(float statetime) {
         if(!shoot && animation.getKeyFrameIndex(statetime) == frameToShoot){
-            fireballs.add(new Bullet(owner.getX(), owner.getY(), owner.getAttackX(), owner.getAttackY(), fireballSpeed, this.hitbox.width, this.hitbox.height));
+            arrows.add(new Bullet(owner.getX(), owner.getY() + owner.getHeight() / 2, owner.getAttackX(), owner.getAttackY(), arrowSpeed, this.hitbox.width, this.hitbox.height));
             shoot = true;
         }
         updateHitbox();
@@ -62,25 +63,36 @@ public class ArrowShoot extends Attack {
 
     @Override
     public void updateHitbox() {
-        for(Bullet thisFireBall : fireballs){
+        for(Bullet thisFireBall : arrows){
             thisFireBall.move();
             Rectangle thisHitbox = thisFireBall.getHitbox();
 
-            if(thisHitbox.x < 0 || thisHitbox.x > Constants.screenWidth || thisHitbox.y < 0
-               || thisHitbox.y > Constants.screenHeight) fireballs.removeValue(thisFireBall, false);
-            else MyGdxGame.batch.draw(arrow, thisHitbox.x, thisHitbox.y);
-
-//            shapeRenderer.begin();
-//            shapeRenderer.rect(thisHitbox.x, thisHitbox.y, hitbox.width, hitbox.height);
-//            shapeRenderer.end();
+            if(thisHitbox.x < 0 || thisHitbox.x > Constants.SCREEN_WIDTH || thisHitbox.y < 0
+               || thisHitbox.y > Constants.screenHeight) arrows.removeValue(thisFireBall, false);
+            else MyGdxGame.batch.draw(arrow,
+                    thisHitbox.x,
+                    thisHitbox.y,
+                    thisHitbox.width / 2,
+                    thisHitbox.height / 2,
+                    thisHitbox.width,
+                    thisHitbox.height,
+                    1,
+                    1,
+                    thisFireBall.getRotation(),
+                    0,
+                    0,
+                    (int)thisHitbox.width,
+                    (int)thisHitbox.height,
+                    thisFireBall.isFlip(),
+                    false);
         }
     }
 
     public boolean hit(Entity entity){
 
-        for(Bullet thisFireBall : fireballs){
+        for(Bullet thisFireBall : arrows){
             if(thisFireBall.getHitbox().overlaps(entity.getHitbox())){
-                fireballs.removeValue(thisFireBall, false);
+                arrows.removeValue(thisFireBall, false);
                 hitEntities.clear();
                 return true;
             }

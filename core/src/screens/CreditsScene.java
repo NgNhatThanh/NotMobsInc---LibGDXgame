@@ -7,11 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 public class CreditsScene implements Screen {
@@ -27,8 +22,8 @@ public class CreditsScene implements Screen {
 
     public CreditsScene(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
-        creditPng = new Texture(Constants.creditImgPath);
-        btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.backArrowInactiveIconPath, Constants.backArrowActiveIconPath);
+        creditPng = new Texture(Constants.CREDIT_IMG_PATH);
+        btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.BACK_ARROW_INACTIVE_ICON_PATH, Constants.BACK_ARROW_ACTIVE_ICON_PATH);
 
     }
 
@@ -44,7 +39,7 @@ public class CreditsScene implements Screen {
         myGdxGame.batch.begin();
 
         updateArrow();
-        myGdxGame.batch.draw(creditPng, (Constants.screenWidth - creditWidth) / 2, (Constants.screenHeight - creditHeight) / 2, creditWidth, creditHeight);
+        myGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2, (Constants.screenHeight - creditHeight) / 2, creditWidth, creditHeight);
 
 
         myGdxGame.batch.end();

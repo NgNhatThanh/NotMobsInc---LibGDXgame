@@ -23,21 +23,23 @@ public class Ghost extends Player {
     private float a, b, x1, y1 ,deltaSP;
 
     public Ghost(){
+        vulnerable = true;
         nextLevelExp = 5;
         expToLevelUp = 6;
         exist = true;
 
-        sampleTexture = new Texture(Constants.ghost1SampleTTPath);
+        sampleTexture = new Texture(Constants.GHOST_1_SAMPLE_TT_PATH);
 
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        health = 10000;
+        currentHealth = 100;
+        maxHealth = 100;
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
 
         hitbox = new Rectangle(x, y, width, height);
 
-        textureAtlas = new TextureAtlas(Constants.ghost1AtlasPath);
+        textureAtlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
         animations = new Animation[4];
 
         animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));
@@ -67,6 +69,8 @@ public class Ghost extends Player {
             return;
         }
 
+        attack.update(statetime);
+
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;
             animationIdx = 1;
@@ -90,12 +94,8 @@ public class Ghost extends Player {
 
     @Override
     public void update() {
-        if(health <= 0){
-            dead = true;
-            statetime = 0;
-            animationIdx = 3;
-        }
-        else{
+        super.update();
+        if(currentHealth > 0){
             while(currentExp >= expToLevelUp){
                 expToLevelUp += nextLevelExp;
                 nextLevelExp += 5;
@@ -106,7 +106,7 @@ public class Ghost extends Player {
 
     public void attack(int x, int y) {
         if(!attacking)
-            ConstantSound.slash.play(ConstantSound.getSoundVolume());
+            ConstantSound.getInstance().slash.play(ConstantSound.getInstance().getSoundVolume());
 
         if(!dead && !attacking){
             attackX = x; attackY = Constants.screenHeight - y;
@@ -121,6 +121,7 @@ public class Ghost extends Player {
     public void move(float desX, float desY){
         if(abs(x - desX) < 5 && abs(y - desY) < 5) {
             if(!attacking) animationIdx = 0;
+            angle = 0;
             return;
         }
         else if(!attacking) animationIdx = 1;
@@ -133,17 +134,22 @@ public class Ghost extends Player {
         if(abs(x - desX) < 5){
             if(desY > y) y += deltaSP;
             else y -= deltaSP;
+            angle = 0;
             return;
         }
 
         if(abs(y - desY) < 5){
             if(desX > x) x += deltaSP;
             else x -= deltaSP;
+            angle = 90;
             return;
         }
 
         a = (y - desY) / (x - desX);
         b = y - a * x;
+
+        angle = (float)Math.atan(a);
+        angle = angle * (float)(180 / Math.PI);
 
         x1 = x;
         y1 = y;
