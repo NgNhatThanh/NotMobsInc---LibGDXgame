@@ -15,18 +15,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class LevelDisplay extends Actor {
-    private Stage stage;
-    private Viewport viewport;
+public class LevelLabel extends Actor {
+//    private Viewport viewport;
     private BitmapFont customFont;
     private Player player;
     private GlyphLayout layout;
 
-    public LevelDisplay(Player player) {
+    public LevelLabel(Player player) {
         this.player = player;
         this.layout = new GlyphLayout();
-        viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, new OrthographicCamera());
-        stage = new Stage(viewport, new SpriteBatch());
+//        viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, new OrthographicCamera());
         initFont();
     }
 
@@ -47,13 +45,7 @@ public class LevelDisplay extends Actor {
         customFont.draw(batch, labelText, 330, Constants.screenHeight - layout.height - 35);
     }
 
-    public void render(float delta) {
-        stage.act(delta);
-        stage.draw();
-    }
-
     public void dispose() {
-        stage.dispose();
         customFont.dispose();
     }
 }

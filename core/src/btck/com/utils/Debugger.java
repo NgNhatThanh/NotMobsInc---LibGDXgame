@@ -14,7 +14,7 @@ public class Debugger {
     public static Debugger debugger;
 
     @Setter
-    public static DEBUG_MODE debugMode = DEBUG_MODE.ON;
+    public static DEBUG_MODE debugMode = DEBUG_MODE.OFF;
 
     public static Debugger getInstance(){
         if(debugger == null) debugger = new Debugger();

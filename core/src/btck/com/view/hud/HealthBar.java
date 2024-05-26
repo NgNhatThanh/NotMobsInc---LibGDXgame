@@ -43,7 +43,7 @@ public class HealthBar extends Actor {
         shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
 
         // Vẽ thanh máu hiện tại (màu đỏ)
-        float healthPercentage = (float) player.getHealth() / player.getMaxHealth();
+        float healthPercentage = (float) player.getCurrentHealth() / player.getMaxHealth();
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.rect(getX(), getY(), getWidth() * healthPercentage, getHeight());
 
@@ -53,15 +53,9 @@ public class HealthBar extends Actor {
         batch.begin();
 
         // Vẽ số máu hiện tại và tối đa
-        String healthText = player.getHealth() + " / " + player.getMaxHealth();
+        String healthText = player.getCurrentHealth() + " / " + player.getMaxHealth();
         layout.setText(customFont, healthText);
         customFont.draw(batch, layout, getX() + (getWidth() - layout.width) / 2, getY() + getHeight() / 2 + layout.height / 2);
-
-        // Vẽ "HealthBar"
-//        String labelText = "HP";
-//        layout.setText(customFont, labelText);
-//        customFont.draw(batch, layout, getX() - layout.width - 10, getY() + getHeight() / 2 + layout.height / 2);
-
     }
 
     @Override

@@ -22,10 +22,10 @@ public class Archer extends Enemy {
 
     public Archer(){
         attackRange = 200;
-        health = 3;
+        currentHealth = 3;
         exp = 5;
 
-        sampleTexture = new Texture(Constants.archerSampleTTPath);
+        sampleTexture = new Texture(Constants.ARCHER_SAMPLE_TT_PATH);
 
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
@@ -33,7 +33,7 @@ public class Archer extends Enemy {
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.archerAtlasPath));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.ARCHER_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height);
@@ -69,6 +69,7 @@ public class Archer extends Enemy {
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
+            vulnerable = true;
             statetime = 0;
             animationIdx = 2;
             if(attacking) attack.end();

@@ -21,10 +21,10 @@ public class Gladiator extends Enemy {
     private float a, b, x1, y1 ,deltaSP;
 
     public Gladiator(){
-        attackRange = 150;
-        health = 4;
+        attackRange = 200;
+        currentHealth = 4;
         exp = 5;
-        sampleTexture = new Texture(Constants.gladiatorSampleTTPath);
+        sampleTexture = new Texture(Constants.GLADIATOR_SAMPLE_TT_PATH);
 
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();
@@ -33,7 +33,7 @@ public class Gladiator extends Enemy {
         normalSpeed = 100;
         currentSpeed = 100;
 
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.gladiatorAtlasPath));
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height / 2);
@@ -71,8 +71,8 @@ public class Gladiator extends Enemy {
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
+            vulnerable = true;
             animationIdx = 2;
-
             if(attacking){
                 attacking = false;
                 attack.end();
