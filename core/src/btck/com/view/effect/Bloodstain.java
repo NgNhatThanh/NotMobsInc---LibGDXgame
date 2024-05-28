@@ -14,12 +14,13 @@ public class Bloodstain extends Effect{
                                           new TextureAtlas(Gdx.files.internal("atlas/enemy/effect/bloodstain/blood-stain3.atlas"))};
 
     static Random rnd = new Random();
-    float timeToDisappear = 12;
+    float timeToDisappear;
 
     public Bloodstain(float x, float y, float angle){
         super(x, y, angle);
         int idx = rnd.nextInt(3);
-        this.FRAME_DURATION = 15f;
+        timeToDisappear = rnd.nextInt(10) + 10;
+        this.FRAME_DURATION = timeToDisappear + 1;
         ani = new Animation<>(FRAME_DURATION, atlases[idx].findRegions("blood-stain"));
         sample = new Texture(Gdx.files.internal("atlas/enemy/effect/bloodstain/blood-stain_sample.png"));
         width = sample.getWidth();
