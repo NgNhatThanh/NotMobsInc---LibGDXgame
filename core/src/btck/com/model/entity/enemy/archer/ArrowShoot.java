@@ -4,7 +4,7 @@ import btck.com.MyGdxGame;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.Bullet;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

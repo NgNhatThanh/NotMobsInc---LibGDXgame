@@ -1,4 +1,4 @@
-package btck.com.model.constant;
+package btck.com.common.io;
 
 public class Constants {
 

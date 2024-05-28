@@ -2,7 +2,7 @@ package btck.com.model.entity.player.ghost;
 
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.io.sound.ConstantSound;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

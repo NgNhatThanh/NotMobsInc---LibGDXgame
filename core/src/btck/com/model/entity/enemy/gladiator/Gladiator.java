@@ -2,7 +2,7 @@ package btck.com.model.entity.enemy.gladiator;
 
 import btck.com.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

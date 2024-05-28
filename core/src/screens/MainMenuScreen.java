@@ -3,7 +3,7 @@ package screens;
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.io.sound.ConstantSound;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.constant.GameState;
 import btck.com.model.entity.player.ghost.Ghost;
 import btck.com.ui.Button;

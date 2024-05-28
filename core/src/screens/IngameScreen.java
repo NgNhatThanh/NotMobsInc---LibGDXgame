@@ -5,7 +5,7 @@ import btck.com.MyGdxGame;
 import btck.com.common.io.MouseHandler;
 import btck.com.common.io.sound.ConstantSound;
 import btck.com.controller.spawn.Spawner;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.utils.DEBUG_MODE;
