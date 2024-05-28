@@ -47,7 +47,7 @@ public class Spawner {
             }
 
             float randomX = rand.nextInt((int) (Constants.SCREEN_WIDTH - spawnEnemy.width));
-            float randomY = rand.nextInt((int) (Constants.screenHeight - spawnEnemy.height));
+            float randomY = rand.nextInt((int) (Constants.SCREEN_HEIGHT - spawnEnemy.height));
             spawnEnemy.setX(randomX);
             spawnEnemy.setY(randomY);
             GameManager.getInstance().addEnemy(spawnEnemy);

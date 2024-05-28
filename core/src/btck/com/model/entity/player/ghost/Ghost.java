@@ -82,7 +82,7 @@ public class Ghost extends Player {
 
         if(!dead){
             if(!attacking){
-                move(Gdx.input.getX(), Constants.screenHeight - Gdx.input.getY());
+                move(Gdx.input.getX(), Constants.SCREEN_HEIGHT - Gdx.input.getY());
             }
             else{
                 move(attackX, attackY);
@@ -109,7 +109,7 @@ public class Ghost extends Player {
             ConstantSound.getInstance().slash.play(ConstantSound.getInstance().getSoundVolume());
 
         if(!dead && !attacking){
-            attackX = x; attackY = Constants.screenHeight - y;
+            attackX = x; attackY = Constants.SCREEN_HEIGHT - y;
             animationIdx = 2;
             attacking = true;
             statetime = 0;

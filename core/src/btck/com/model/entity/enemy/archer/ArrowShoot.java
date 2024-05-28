@@ -68,7 +68,7 @@ public class ArrowShoot extends Attack {
             Rectangle thisHitbox = thisFireBall.getHitbox();
 
             if(thisHitbox.x < 0 || thisHitbox.x > Constants.SCREEN_WIDTH || thisHitbox.y < 0
-               || thisHitbox.y > Constants.screenHeight) arrows.removeValue(thisFireBall, false);
+               || thisHitbox.y > Constants.SCREEN_HEIGHT) arrows.removeValue(thisFireBall, false);
             else MyGdxGame.batch.draw(arrow,
                     thisHitbox.x,
                     thisHitbox.y,

@@ -1,0 +1,15 @@
+blood-stain1.png
+size:512,128
+repeat:none
+blood-stain
+index:3
+bounds:2,2,80,80
+blood-stain
+index:0
+bounds:84,2,80,80
+blood-stain
+index:2
+bounds:166,2,80,80
+blood-stain
+index:1
+bounds:248,2,80,80

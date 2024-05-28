@@ -23,7 +23,7 @@ public class MainMenuScreen  implements Screen {
     public final int settingWidth = 400;
     public final int settingHeight = 100;
     int newGameX = (Constants.SCREEN_WIDTH - newGameWidth - 20);
-    int newGameY = (Constants.screenHeight - newGameHeight - 50);
+    int newGameY = (Constants.SCREEN_HEIGHT - newGameHeight - 50);
     int creditX = newGameX - 15;
     int creditY = newGameY - 120;
     int settingX = newGameX;

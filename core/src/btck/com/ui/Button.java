@@ -51,7 +51,7 @@ public class Button {
 
     public void update(){
         int mouseX = Gdx.input.getX();
-        int mouseY = Constants.screenHeight - Gdx.input.getY();
+        int mouseY = Constants.SCREEN_HEIGHT - Gdx.input.getY();
         if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
             isHovered = true;
         } else {

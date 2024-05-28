@@ -16,7 +16,7 @@ public class HUD{
     Viewport viewport;
 
     public HUD(){
-        viewport = new FitViewport(Constants.SCREEN_WIDTH, Constants.screenHeight);
+        viewport = new FitViewport(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         stage = new Stage(viewport, MyGdxGame.batch);
 
         //         Thêm Health Bar vào stage

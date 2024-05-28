@@ -39,7 +39,7 @@ public class CreditsScene implements Screen {
         myGdxGame.batch.begin();
 
         updateArrow();
-        myGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2, (Constants.screenHeight - creditHeight) / 2, creditWidth, creditHeight);
+        myGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2, (Constants.SCREEN_HEIGHT - creditHeight) / 2, creditWidth, creditHeight);
 
 
         myGdxGame.batch.end();

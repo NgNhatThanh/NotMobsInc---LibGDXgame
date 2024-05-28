@@ -130,7 +130,7 @@ public class Gladiator extends Enemy {
     @Override
     public void attack(int x, int y) {
         if(!dead && !attacking){
-            attackX = x; attackY = Constants.screenHeight - y;
+            attackX = x; attackY = Constants.SCREEN_HEIGHT - y;
             animationIdx = 4;
             attacking = true;
             statetime = 0;

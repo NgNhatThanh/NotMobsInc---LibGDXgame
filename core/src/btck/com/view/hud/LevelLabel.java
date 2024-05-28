@@ -37,7 +37,7 @@ public class LevelLabel extends Actor {
         super.draw(batch, parentAlpha);
         String labelText = "LEVEL " + player.getLevel();
         layout.setText(customFont, labelText);
-        customFont.draw(batch, labelText, 330, Constants.screenHeight - layout.height - 35);
+        customFont.draw(batch, labelText, 330, Constants.SCREEN_HEIGHT - layout.height - 35);
     }
 
     public void dispose() {
