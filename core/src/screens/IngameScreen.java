@@ -12,7 +12,6 @@ import btck.com.utils.DEBUG_MODE;
 import btck.com.utils.Debugger;
 import btck.com.ui.Button;
 import btck.com.view.effect.Effect;
-import btck.com.view.effect.Rumble;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
