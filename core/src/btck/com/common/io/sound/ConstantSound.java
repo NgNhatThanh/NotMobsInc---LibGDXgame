@@ -19,6 +19,7 @@ public class ConstantSound {
     public Music bgmIngame = Gdx.audio.newMusic(Gdx.files.internal(Constants.INGAME_BGM_PATH));
     public Sound slash = Gdx.audio.newSound(Gdx.files.internal(Constants.ATTACK_SFX_PATH));
     public Music bgmMenu = Gdx.audio.newMusic(Gdx.files.internal(Constants.MENU_BGM_PATH));
+    public Sound playerHitSFX = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/player-hit.mp3"));
     public Sound[] enemyHitSFX;
     Random rand = new Random();
 
@@ -46,5 +47,9 @@ public class ConstantSound {
     public void  playEnemyHitSound(){
         int idx = rand.nextInt(3);
         enemyHitSFX[idx].play(soundVolume);
+    }
+
+    public void playPlayerHitSFX(){
+        playerHitSFX.play(soundVolume);
     }
 }

@@ -26,10 +26,12 @@ public class DashAttack extends Attack {
         hitbox.width = owner.width;
         hitbox.height = owner.height / 2f;
         damage = 2;
+        currentDamage = damage;
     }
 
     @Override
     public void start() {
+        owner.setVulnerable(false);
         owner.currentSpeed = DASH_SPEED;
         attackX = owner.getAttackX();
         attackY = owner.getAttackY();
@@ -43,8 +45,8 @@ public class DashAttack extends Attack {
     public void addHitEntity(Entity entity){
         updateHitbox();
         if(hitEntities.contains(entity, false)) return;
-        entity.takeDamage(this.damage);
-        IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, owner.getAngle(), SLICE_COLOR.RED));
+        entity.takeDamage(this.currentDamage);
+        if(currentDamage > 0) IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, owner.getAngle(), SLICE_COLOR.RED));
         if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
         hitEntities.add(entity);
     }
@@ -53,5 +55,10 @@ public class DashAttack extends Attack {
     public void updateHitbox() {
         hitbox.x = owner.getX() - owner.getWidth() / 2;
         hitbox.y = owner.getY() + owner.getHeight() / 2;
+    }
+
+    public void end(){
+        super.end();
+        owner.setVulnerable(true);
     }
 }

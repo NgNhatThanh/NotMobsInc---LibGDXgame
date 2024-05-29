@@ -21,7 +21,7 @@ public class ArrowShoot extends Attack {
 
     Texture arrow;
     Array<Bullet> arrows;
-    int arrowSpeed = 700;
+    int arrowSpeed = 850;
 
     int frameToShoot;
     boolean shoot = true;
@@ -30,8 +30,8 @@ public class ArrowShoot extends Attack {
     public ArrowShoot(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         shapeRenderer.setAutoShapeType(true);
-
         damage = 3;
+        currentDamage = damage;
 
         frameToShoot = 6;
         arrows = new Array<>();
@@ -61,7 +61,7 @@ public class ArrowShoot extends Attack {
     public void addHitEntity(Entity entity) {
         if(owner.isDead() || hitEntities.contains(entity, false)) return;
         IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, 45, SLICE_COLOR.WHITE));
-        entity.takeDamage(this.damage);
+        entity.takeDamage(this.currentDamage);
         hitEntities.add(entity);
     }
 

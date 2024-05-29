@@ -14,7 +14,7 @@ public abstract class Enemy extends Entity{
 
     public void takeDamage(int damage){
         super.takeDamage(damage);
-        ConstantSound.getInstance().playEnemyHitSound();
+        if(damage > 0) ConstantSound.getInstance().playEnemyHitSound();
     }
 
     public void update(){
