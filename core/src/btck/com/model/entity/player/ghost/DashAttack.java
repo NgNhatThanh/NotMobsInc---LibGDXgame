@@ -5,6 +5,7 @@ import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
 import btck.com.model.entity.Player;
+import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -43,7 +44,7 @@ public class DashAttack extends Attack {
         updateHitbox();
         if(hitEntities.contains(entity, false)) return;
         entity.takeDamage(this.damage);
-        IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, owner.getAngle()));
+        IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, owner.getAngle(), SLICE_COLOR.RED));
         if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
         hitEntities.add(entity);
     }

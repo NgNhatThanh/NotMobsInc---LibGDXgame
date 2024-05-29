@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class Slice extends Effect{
 
-    static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("atlas/effect/slice/slice.atlas"));
+    static TextureAtlas redSliceAtlas = new TextureAtlas(Gdx.files.internal("atlas/effect/slice/red-slice.atlas"));
+    static TextureAtlas whiteSliceAtlas = new TextureAtlas(Gdx.files.internal("atlas/effect/slice/white-slice.atlas"));
 
-    public Slice(float x, float y, float angle){
+    public Slice(float x, float y, float angle, SLICE_COLOR color){
         super(x, y, angle);
         this.FRAME_DURATION = 0.03f;
-        ani = new Animation<>(FRAME_DURATION, atlas.findRegions("slice"));
+        if(color == SLICE_COLOR.RED) ani = new Animation<>(FRAME_DURATION, redSliceAtlas.findRegions("slice"));
+        else ani = new Animation<>(FRAME_DURATION, whiteSliceAtlas.findRegions("slice"));
         sample = new Texture(Gdx.files.internal("atlas/effect/slice/slice_sample.png"));
         System.out.println(width + " " + heigth);
         width = sample.getWidth();
