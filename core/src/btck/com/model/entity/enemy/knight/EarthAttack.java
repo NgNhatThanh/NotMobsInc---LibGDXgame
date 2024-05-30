@@ -3,9 +3,12 @@ package btck.com.model.entity.enemy.knight;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Entity;
+import btck.com.view.effect.SLICE_COLOR;
+import btck.com.view.effect.Slice;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import screens.IngameScreen;
 
 public class EarthAttack extends Attack {
 
@@ -34,6 +37,7 @@ public class EarthAttack extends Attack {
     public void addHitEntity(Entity entity) {
         if(hitEntities.contains(entity, false)) return;
         if(animation.getKeyFrameIndex(owner.getStatetime()) >= frameToDealDamage[0]){
+            IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, 45, SLICE_COLOR.WHITE));
             hitEntities.add(entity);
             entity.takeDamage(this.currentDamage);
         }

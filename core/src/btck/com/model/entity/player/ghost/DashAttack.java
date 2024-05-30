@@ -14,7 +14,7 @@ import screens.IngameScreen;
 
 public class DashAttack extends Attack {
 
-    final int DASH_SPEED = 600;
+    final int DASH_SPEED = 450;
 
     float attackX, attackY;
 
@@ -43,12 +43,14 @@ public class DashAttack extends Attack {
     public void update(float statetime) {}
 
     public void addHitEntity(Entity entity){
-        updateHitbox();
-        if(hitEntities.contains(entity, false)) return;
-        entity.takeDamage(this.currentDamage);
-        if(currentDamage > 0) IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, owner.getAngle(), SLICE_COLOR.RED));
-        if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
-        hitEntities.add(entity);
+        if(animation.getKeyFrameIndex(owner.getStatetime()) < 6){
+            updateHitbox();
+            if(hitEntities.contains(entity, false)) return;
+            entity.takeDamage(this.currentDamage);
+            if(currentDamage > 0) IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, owner.getAngle(), SLICE_COLOR.RED));
+            if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
+            hitEntities.add(entity);
+        }
     }
 
     @Override
