@@ -8,7 +8,7 @@ public class Blinking {
     static public boolean blinking = false;
     static public boolean appearing = true;
     static private float curTime = 0;
-    static private float blinkDuration = 0.64f;
+    static private float blinkDuration = 0.8f;
     static private float invisibleTime = 0.08f;
 
     public static void blink(){
