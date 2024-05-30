@@ -2,6 +2,8 @@ package btck.com.common.io;
 
 import btck.com.GameManager;
 import btck.com.model.constant.GameState;
+import btck.com.utils.DEBUG_MODE;
+import btck.com.utils.Debugger;
 import com.badlogic.gdx.InputProcessor;
 
 public class MouseHandler implements InputProcessor {
@@ -25,6 +27,10 @@ public class MouseHandler implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
+        if(character == 'd' || character == 'D'){
+            if(Debugger.debugMode == DEBUG_MODE.ON) Debugger.setDebugMode(DEBUG_MODE.OFF);
+            else Debugger.setDebugMode(DEBUG_MODE.ON);
+        }
         return false;
     }
 

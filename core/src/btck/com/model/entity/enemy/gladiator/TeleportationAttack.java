@@ -3,13 +3,14 @@ package btck.com.model.entity.enemy.gladiator;
 import btck.com.GameManager;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
-import btck.com.model.entity.Player;
+import btck.com.view.effect.SLICE_COLOR;
+import btck.com.view.effect.Slice;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import screens.IngameScreen;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -27,6 +28,7 @@ public class TeleportationAttack extends Attack {
         hitbox.width = owner.width;
         hitbox.height = owner.height;
         damage = 2;
+        currentDamage = damage;
         coolDown = 1000;
         lastAttackTime = 0;
     }
@@ -35,7 +37,7 @@ public class TeleportationAttack extends Attack {
     public void start() {
         targetX = GameManager.getInstance().getCurrentPlayer().getX();
         targetY = GameManager.getInstance().getCurrentPlayer().getY();
-        damage = 0;
+        currentDamage = 0;
         owner.setFlip(!(targetX > owner.getX()));
         owner.currentSpeed = teleportSpeed;
     }
@@ -45,7 +47,7 @@ public class TeleportationAttack extends Attack {
         if(owner.isDead()) return;
         int currentFrame = animation.getKeyFrameIndex(statetime);
         if(currentFrame > frameToTeleport){
-            damage = 2;
+            currentDamage = 2;
             moveTowardsTarget();
         }
     }
@@ -56,7 +58,8 @@ public class TeleportationAttack extends Attack {
         if(currentFrame > frameToTeleport){
             updateHitbox();
             if(hitEntities.contains(entity, false)) return;
-            entity.takeDamage(this.damage);
+            IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, 45, SLICE_COLOR.WHITE));
+            entity.takeDamage(this.currentDamage);
             hitEntities.add(entity);
         }
     }

@@ -1,42 +1,24 @@
 package btck.com.view.effect;
 
-import btck.com.MyGdxGame;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 
-public class Slice {
+public class Slice extends Effect{
 
-    Animation<TextureRegion> ani;
-    float FRAME_DURATION = 0.03f;
-    float statetime = 0;
-    float x, y, angle;
+    static TextureAtlas redSliceAtlas = new TextureAtlas(Gdx.files.internal("atlas/effect/slice/red-slice.atlas"));
+    static TextureAtlas whiteSliceAtlas = new TextureAtlas(Gdx.files.internal("atlas/effect/slice/white-slice.atlas"));
 
-    public Slice(Array<TextureAtlas.AtlasRegion> regionArray, float x, float y, float angle){
-        ani = new Animation<>(FRAME_DURATION, regionArray);
-        this. x = x;
-        this.y = y;
-        this.angle = angle;
+    public Slice(float x, float y, float angle, SLICE_COLOR color){
+        super(x, y, angle);
+        this.FRAME_DURATION = 0.03f;
+        if(color == SLICE_COLOR.RED) ani = new Animation<>(FRAME_DURATION, redSliceAtlas.findRegions("slice"));
+        else ani = new Animation<>(FRAME_DURATION, whiteSliceAtlas.findRegions("slice"));
+        sample = new Texture(Gdx.files.internal("atlas/effect/slice/slice_sample.png"));
+        System.out.println(width + " " + heigth);
+        width = sample.getWidth();
+        heigth = sample.getHeight();
+        sample.dispose();
     }
-
-    public void draw(){
-        statetime += Gdx.graphics.getDeltaTime();
-        MyGdxGame.batch.draw(ani.getKeyFrame(statetime, false),
-                x,
-                y,
-                ani.getKeyFrame(statetime).getRegionWidth() / 2,
-                ani.getKeyFrame(statetime).getRegionHeight() / 2,
-                ani.getKeyFrame(statetime).getRegionWidth(),
-                ani.getKeyFrame(statetime).getRegionHeight(),
-                1,
-                1,
-                angle);
-    }
-
-    public boolean isFinish(){
-        return ani.isAnimationFinished(statetime);
-    }
-
 }

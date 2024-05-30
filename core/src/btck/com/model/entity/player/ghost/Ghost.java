@@ -2,8 +2,9 @@ package btck.com.model.entity.player.ghost;
 
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.io.sound.ConstantSound;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Player;
+import btck.com.model.entity.player.Blinking;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -69,8 +70,6 @@ public class Ghost extends Player {
             return;
         }
 
-        attack.update(statetime);
-
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;
             animationIdx = 1;
@@ -78,11 +77,13 @@ public class Ghost extends Player {
             attack.end();
         }
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
+        if(Blinking.blinking) Blinking.update();
+
+        if(Blinking.appearing) spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if(!dead){
             if(!attacking){
-                move(Gdx.input.getX(), Constants.screenHeight - Gdx.input.getY());
+                move(Gdx.input.getX(), Constants.SCREEN_HEIGHT - Gdx.input.getY());
             }
             else{
                 move(attackX, attackY);
@@ -105,11 +106,10 @@ public class Ghost extends Player {
     }
 
     public void attack(int x, int y) {
-        if(!attacking)
-            ConstantSound.getInstance().slash.play(ConstantSound.getInstance().getSoundVolume());
+        if(!attacking) ConstantSound.getInstance().slash.play(ConstantSound.getInstance().getSoundVolume());
 
         if(!dead && !attacking){
-            attackX = x; attackY = Constants.screenHeight - y;
+            attackX = x; attackY = Constants.SCREEN_HEIGHT - y;
             animationIdx = 2;
             attacking = true;
             statetime = 0;

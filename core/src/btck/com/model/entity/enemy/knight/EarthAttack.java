@@ -3,7 +3,6 @@ package btck.com.model.entity.enemy.knight;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,6 +17,7 @@ public class EarthAttack extends Attack {
         frameToDealDamage = new int[1];
         frameToDealDamage[0] = 10;
         damage = 2;
+        currentDamage = damage;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class EarthAttack extends Attack {
         if(hitEntities.contains(entity, false)) return;
         if(animation.getKeyFrameIndex(owner.getStatetime()) >= frameToDealDamage[0]){
             hitEntities.add(entity);
-            entity.takeDamage(this.damage);
+            entity.takeDamage(this.currentDamage);
         }
     }
 

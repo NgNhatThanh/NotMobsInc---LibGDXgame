@@ -4,8 +4,10 @@ import btck.com.MyGdxGame;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.Bullet;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Entity;
+import btck.com.view.effect.SLICE_COLOR;
+import btck.com.view.effect.Slice;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -13,12 +15,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import screens.IngameScreen;
 
 public class ArrowShoot extends Attack {
 
     Texture arrow;
     Array<Bullet> arrows;
-    int arrowSpeed = 700;
+    int arrowSpeed = 850;
 
     int frameToShoot;
     boolean shoot = true;
@@ -27,8 +30,8 @@ public class ArrowShoot extends Attack {
     public ArrowShoot(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         shapeRenderer.setAutoShapeType(true);
-
         damage = 3;
+        currentDamage = damage;
 
         frameToShoot = 6;
         arrows = new Array<>();
@@ -57,7 +60,8 @@ public class ArrowShoot extends Attack {
     @Override
     public void addHitEntity(Entity entity) {
         if(owner.isDead() || hitEntities.contains(entity, false)) return;
-        entity.takeDamage(this.damage);
+        IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, 45, SLICE_COLOR.WHITE));
+        entity.takeDamage(this.currentDamage);
         hitEntities.add(entity);
     }
 
@@ -68,7 +72,7 @@ public class ArrowShoot extends Attack {
             Rectangle thisHitbox = thisFireBall.getHitbox();
 
             if(thisHitbox.x < 0 || thisHitbox.x > Constants.SCREEN_WIDTH || thisHitbox.y < 0
-               || thisHitbox.y > Constants.screenHeight) arrows.removeValue(thisFireBall, false);
+               || thisHitbox.y > Constants.SCREEN_HEIGHT) arrows.removeValue(thisFireBall, false);
             else MyGdxGame.batch.draw(arrow,
                     thisHitbox.x,
                     thisHitbox.y,

@@ -3,7 +3,7 @@ package screens;
 import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.io.sound.ConstantSound;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.constant.GameState;
 import btck.com.model.entity.player.ghost.Ghost;
 import btck.com.ui.Button;
@@ -23,7 +23,7 @@ public class MainMenuScreen  implements Screen {
     public final int settingWidth = 400;
     public final int settingHeight = 100;
     int newGameX = (Constants.SCREEN_WIDTH - newGameWidth - 20);
-    int newGameY = (Constants.screenHeight - newGameHeight - 50);
+    int newGameY = (Constants.SCREEN_HEIGHT - newGameHeight - 50);
     int creditX = newGameX - 15;
     int creditY = newGameY - 120;
     int settingX = newGameX;

@@ -1,7 +1,7 @@
 package btck.com.controller.spawn;
 
 import btck.com.GameManager;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.enemy.archer.Archer;
 import btck.com.model.entity.enemy.knight.Knight;
@@ -47,7 +47,7 @@ public class Spawner {
             }
 
             float randomX = rand.nextInt((int) (Constants.SCREEN_WIDTH - spawnEnemy.width));
-            float randomY = rand.nextInt((int) (Constants.screenHeight - spawnEnemy.height));
+            float randomY = rand.nextInt((int) (Constants.SCREEN_HEIGHT - spawnEnemy.height));
             spawnEnemy.setX(randomX);
             spawnEnemy.setY(randomY);
             GameManager.getInstance().addEnemy(spawnEnemy);

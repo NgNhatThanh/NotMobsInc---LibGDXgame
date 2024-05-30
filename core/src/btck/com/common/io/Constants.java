@@ -1,9 +1,9 @@
-package btck.com.model.constant;
+package btck.com.common.io;
 
 public class Constants {
 
     static public final int SCREEN_WIDTH = 1400;
-    static public final int screenHeight = 850;
+    static public final int SCREEN_HEIGHT = 850;
 
     static public final String ATTACK_SFX_PATH = "sound/sound ingame/dash.mp3";
 

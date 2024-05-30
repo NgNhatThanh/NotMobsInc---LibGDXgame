@@ -1,6 +1,6 @@
 package btck.com.ui;
 
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -51,7 +51,7 @@ public class Button {
 
     public void update(){
         int mouseX = Gdx.input.getX();
-        int mouseY = Constants.screenHeight - Gdx.input.getY();
+        int mouseY = Constants.SCREEN_HEIGHT - Gdx.input.getY();
         if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
             isHovered = true;
         } else {
