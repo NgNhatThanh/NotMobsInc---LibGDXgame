@@ -30,7 +30,7 @@ public class ArrowShoot extends Attack {
     public ArrowShoot(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         shapeRenderer.setAutoShapeType(true);
-        damage = 3;
+        damage = 4;
         currentDamage = damage;
 
         frameToShoot = 6;

@@ -22,7 +22,7 @@ public class EarthAttack extends Attack {
         hitbox.height = owner.getHitbox().height * 1.5f;
         frameToDealDamage = new int[1];
         frameToDealDamage[0] = 10;
-        damage = 2;
+        damage = 10;
         currentDamage = damage;
     }
 

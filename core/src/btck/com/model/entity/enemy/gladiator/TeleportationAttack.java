@@ -27,7 +27,7 @@ public class TeleportationAttack extends Attack {
         hitbox = new Rectangle();
         hitbox.width = owner.width;
         hitbox.height = owner.height;
-        damage = 2;
+        damage = 6;
         currentDamage = damage;
         coolDown = 1000;
         lastAttackTime = 0;
