@@ -19,7 +19,7 @@ public class Bloodstain extends Effect{
     public Bloodstain(float x, float y, float angle){
         super(x, y, angle);
         int idx = rnd.nextInt(atlases.length);
-        timeToDisappear = rnd.nextInt(10) + 10;
+        timeToDisappear = rnd.nextInt(10) + 30;
         this.FRAME_DURATION = timeToDisappear + 1;
         ani = new Animation<>(FRAME_DURATION, atlases[idx].findRegions("blood-stain"));
         sample = new Texture(Gdx.files.internal("atlas/effect/bloodstain/blood-stain_sample.png"));
