@@ -21,7 +21,7 @@ public class DashAttack extends Attack {
 
     float angle;
 
-    float dashDistance = 300;
+    float dashDistance = 250;
 
     float curDashDistance = 0;
 
