@@ -1,6 +1,6 @@
 package btck.com.common.io;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import btck.com.model.constant.GameState;
 import btck.com.utils.DEBUG_MODE;
 import btck.com.utils.Debugger;

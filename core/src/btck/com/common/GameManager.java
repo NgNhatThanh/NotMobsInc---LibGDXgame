@@ -1,4 +1,4 @@
-package btck.com;
+package btck.com.common;
 
 import btck.com.model.constant.GameState;
 import btck.com.model.entity.Enemy;

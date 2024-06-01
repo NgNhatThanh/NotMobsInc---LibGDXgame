@@ -1,14 +1,10 @@
 package btck.com.model.entity;
 
-import btck.com.common.io.Constants;
-import btck.com.common.io.sound.ConstantSound;
-import btck.com.model.constant.PlayerState;
+import btck.com.common.sound.ConstantSound;
 import btck.com.model.entity.player.Blinking;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.nio.channels.spi.SelectorProvider;
 @Getter
 @Setter
 public abstract class Player extends Entity{

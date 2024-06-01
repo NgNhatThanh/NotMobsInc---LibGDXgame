@@ -1,6 +1,6 @@
 package btck.com.view.effect;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;

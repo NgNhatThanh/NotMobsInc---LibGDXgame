@@ -1,6 +1,6 @@
 package btck.com.utils;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

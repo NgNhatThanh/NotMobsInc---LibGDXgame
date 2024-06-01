@@ -1,6 +1,6 @@
 package btck.com.view.hud;
 
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

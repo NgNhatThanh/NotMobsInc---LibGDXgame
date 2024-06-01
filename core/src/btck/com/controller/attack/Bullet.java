@@ -1,6 +1,6 @@
 package btck.com.controller.attack;
 
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import lombok.Getter;

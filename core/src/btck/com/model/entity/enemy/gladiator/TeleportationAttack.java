@@ -1,7 +1,7 @@
 package btck.com.model.entity.enemy.gladiator;
 
-import btck.com.GameManager;
-import btck.com.common.io.sound.ConstantSound;
+import btck.com.common.GameManager;
+import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Entity;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import screens.IngameScreen;
+import btck.com.view.screens.IngameScreen;
 
 import java.util.Random;
 

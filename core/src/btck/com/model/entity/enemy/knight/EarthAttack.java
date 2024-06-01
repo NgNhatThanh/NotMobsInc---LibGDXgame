@@ -9,7 +9,7 @@ import btck.com.view.effect.Slice;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import screens.IngameScreen;
+import btck.com.view.screens.IngameScreen;
 
 public class EarthAttack extends Attack {
 

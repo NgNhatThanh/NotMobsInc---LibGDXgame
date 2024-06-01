@@ -1,6 +1,6 @@
 package btck.com.ui;
 
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

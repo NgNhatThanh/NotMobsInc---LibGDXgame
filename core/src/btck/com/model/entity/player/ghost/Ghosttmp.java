@@ -1,8 +1,8 @@
 package btck.com.model.entity.player.ghost;
 
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.common.io.sound.ConstantSound;
-import btck.com.common.io.Constants;
+import btck.com.common.sound.ConstantSound;
+import btck.com.common.Constants;
 import btck.com.model.entity.Player;
 import btck.com.model.entity.player.Blinking;
 import com.badlogic.gdx.Gdx;

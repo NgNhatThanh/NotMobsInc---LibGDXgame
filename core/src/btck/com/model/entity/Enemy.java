@@ -1,8 +1,8 @@
 package btck.com.model.entity;
 
-import btck.com.common.io.sound.ConstantSound;
+import btck.com.common.sound.ConstantSound;
 import btck.com.view.effect.Bloodstain;
-import screens.IngameScreen;
+import btck.com.view.screens.IngameScreen;
 
 public abstract class Enemy extends Entity{
     public int exp;

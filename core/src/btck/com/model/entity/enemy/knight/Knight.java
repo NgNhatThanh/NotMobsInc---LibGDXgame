@@ -1,8 +1,8 @@
 package btck.com.model.entity.enemy.knight;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

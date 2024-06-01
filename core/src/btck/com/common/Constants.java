@@ -1,4 +1,4 @@
-package btck.com.common.io;
+package btck.com.common;
 
 public class Constants {
 

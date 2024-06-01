@@ -1,7 +1,7 @@
-package screens;
+package btck.com.view.screens;
 
 import btck.com.MyGdxGame;
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

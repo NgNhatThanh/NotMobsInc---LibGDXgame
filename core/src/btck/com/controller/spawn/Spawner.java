@@ -1,7 +1,7 @@
 package btck.com.controller.spawn;
 
-import btck.com.GameManager;
-import btck.com.common.io.Constants;
+import btck.com.common.GameManager;
+import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.enemy.archer.Archer;
 import btck.com.model.entity.enemy.knight.Knight;

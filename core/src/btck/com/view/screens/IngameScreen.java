@@ -1,11 +1,11 @@
-package screens;
+package btck.com.view.screens;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.io.MouseHandler;
-import btck.com.common.io.sound.ConstantSound;
+import btck.com.common.sound.ConstantSound;
 import btck.com.controller.spawn.Spawner;
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.utils.DEBUG_MODE;

@@ -1,8 +1,7 @@
 package btck.com.model.entity.player;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import com.badlogic.gdx.Gdx;
-import lombok.Getter;
 
 public class Blinking {
     static public boolean blinking = false;

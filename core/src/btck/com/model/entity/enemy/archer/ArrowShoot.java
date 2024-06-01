@@ -1,11 +1,11 @@
 package btck.com.model.entity.enemy.archer;
 
 import btck.com.MyGdxGame;
-import btck.com.common.io.sound.ConstantSound;
+import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.Bullet;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import btck.com.model.entity.Entity;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import screens.IngameScreen;
+import btck.com.view.screens.IngameScreen;
 
 public class ArrowShoot extends Attack {
 
