@@ -1,6 +1,7 @@
 package btck.com.model.entity.enemy.archer;
 
 import btck.com.MyGdxGame;
+import btck.com.common.io.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.Bullet;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
@@ -9,6 +10,7 @@ import btck.com.model.entity.Entity;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,6 +20,8 @@ import com.badlogic.gdx.utils.Array;
 import screens.IngameScreen;
 
 public class ArrowShoot extends Attack {
+
+    static Sound sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/arrow shot.mp3"));
 
     Texture arrow;
     Array<Bullet> arrows;
@@ -30,7 +34,7 @@ public class ArrowShoot extends Attack {
     public ArrowShoot(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         shapeRenderer.setAutoShapeType(true);
-        damage = 3;
+        damage = 4;
         currentDamage = damage;
 
         frameToShoot = 6;
@@ -50,8 +54,9 @@ public class ArrowShoot extends Attack {
 
     @Override
     public void update(float statetime) {
-        if(!shoot && animation.getKeyFrameIndex(statetime) == frameToShoot){
+        if(!owner.isDead() && !shoot && animation.getKeyFrameIndex(statetime) == frameToShoot){
             arrows.add(new Bullet(owner.getX(), owner.getY() + owner.getHeight() / 2, owner.getAttackX(), owner.getAttackY(), arrowSpeed, this.hitbox.width, this.hitbox.height));
+            sfx.play(ConstantSound.getInstance().getSoundVolume());
             shoot = true;
         }
         updateHitbox();

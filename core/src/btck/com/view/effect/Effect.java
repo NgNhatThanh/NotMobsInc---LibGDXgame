@@ -12,7 +12,7 @@ public abstract class Effect {
     float x, y, width, heigth, angle;
     float FRAME_DURATION;
     float currentTime = 0;
-    Texture sample;
+    boolean fixedSize = true;
 
     public Effect(float x, float y, float angle){
         this.x = x;
@@ -22,6 +22,12 @@ public abstract class Effect {
 
     public void draw(){
         currentTime += Gdx.graphics.getDeltaTime();
+
+        if(fixedSize){
+            width = ani.getKeyFrame(currentTime).getRegionWidth();
+            heigth = ani.getKeyFrame(currentTime).getRegionHeight();
+        }
+
         MyGdxGame.batch.draw(ani.getKeyFrame(currentTime, false),
                 x,
                 y,

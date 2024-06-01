@@ -22,10 +22,6 @@ public class Bloodstain extends Effect{
         timeToDisappear = rnd.nextInt(10) + 30;
         this.FRAME_DURATION = timeToDisappear + 1;
         ani = new Animation<>(FRAME_DURATION, atlases[idx].findRegions("blood-stain"));
-        sample = new Texture(Gdx.files.internal("atlas/effect/bloodstain/blood-stain_sample.png"));
-        width = sample.getWidth();
-        heigth = sample.getHeight();
-        sample.dispose();
     }
 
     public void draw(){

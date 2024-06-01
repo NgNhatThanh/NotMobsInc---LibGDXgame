@@ -1,23 +1,33 @@
 package btck.com.model.entity.enemy.gladiator;
 
 import btck.com.GameManager;
+import btck.com.common.io.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Entity;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import screens.IngameScreen;
+
+import java.util.Random;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
 public class TeleportationAttack extends Attack {
 
+    static Sound[] sfx = {Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/gladiator attack 1.mp3")),
+                        Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/gladiator attack 2.mp3"))};
+    static Random rnd = new Random();
+    int sfxIdx;
+
     final int teleportSpeed = 450;
+    private boolean sfxPlayed = false;
     private float targetX, targetY;
     private float a, b, x1, y1 ,deltaSP;
     int frameToTeleport = 2;
@@ -27,10 +37,11 @@ public class TeleportationAttack extends Attack {
         hitbox = new Rectangle();
         hitbox.width = owner.width;
         hitbox.height = owner.height;
-        damage = 2;
+        damage = 6;
         currentDamage = damage;
         coolDown = 1000;
         lastAttackTime = 0;
+        sfxIdx = rnd.nextInt(2);
     }
 
     @Override
@@ -47,7 +58,11 @@ public class TeleportationAttack extends Attack {
         if(owner.isDead()) return;
         int currentFrame = animation.getKeyFrameIndex(statetime);
         if(currentFrame > frameToTeleport){
-            currentDamage = 2;
+            currentDamage = damage;
+            if(!sfxPlayed){
+                sfx[sfxIdx].play(ConstantSound.getInstance().getSoundVolume());
+                sfxPlayed = true;
+            }
             moveTowardsTarget();
         }
     }
@@ -102,4 +117,8 @@ public class TeleportationAttack extends Attack {
         owner.setY(y1);
     }
 
+    public void end(){
+        super.end();
+        sfxPlayed = false;
+    }
 }

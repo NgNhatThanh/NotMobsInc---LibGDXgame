@@ -15,10 +15,5 @@ public class Slice extends Effect{
         this.FRAME_DURATION = 0.03f;
         if(color == SLICE_COLOR.RED) ani = new Animation<>(FRAME_DURATION, redSliceAtlas.findRegions("slice"));
         else ani = new Animation<>(FRAME_DURATION, whiteSliceAtlas.findRegions("slice"));
-        sample = new Texture(Gdx.files.internal("atlas/effect/slice/slice_sample.png"));
-        System.out.println(width + " " + heigth);
-        width = sample.getWidth();
-        heigth = sample.getHeight();
-        sample.dispose();
     }
 }

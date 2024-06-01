@@ -3,6 +3,7 @@ package btck.com.model.entity.enemy.knight;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Entity;
+import btck.com.view.effect.AirStrike;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,14 +13,16 @@ import screens.IngameScreen;
 
 public class EarthAttack extends Attack {
 
+    private boolean effAdded = false;
+
     public EarthAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         hitbox = new Rectangle();
         hitbox.width = 200;
-        hitbox.height = owner.getHitbox().height;
+        hitbox.height = owner.getHitbox().height * 1.5f;
         frameToDealDamage = new int[1];
         frameToDealDamage[0] = 10;
-        damage = 2;
+        damage = 10;
         currentDamage = damage;
     }
 
@@ -30,7 +33,10 @@ public class EarthAttack extends Attack {
 
     @Override
     public void update(float statetime) {
-
+        if (!effAdded && animation.getKeyFrameIndex(statetime) >= 10) {
+            IngameScreen.addTopEffect(new AirStrike(owner.getX(), owner.getY()));
+            effAdded = true;
+        }
     }
 
     @Override
@@ -47,5 +53,10 @@ public class EarthAttack extends Attack {
     public void updateHitbox() {
         hitbox.x = owner.getX() - 100;
         hitbox.y = owner.getY() - 50;
+    }
+
+    public void end(){
+        super.end();
+        effAdded = false;
     }
 }
