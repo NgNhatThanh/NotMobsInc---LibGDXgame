@@ -4,6 +4,7 @@ import btck.com.common.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.io.MouseHandler;
 import btck.com.common.sound.ConstantSound;
+import btck.com.controller.attack.Bullet;
 import btck.com.controller.spawn.Spawner;
 import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
@@ -18,10 +19,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import lombok.Getter;
+
 import java.util.Iterator;
 import java.util.Random;
 
@@ -43,8 +47,12 @@ public class IngameScreen implements Screen {
     private final Texture map;
     private final Texture frame;
     private final HUD hud;
+    @Getter
     private static Array<Effect> topLayerEffects;
+    @Getter
     private static Array<Effect> bottomLayerEffects;
+    @Getter
+    private static Array<Bullet> bullets;
 
     Vector3 center = new Vector3((float) Constants.SCREEN_WIDTH / 2, (float) Constants.SCREEN_HEIGHT / 2, 0);
 
@@ -56,6 +64,7 @@ public class IngameScreen implements Screen {
 
         topLayerEffects = new Array<>();
         bottomLayerEffects = new Array<>();
+        bullets = new Array<>();
         this.btnQuit = new Button(quitX, quitY, quitWidth, quitHeight, Constants.QUIT_ICON_INACTIVE_PATH, Constants.QUIT_ICON_ACTIVE_PATH);
         this.spawner = new Spawner(maxEnemyAmount, maxEnemySpawnAtOnce);
 
@@ -98,6 +107,15 @@ public class IngameScreen implements Screen {
             Effect tmp = eff.next();
             tmp.draw();
             if(tmp.isFinished()) eff.remove();
+        }
+
+        updateBullets();
+
+        for(Bullet bullet : bullets){
+            if(player.isVulnerable() && bullet.getHitbox().overlaps(player.getHitbox())){
+                player.takeDamage(bullet.getDamage());
+                bullets.removeValue(bullet, false);
+            }
         }
 
         for (Iterator<Enemy> enemyIterator = GameManager.getInstance().getEnemies().iterator(); enemyIterator.hasNext(); ) {
@@ -160,6 +178,8 @@ public class IngameScreen implements Screen {
 
     public static void addBottomEffect(Effect eff){ bottomLayerEffects.add(eff); }
 
+    public static void addBullet(Bullet bullet){ bullets.add(bullet); }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -195,6 +215,32 @@ public class IngameScreen implements Screen {
             btnQuit.setClicked(false);
             this.dispose();
             myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+        }
+    }
+
+    public void updateBullets(){
+        for(Bullet bullet : bullets){
+            bullet.move();
+            Rectangle thisHitbox = bullet.getHitbox();
+
+            if(thisHitbox.x < 0 || thisHitbox.x > Constants.SCREEN_WIDTH || thisHitbox.y < 0
+                    || thisHitbox.y > Constants.SCREEN_HEIGHT) bullets.removeValue(bullet, false);
+            else MyGdxGame.batch.draw(bullet.getTexture(),
+                    thisHitbox.x,
+                    thisHitbox.y,
+                    thisHitbox.width / 2,
+                    thisHitbox.height / 2,
+                    thisHitbox.width,
+                    thisHitbox.height,
+                    1,
+                    1,
+                    bullet.getRotation(),
+                    0,
+                    0,
+                    (int)thisHitbox.width,
+                    (int)thisHitbox.height,
+                    bullet.isFlip(),
+                    false);
         }
     }
 }

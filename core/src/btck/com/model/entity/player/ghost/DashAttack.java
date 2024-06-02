@@ -34,6 +34,7 @@ public class DashAttack extends Attack {
         hitbox.height = owner.height / 2f;
         damage = 2;
         currentDamage = damage;
+        owner.attackSpeed = DASH_SPEED;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class DashAttack extends Attack {
         startX = owner.getX();
         startY = owner.getY();
         owner.setVulnerable(false);
-        owner.currentSpeed = DASH_SPEED;
+        owner.currentSpeed = owner.attackSpeed;
         attackX = owner.getAttackX();
         attackY = owner.getAttackY();
         this.angle = owner.getAngle();

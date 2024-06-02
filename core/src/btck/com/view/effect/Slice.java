@@ -1,5 +1,6 @@
 package btck.com.view.effect;
 
+import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,7 +13,7 @@ public class Slice extends Effect{
 
     public Slice(float x, float y, float angle, SLICE_COLOR color){
         super(x, y, angle);
-        this.FRAME_DURATION = 0.03f;
+        this.FRAME_DURATION = Constants.FRAME_DURATION[2];
         if(color == SLICE_COLOR.RED) ani = new Animation<>(FRAME_DURATION, redSliceAtlas.findRegions("slice"));
         else ani = new Animation<>(FRAME_DURATION, whiteSliceAtlas.findRegions("slice"));
     }

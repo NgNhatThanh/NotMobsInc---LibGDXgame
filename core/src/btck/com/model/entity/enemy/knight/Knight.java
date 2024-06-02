@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import static java.lang.Math.abs;
@@ -17,18 +16,13 @@ import static java.lang.Math.sqrt;
 
 public class Knight extends Enemy {
 
-    ShapeRenderer shapeRenderer;
-
-    float FRAME_SPEED = 0.1f;
     private float a, b, x1, y1 ,deltaSP;
 
     public Knight(){
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
-
+        FRAME_DURATION = Constants.FRAME_DURATION[0];
         sampleTexture = new Texture(Constants.KNIGHT_SAMPLE_TT_PATH);
 
-        attackRange = 150;
+        attackRange = 130;
         currentHealth = 6;
         exp = 4;
         width = sampleTexture.getWidth();
@@ -42,11 +36,11 @@ public class Knight extends Enemy {
 
         hitbox = new Rectangle(0, 0, width, height);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_spawn"));
-        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_idle"));
-        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_run"));
-        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_die"));
-        animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_attack"));
+        animations[0] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_spawn"));
+        animations[1] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_idle"));
+        animations[2] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_run"));
+        animations[3] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_die"));
+        animations[4] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_attack"));
 
         attack = new EarthAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }

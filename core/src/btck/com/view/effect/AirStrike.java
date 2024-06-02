@@ -1,5 +1,6 @@
 package btck.com.view.effect;
 
+import btck.com.common.Constants;
 import btck.com.common.sound.ConstantSound;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -16,7 +17,7 @@ public class AirStrike extends Effect{
         super(x, y, 0);
         this.x -= 140;
         this.y -= 35;
-        this.FRAME_DURATION = 0.08f;
+        this.FRAME_DURATION = Constants.FRAME_DURATION[1];
         ani = new Animation<>(FRAME_DURATION, atlas.findRegions("air-strike"));
         SFX.play(ConstantSound.getInstance().getSoundVolume());
     }

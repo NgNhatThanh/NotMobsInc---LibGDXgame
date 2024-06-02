@@ -5,6 +5,8 @@ public class Constants {
     static public final int SCREEN_WIDTH = 1400;
     static public final int SCREEN_HEIGHT = 850;
 
+    static public final float[] FRAME_DURATION = {0.1f, 0.08f, 0.03f};
+
     static public final String ATTACK_SFX_PATH = "sound/sound ingame/dash.mp3";
 
     static public final String INGAME_BGM_PATH = "sound\\bgmusic\\music-ingame.mp3";

@@ -18,12 +18,13 @@ public class EarthAttack extends Attack {
     public EarthAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         hitbox = new Rectangle();
-        hitbox.width = 200;
-        hitbox.height = owner.getHitbox().height * 1.5f;
+        hitbox.width = 260;
+        hitbox.height = 260;
         frameToDealDamage = new int[1];
         frameToDealDamage[0] = 10;
         damage = 10;
         currentDamage = damage;
+        owner.attackSpeed = owner.normalSpeed;
     }
 
     @Override
@@ -51,8 +52,8 @@ public class EarthAttack extends Attack {
 
     @Override
     public void updateHitbox() {
-        hitbox.x = owner.getX() - 100;
-        hitbox.y = owner.getY() - 50;
+        hitbox.x = owner.getX() - 130;
+        hitbox.y = owner.getY() - 70;
     }
 
     public void end(){

@@ -19,11 +19,10 @@ public class Ghost extends Player {
 
     final int NORMAL_SPEED = 200;
 
-    final float FRAME_SPEED = 0.1f;
-
     private float a, b, x1, y1 ,deltaSP;
 
     public Ghost(){
+        FRAME_DURATION = Constants.FRAME_DURATION[0];
         vulnerable = true;
         nextLevelExp = 5;
         expToLevelUp = 6;
@@ -43,10 +42,10 @@ public class Ghost extends Player {
         textureAtlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
         animations = new Animation[4];
 
-        animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));
-        animations[1] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_run"));
-        animations[2] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_attack"));
-        animations[3] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_die"));
+        animations[0] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_idle"));
+        animations[1] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_run"));
+        animations[2] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_attack"));
+        animations[3] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_die"));
 
         attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.ONCE);
     }

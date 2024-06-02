@@ -2,26 +2,31 @@ package btck.com.controller.attack;
 
 import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import lombok.Getter;
+import lombok.Setter;
+import org.w3c.dom.Text;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
+@Getter
 public class Bullet {
 
     float desX, desY;
-    int speed;
-
-    @Getter
+    @Setter
+    float speed;
+    Texture texture;
     Rectangle hitbox;
-    @Getter
     float rotation;
-    @Getter
     boolean flip = true;
+    int damage;
     float a, b, x1, y1, deltaSP;
 
-    public Bullet(float x, float y, float desX, float desY, int speed, float width, float height){
+    public Bullet(Texture texture, int damage, float x, float y, float desX, float desY, int speed, float width, float height){
+        this.texture = texture;
+        this.damage = damage;
         this.speed = speed;
         this.hitbox = new Rectangle();
         this.hitbox.x = x;

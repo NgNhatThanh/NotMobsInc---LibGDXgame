@@ -20,8 +20,9 @@ public abstract class Entity{
     protected float x, y;
     protected int attackX, attackY;
     public int width, height;
-    public int normalSpeed;
-    public int currentSpeed;
+    public float normalSpeed;
+    public float attackSpeed;
+    public float currentSpeed;
     protected boolean vulnerable = false;
     protected boolean attacking;
     protected boolean flip;
@@ -34,6 +35,7 @@ public abstract class Entity{
     protected TextureAtlas textureAtlas;
     protected Animation<TextureRegion>[] animations;
     protected Texture sampleTexture;
+    protected float FRAME_DURATION;
     protected float statetime;
     protected int animationIdx;
     public abstract void draw(SpriteBatch spriteBatch);
@@ -42,10 +44,12 @@ public abstract class Entity{
 
     public void takeDamage(int damage){
         this.currentHealth -= damage;
+        if(this.currentHealth < 0) this.currentHealth = 0;
         update();
     }
 
     public void update(){
+        for(Animation<TextureRegion> animation : animations) animation.setFrameDuration(FRAME_DURATION);
         if(currentHealth <= 0){
             attacking = false;
             vulnerable = false;

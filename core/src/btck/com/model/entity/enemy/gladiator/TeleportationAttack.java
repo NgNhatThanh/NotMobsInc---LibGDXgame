@@ -42,6 +42,7 @@ public class TeleportationAttack extends Attack {
         coolDown = 1000;
         lastAttackTime = 0;
         sfxIdx = rnd.nextInt(2);
+        owner.attackSpeed = teleportSpeed;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class TeleportationAttack extends Attack {
         targetY = GameManager.getInstance().getCurrentPlayer().getY();
         currentDamage = 0;
         owner.setFlip(!(targetX > owner.getX()));
-        owner.currentSpeed = teleportSpeed;
+        owner.currentSpeed = owner.attackSpeed;
     }
 
     @Override

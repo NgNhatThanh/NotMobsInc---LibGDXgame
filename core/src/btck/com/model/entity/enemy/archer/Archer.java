@@ -16,11 +16,10 @@ import static java.lang.Math.sqrt;
 
 public class Archer extends Enemy {
 
-    float FRAME_SPEED = 0.1f;
-
     private float a, b, x1, y1 ,deltaSP;
 
     public Archer(){
+        FRAME_DURATION = Constants.FRAME_DURATION[0];
         attackRange = 200;
         currentHealth = 3;
         exp = 5;
@@ -38,11 +37,11 @@ public class Archer extends Enemy {
 
         hitbox = new Rectangle(0, 0, width, height);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_spawn"));
-        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_idle"));
-        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_run"));
-        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_die"));
-        animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_attack"));
+        animations[0] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_spawn"));
+        animations[1] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_idle"));
+        animations[2] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_run"));
+        animations[3] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_die"));
+        animations[4] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_attack"));
 
         attack = new ArrowShoot(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }

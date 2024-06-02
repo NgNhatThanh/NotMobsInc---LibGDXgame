@@ -16,11 +16,10 @@ import static java.lang.Math.sqrt;
 
 public class Gladiator extends Enemy {
 
-    float FRAME_SPEED = 0.1f;
-
     private float a, b, x1, y1 ,deltaSP;
 
     public Gladiator(){
+        FRAME_DURATION = Constants.FRAME_DURATION[0];
         attackRange = 200;
         currentHealth = 4;
         exp = 5;
@@ -38,11 +37,11 @@ public class Gladiator extends Enemy {
 
         hitbox = new Rectangle(0, 0, width, height / 2);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spawn"));
-        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
-        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("run"));
-        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("dead"));
-        animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("attack"));
+        animations[0] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spawn"));
+        animations[1] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("idle"));
+        animations[2] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("run"));
+        animations[3] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("dead"));
+        animations[4] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("attack"));
 
         attack = new TeleportationAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }

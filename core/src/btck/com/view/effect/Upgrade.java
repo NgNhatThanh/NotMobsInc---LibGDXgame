@@ -1,5 +1,6 @@
 package btck.com.view.effect;
 
+import btck.com.common.Constants;
 import btck.com.common.GameManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -11,7 +12,7 @@ public class Upgrade extends Effect{
 
     public Upgrade(float x, float y) {
         super(x, y, 0);
-        this.FRAME_DURATION = 0.1f;
+        this.FRAME_DURATION = Constants.FRAME_DURATION[0];
         ani = new Animation<>(FRAME_DURATION, atlas.findRegions("upgrade"));
         this.fixedSize = false;
         this.width = GameManager.getInstance().getCurrentPlayer().getWidth() + 90;
