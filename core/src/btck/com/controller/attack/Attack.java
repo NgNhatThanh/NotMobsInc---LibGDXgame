@@ -1,12 +1,12 @@
 package btck.com.controller.attack;
 
 import btck.com.model.entity.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import lombok.Getter;
+import lombok.Setter;
 
 
 public abstract class Attack {
@@ -15,7 +15,11 @@ public abstract class Attack {
     protected Animation<TextureRegion> animation;
     protected Array<Entity> hitEntities;
     protected DEAL_DAMAGE_TIME dealDamageType;
-    @Getter protected int damage;
+    @Getter
+    protected int damage;
+    @Getter
+    @Setter
+    protected int currentDamage;
     protected boolean[] dealed;
     protected int[] frameToDealDamage;
     protected int frameToDealDamageIdx;
@@ -37,7 +41,7 @@ public abstract class Attack {
 
     public void dealDamage(){
         for(Entity entity : hitEntities){
-            entity.takeDamage(this.damage);
+            entity.takeDamage(this.currentDamage);
         }
 
         dealed[frameToDealDamageIdx] = true;

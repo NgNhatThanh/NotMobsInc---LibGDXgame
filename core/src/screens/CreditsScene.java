@@ -1,7 +1,7 @@
 package screens;
 
 import btck.com.MyGdxGame;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -39,7 +39,7 @@ public class CreditsScene implements Screen {
         myGdxGame.batch.begin();
 
         updateArrow();
-        myGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2, (Constants.screenHeight - creditHeight) / 2, creditWidth, creditHeight);
+        myGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2, (Constants.SCREEN_HEIGHT - creditHeight) / 2, creditWidth, creditHeight);
 
 
         myGdxGame.batch.end();

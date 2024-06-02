@@ -2,7 +2,7 @@ package btck.com.model.entity.enemy.gladiator;
 
 import btck.com.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -130,7 +130,7 @@ public class Gladiator extends Enemy {
     @Override
     public void attack(int x, int y) {
         if(!dead && !attacking){
-            attackX = x; attackY = Constants.screenHeight - y;
+            attackX = x; attackY = Constants.SCREEN_HEIGHT - y;
             animationIdx = 4;
             attacking = true;
             statetime = 0;

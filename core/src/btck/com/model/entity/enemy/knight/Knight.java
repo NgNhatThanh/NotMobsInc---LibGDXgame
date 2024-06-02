@@ -2,7 +2,7 @@ package btck.com.model.entity.enemy.knight;
 
 import btck.com.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,7 +28,7 @@ public class Knight extends Enemy {
 
         sampleTexture = new Texture(Constants.KNIGHT_SAMPLE_TT_PATH);
 
-        attackRange = 70;
+        attackRange = 150;
         currentHealth = 6;
         exp = 4;
         width = sampleTexture.getWidth();
@@ -69,6 +69,8 @@ public class Knight extends Enemy {
             exist = false;
             return;
         }
+
+        if(attacking) attack.update(statetime);
 
         spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 

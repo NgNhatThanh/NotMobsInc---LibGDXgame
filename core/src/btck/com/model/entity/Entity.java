@@ -47,6 +47,7 @@ public abstract class Entity{
 
     public void update(){
         if(currentHealth <= 0){
+            attacking = false;
             vulnerable = false;
             dead = true;
             statetime = 0;

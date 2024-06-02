@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
-public class Ghost extends Player {
+public class Ghosttmp extends Player {
 
     final int NORMAL_SPEED = 200;
 
@@ -23,13 +23,13 @@ public class Ghost extends Player {
 
     private float a, b, x1, y1 ,deltaSP;
 
-    public Ghost(){
+    public Ghosttmp(){
         vulnerable = true;
         nextLevelExp = 5;
         expToLevelUp = 6;
         exist = true;
 
-        sampleTexture = new Texture(Constants.GHOST_1_SAMPLE_TT_PATH);
+        sampleTexture = new Texture(Constants.GHOST_3_SAMPLE_TT_PATH);
 
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
@@ -40,7 +40,7 @@ public class Ghost extends Player {
 
         hitbox = new Rectangle(x, y, width, height);
 
-        textureAtlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
+        textureAtlas = new TextureAtlas(Constants.GHOST_3_ATLAS_PATH);
         animations = new Animation[4];
 
         animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));

@@ -1,9 +1,9 @@
-package btck.com.model.constant;
+package btck.com.common.io;
 
 public class Constants {
 
     static public final int SCREEN_WIDTH = 1400;
-    static public final int screenHeight = 850;
+    static public final int SCREEN_HEIGHT = 850;
 
     static public final String ATTACK_SFX_PATH = "sound/sound ingame/dash.mp3";
 
@@ -11,6 +11,8 @@ public class Constants {
     static public final String MENU_BGM_PATH = "sound\\bgmusic\\music-menu.mp3";
 
     static public final String GHOST_1_SAMPLE_TT_PATH = "atlas/player/ghost1/sample.png";
+    static public final String GHOST_2_SAMPLE_TT_PATH = "atlas/player/ghost2/sample.png";
+    static public final String GHOST_3_SAMPLE_TT_PATH = "atlas/player/ghost3/sample.png";
     static public final String GHOST_4_SAMPLE_TT_PATH = "atlas/player/ghost4/sample.png";
 
     static public final String ARCHER_SAMPLE_TT_PATH = "atlas/enemy/archer/sample.png";
@@ -23,6 +25,8 @@ public class Constants {
     static public final String GLADIATOR_ATLAS_PATH = "atlas/enemy/gladiator/gladiator.atlas";
 
     static public final String GHOST_1_ATLAS_PATH = "atlas/player/ghost1/ghost1.atlas";
+    static public final String GHOST_2_ATLAS_PATH = "atlas/player/ghost2/ghost2.atlas";
+    static public final String GHOST_3_ATLAS_PATH = "atlas/player/ghost3/ghost3.atlas";
     static public final String GHOST_4_ATLAS_PATH = "atlas/player/ghost4/ghost4.atlas";
 
     static public final String BACK_ARROW_INACTIVE_ICON_PATH = "credits\\back arrow inactive.png";

@@ -1,19 +1,14 @@
 package btck.com.view.hud;
 
-import btck.com.model.constant.Constants;
+import btck.com.common.io.Constants;
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class LevelLabel extends Actor {
 //    private Viewport viewport;
@@ -42,7 +37,7 @@ public class LevelLabel extends Actor {
         super.draw(batch, parentAlpha);
         String labelText = "LEVEL " + player.getLevel();
         layout.setText(customFont, labelText);
-        customFont.draw(batch, labelText, 330, Constants.screenHeight - layout.height - 35);
+        customFont.draw(batch, labelText, 330, Constants.SCREEN_HEIGHT - layout.height - 35);
     }
 
     public void dispose() {

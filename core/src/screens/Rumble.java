@@ -1,4 +1,4 @@
-package btck.com.view.effect;
+package screens;
 
 import com.badlogic.gdx.math.Vector3;
 import lombok.Getter;
