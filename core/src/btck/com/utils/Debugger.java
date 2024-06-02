@@ -36,7 +36,13 @@ public class Debugger {
         shapeRenderer.rect(playerHitbox.x, playerHitbox.y, playerHitbox.width, playerHitbox.height);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.rect(playerAttackHB.x, playerAttackHB.y, playerAttackHB.width, playerAttackHB.height, Color.RED, Color.RED, Color.RED, Color.RED);
-        shapeRenderer.setColor(Color.WHITE);
+
+        for(Bullet bullet : IngameScreen.getBullets()){
+            Rectangle hitbox = bullet.getHitbox();
+            shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        }
+
+        shapeRenderer.setColor(Color.GREEN);
 
         for(Enemy enemy : GameManager.getInstance().enemies){
             Rectangle enemyHitbox = enemy.getHitbox();
@@ -44,13 +50,7 @@ public class Debugger {
             shapeRenderer.rect(enemyHitbox.x, enemyHitbox.y, enemyHitbox.width, enemyHitbox.height);
             shapeRenderer.setColor(Color.RED);
             shapeRenderer.rect(enemyAttackHB.x, enemyAttackHB.y, enemyAttackHB.width, enemyAttackHB.height);
-            shapeRenderer.setColor(Color.WHITE);
-        }
-
-        shapeRenderer.setColor(Color.RED);
-        for(Bullet bullet : IngameScreen.getBullets()){
-            Rectangle hitbox = bullet.getHitbox();
-            shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+            shapeRenderer.setColor(Color.GREEN);
         }
 
         shapeRenderer.end();
