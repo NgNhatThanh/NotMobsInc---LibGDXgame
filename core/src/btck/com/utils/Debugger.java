@@ -1,7 +1,9 @@
 package btck.com.utils;
 
 import btck.com.common.GameManager;
+import btck.com.controller.attack.Bullet;
 import btck.com.model.entity.Enemy;
+import btck.com.view.screens.IngameScreen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,6 +45,12 @@ public class Debugger {
             shapeRenderer.setColor(Color.RED);
             shapeRenderer.rect(enemyAttackHB.x, enemyAttackHB.y, enemyAttackHB.width, enemyAttackHB.height);
             shapeRenderer.setColor(Color.WHITE);
+        }
+
+        shapeRenderer.setColor(Color.RED);
+        for(Bullet bullet : IngameScreen.getBullets()){
+            Rectangle hitbox = bullet.getHitbox();
+            shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
         }
 
         shapeRenderer.end();
