@@ -1,10 +1,11 @@
-package btck.com.view.screens;
+package btck.com.crowd_control;
 
 import btck.com.common.GameManager;
 import btck.com.controller.attack.Bullet;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
 import btck.com.view.effect.Effect;
+import btck.com.view.screens.IngameScreen;
 
 public class SlowMo {
 

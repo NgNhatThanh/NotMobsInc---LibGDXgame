@@ -1,10 +1,9 @@
 package btck.com.common.io;
 
 import btck.com.common.GameManager;
-import btck.com.model.constant.GameState;
+import btck.com.model.state.GameState;
 import btck.com.utils.DEBUG_MODE;
 import btck.com.utils.Debugger;
-import btck.com.view.screens.SlowMo;
 import com.badlogic.gdx.InputProcessor;
 
 public class MouseHandler implements InputProcessor {

@@ -4,7 +4,7 @@ import btck.com.common.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.sound.ConstantSound;
 import btck.com.common.Constants;
-import btck.com.model.constant.GameState;
+import btck.com.model.state.GameState;
 import btck.com.model.entity.player.ghost.Ghost;
 import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;

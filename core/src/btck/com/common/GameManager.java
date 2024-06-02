@@ -1,9 +1,9 @@
 package btck.com.common;
 
-import btck.com.model.constant.GameState;
+import btck.com.model.state.GameState;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
-import btck.com.view.screens.SlowMo;
+import btck.com.crowd_control.SlowMo;
 import com.badlogic.gdx.utils.Array;
 import lombok.Getter;
 import lombok.Setter;
