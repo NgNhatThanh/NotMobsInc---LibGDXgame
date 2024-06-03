@@ -80,7 +80,7 @@ public class Ghost extends Player {
 
         if(Blinking.blinking) Blinking.update();
 
-        if(Blinking.appearing) spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
+        if(visible) spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if(!dead){
             if(!attacking){

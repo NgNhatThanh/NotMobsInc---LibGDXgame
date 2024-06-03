@@ -23,6 +23,7 @@ public abstract class Entity{
     public float normalSpeed;
     public float attackSpeed;
     public float currentSpeed;
+    protected boolean visible = true;
     protected boolean vulnerable = false;
     protected boolean attacking;
     protected boolean flip;

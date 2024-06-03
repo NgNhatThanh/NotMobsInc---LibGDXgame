@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 
 public class Blinking {
     static public boolean blinking = false;
-    static public boolean appearing = true;
     static private float curTime = 0;
     static private float blinkDuration = 0.8f;
     static private float invisibleTime = 0.08f;
@@ -20,11 +19,11 @@ public class Blinking {
     public static void update(){
         curTime += Gdx.graphics.getDeltaTime();
         if(curTime <= blinkDuration){
-            appearing = (int) (curTime / invisibleTime) % 2 != 0;
+            GameManager.getInstance().getCurrentPlayer().setVisible((int) (curTime / invisibleTime) % 2 != 0);
         }
         else{
             blinking = false;
-            appearing = true;
+            GameManager.getInstance().getCurrentPlayer().setVisible(true);
             GameManager.getInstance().getCurrentPlayer().getAttack().setCurrentDamage(GameManager.getInstance().getCurrentPlayer().getAttack().getDamage());
             GameManager.getInstance().getCurrentPlayer().setVulnerable(true);
         }
