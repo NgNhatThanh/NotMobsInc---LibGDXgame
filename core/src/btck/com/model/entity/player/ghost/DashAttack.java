@@ -61,7 +61,7 @@ public class DashAttack extends Attack {
             updateHitbox();
             if(hitEntities.contains(entity, false)) return;
             entity.takeDamage(this.currentDamage);
-            if(currentDamage > 0) IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, owner.getAngle(), SLICE_COLOR.RED));
+            if(currentDamage > 0) IngameScreen.addTopEffect(new Slice(entity.getX(), entity.getY(), owner.getAngle(), owner.getHeight(), SLICE_COLOR.RED));
             if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
             hitEntities.add(entity);
         }

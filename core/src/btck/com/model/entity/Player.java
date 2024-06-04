@@ -1,7 +1,9 @@
 package btck.com.model.entity;
 
 import btck.com.common.sound.ConstantSound;
+import btck.com.controller.attack.skill.Skill;
 import btck.com.model.entity.player.Blinking;
+import com.badlogic.gdx.utils.Array;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +15,7 @@ public abstract class Player extends Entity{
     public int currentExp;
     public int expToLevelUp;
     public int nextLevelExp;
+    public Array<Skill> skills;
 
     public void takeDamage(int damage){
         super.takeDamage(damage);

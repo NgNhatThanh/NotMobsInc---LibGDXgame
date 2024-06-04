@@ -3,6 +3,7 @@ package btck.com.model.entity.player.ghost;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.sound.ConstantSound;
 import btck.com.common.Constants;
+import btck.com.controller.attack.skill.Skill;
 import btck.com.model.entity.Player;
 import btck.com.model.entity.player.Blinking;
 import com.badlogic.gdx.Gdx;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -48,10 +50,16 @@ public class Ghost extends Player {
         animations[3] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_die"));
 
         attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.ONCE);
+
+        skills = new Array<>();
+        skills.add(new ImpactSkill(this, 1));
+        skills.add(new DeadlyBounceSkill(this, 2));
+        skills.add(new ShieldSkill(this, 3));
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        for(Skill skill : skills) skill.draw();
         statetime += Gdx.graphics.getDeltaTime();
 
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();

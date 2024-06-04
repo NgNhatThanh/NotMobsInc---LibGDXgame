@@ -21,12 +21,14 @@ public class Blinking {
         if(curTime <= blinkDuration){
             GameManager.getInstance().getCurrentPlayer().setVisible((int) (curTime / invisibleTime) % 2 != 0);
         }
-        else{
-            blinking = false;
-            GameManager.getInstance().getCurrentPlayer().setVisible(true);
-            GameManager.getInstance().getCurrentPlayer().getAttack().setCurrentDamage(GameManager.getInstance().getCurrentPlayer().getAttack().getDamage());
-            GameManager.getInstance().getCurrentPlayer().setVulnerable(true);
-        }
+        else stop();
+    }
+
+    public static void stop(){
+        blinking = false;
+        GameManager.getInstance().getCurrentPlayer().setVisible(true);
+        GameManager.getInstance().getCurrentPlayer().getAttack().setCurrentDamage(GameManager.getInstance().getCurrentPlayer().getAttack().getDamage());
+        GameManager.getInstance().getCurrentPlayer().setVulnerable(true);
     }
 
 }

@@ -14,7 +14,6 @@ public class ConstantSound {
 
     @Setter
     private float soundVolume = 0.5f;
-    @Setter
     private float bgmVolume = 0.5f;
     public Music bgmIngame = Gdx.audio.newMusic(Gdx.files.internal(Constants.INGAME_BGM_PATH));
     public Sound slash = Gdx.audio.newSound(Gdx.files.internal(Constants.ATTACK_SFX_PATH));
@@ -51,5 +50,11 @@ public class ConstantSound {
 
     public void playPlayerHitSFX(){
         playerHitSFX.play(soundVolume);
+    }
+
+    public void setBgmVolume(float volume){
+        this.bgmVolume = volume;
+        this.bgmIngame.setVolume(this.bgmVolume);
+        this.bgmMenu.setVolume(this.bgmVolume);
     }
 }

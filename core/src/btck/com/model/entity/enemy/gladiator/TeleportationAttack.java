@@ -74,7 +74,7 @@ public class TeleportationAttack extends Attack {
         if(currentFrame > frameToTeleport){
             updateHitbox();
             if(hitEntities.contains(entity, false)) return;
-            IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, 45, SLICE_COLOR.WHITE));
+            IngameScreen.addTopEffect(new Slice(entity.getX(), entity.getY(), 45, owner.getHeight(), SLICE_COLOR.WHITE));
             entity.takeDamage(this.currentDamage);
             hitEntities.add(entity);
         }

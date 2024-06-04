@@ -2,7 +2,7 @@ package btck.com.view.screens;
 
 import btck.com.common.GameManager;
 import btck.com.MyGdxGame;
-import btck.com.common.io.MouseHandler;
+import btck.com.common.io.IngameInputHandler;
 import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Bullet;
 import btck.com.controller.spawn.Spawner;
@@ -71,7 +71,7 @@ public class IngameScreen implements Screen {
         this.cam = new OrthographicCamera();
         this.viewport = new FitViewport(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, cam);
 
-        Gdx.input.setInputProcessor(new MouseHandler());
+        Gdx.input.setInputProcessor(new IngameInputHandler());
         ConstantSound.getInstance().bgmIngame.setVolume(ConstantSound.getInstance().getBgmVolume());
         ConstantSound.getInstance().bgmIngame.play();
 
@@ -157,10 +157,7 @@ public class IngameScreen implements Screen {
 
         hud.draw();
 
-        if(Debugger.debugMode == DEBUG_MODE.ON) {
-            Debugger.getInstance();
-            Debugger.debug();
-        }
+        if(Debugger.debugMode == DEBUG_MODE.ON) Debugger.getInstance().debug();
 
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
             System.out.println("chet");

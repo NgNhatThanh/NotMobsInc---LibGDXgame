@@ -2,6 +2,8 @@ package btck.com.utils;
 
 import btck.com.common.GameManager;
 import btck.com.controller.attack.Bullet;
+import btck.com.controller.attack.skill.SKILL_STATE;
+import btck.com.controller.attack.skill.Skill;
 import btck.com.model.entity.Enemy;
 import btck.com.view.screens.IngameScreen;
 import com.badlogic.gdx.graphics.Color;
@@ -28,7 +30,7 @@ public class Debugger {
         shapeRenderer.setAutoShapeType(true);
     }
 
-    public static void debug(){
+    public void debug(){
         Rectangle playerHitbox = GameManager.getInstance().getCurrentPlayer().getHitbox();
         Rectangle playerAttackHB = GameManager.getInstance().getCurrentPlayer().getAttack().getHitbox();
 
@@ -40,6 +42,14 @@ public class Debugger {
         for(Bullet bullet : IngameScreen.getBullets()){
             Rectangle hitbox = bullet.getHitbox();
             shapeRenderer.rect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
+        }
+
+        for(Skill skill : GameManager.getInstance().getCurrentPlayer().getSkills()){
+            System.out.println(skill.getState());
+            if(skill.getState() == SKILL_STATE.ACTIVE){
+                System.out.println("skill debug");
+                shapeRenderer.rect(skill.getHitbox().x, skill.getHitbox().y, skill.getHitbox().width, skill.getHitbox().height);
+            }
         }
 
         shapeRenderer.setColor(Color.GREEN);
