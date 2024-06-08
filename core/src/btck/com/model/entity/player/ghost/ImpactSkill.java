@@ -32,10 +32,11 @@ public class ImpactSkill extends Skill {
 
     public ImpactSkill(Entity owner, int slot) {
         super(owner, slot);
+        this.state = SKILL_STATE.AVAILABLE;
         this.cooldown = 6;
         this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/impact/locked.png"));
         this.availableTT = new Texture(Gdx.files.internal("atlas/skill/impact/available.png"));
-        this.FRAME_DURATION = 0.1f;
+        this.FRAME_DURATION = Constants.FRAME_DURATION[0];
         this.atlas = new TextureAtlas(Gdx.files.internal("atlas/skill/impact/active.atlas"));
         this.activeAni = new Animation<>(FRAME_DURATION, atlas.findRegions("active"));
         this.hitbox = new Rectangle(0, 0, 250, 250);
