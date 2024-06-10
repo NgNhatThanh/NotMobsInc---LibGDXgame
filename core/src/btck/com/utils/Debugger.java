@@ -37,7 +37,9 @@ public class Debugger {
         shapeRenderer.begin();
         shapeRenderer.rect(playerHitbox.x, playerHitbox.y, playerHitbox.width, playerHitbox.height);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(playerAttackHB.x, playerAttackHB.y, playerAttackHB.width, playerAttackHB.height, Color.RED, Color.RED, Color.RED, Color.RED);
+        if(GameManager.getInstance().getCurrentPlayer().isAttacking()){
+            shapeRenderer.rect(playerAttackHB.x, playerAttackHB.y, playerAttackHB.width, playerAttackHB.height);
+        }
 
         for(Bullet bullet : IngameScreen.getBullets()){
             Rectangle hitbox = bullet.getHitbox();
@@ -45,9 +47,7 @@ public class Debugger {
         }
 
         for(Skill skill : GameManager.getInstance().getCurrentPlayer().getSkills()){
-            System.out.println(skill.getState());
             if(skill.getState() == SKILL_STATE.ACTIVE){
-                System.out.println("skill debug");
                 shapeRenderer.rect(skill.getHitbox().x, skill.getHitbox().y, skill.getHitbox().width, skill.getHitbox().height);
             }
         }
@@ -58,9 +58,11 @@ public class Debugger {
             Rectangle enemyHitbox = enemy.getHitbox();
             Rectangle enemyAttackHB = enemy.getAttack().getHitbox();
             shapeRenderer.rect(enemyHitbox.x, enemyHitbox.y, enemyHitbox.width, enemyHitbox.height);
-            shapeRenderer.setColor(Color.RED);
-            shapeRenderer.rect(enemyAttackHB.x, enemyAttackHB.y, enemyAttackHB.width, enemyAttackHB.height);
-            shapeRenderer.setColor(Color.GREEN);
+            if(enemy.isAttacking()){
+                shapeRenderer.setColor(Color.RED);
+                shapeRenderer.rect(enemyAttackHB.x, enemyAttackHB.y, enemyAttackHB.width, enemyAttackHB.height);
+                shapeRenderer.setColor(Color.GREEN);
+            }
         }
 
         shapeRenderer.end();
