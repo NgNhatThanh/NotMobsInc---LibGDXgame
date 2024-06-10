@@ -35,7 +35,6 @@ public abstract class Entity{
     protected float angle;
     protected TextureAtlas textureAtlas;
     protected Animation<TextureRegion>[] animations;
-    protected Texture sampleTexture;
     protected float FRAME_DURATION;
     protected float statetime;
     protected int animationIdx;

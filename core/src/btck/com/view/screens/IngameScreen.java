@@ -13,6 +13,8 @@ import btck.com.utils.DEBUG_MODE;
 import btck.com.utils.Debugger;
 import btck.com.ui.Button;
 import btck.com.view.effect.Effect;
+import btck.com.view.effect.SLICE_COLOR;
+import btck.com.view.effect.Slice;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -114,6 +116,7 @@ public class IngameScreen implements Screen {
         for(Bullet bullet : bullets){
             if(player.isVulnerable() && bullet.getHitbox().overlaps(player.getHitbox())){
                 player.takeDamage(bullet.getDamage());
+                addTopEffect(new Slice(player.getX(), player.getY(), 45, player.getHeight(), SLICE_COLOR.WHITE));
                 bullets.removeValue(bullet, false);
             }
         }

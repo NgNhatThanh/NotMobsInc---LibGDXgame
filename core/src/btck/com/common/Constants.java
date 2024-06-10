@@ -12,15 +12,6 @@ public class Constants {
     static public final String INGAME_BGM_PATH = "sound\\bgmusic\\music-ingame.mp3";
     static public final String MENU_BGM_PATH = "sound\\bgmusic\\music-menu.mp3";
 
-    static public final String GHOST_1_SAMPLE_TT_PATH = "atlas/player/ghost1/sample.png";
-    static public final String GHOST_2_SAMPLE_TT_PATH = "atlas/player/ghost2/sample.png";
-    static public final String GHOST_3_SAMPLE_TT_PATH = "atlas/player/ghost3/sample.png";
-    static public final String GHOST_4_SAMPLE_TT_PATH = "atlas/player/ghost4/sample.png";
-
-    static public final String ARCHER_SAMPLE_TT_PATH = "atlas/enemy/archer/sample.png";
-    static public final String KNIGHT_SAMPLE_TT_PATH = "atlas/enemy/knight/sample.png";
-    static public final String GLADIATOR_SAMPLE_TT_PATH = "atlas/enemy/gladiator/sample.png";
-
     static public final String ARROW_IMG_PATH = "atlas/enemy/archer/arrow.png";
     static public final String ARCHER_ATLAS_PATH = "atlas/enemy/archer/archer.atlas";
     static public final String KNIGHT_ATLAS_PATH = "atlas/enemy/knight/knight.atlas";

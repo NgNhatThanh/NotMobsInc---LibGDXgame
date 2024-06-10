@@ -30,14 +30,10 @@ public class Ghost extends Player {
         expToLevelUp = 6;
         exist = true;
 
-        sampleTexture = new Texture(Constants.GHOST_1_SAMPLE_TT_PATH);
-
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
         currentHealth = 100;
         maxHealth = 100;
-        width = sampleTexture.getWidth();
-        height = sampleTexture.getHeight();
 
         hitbox = new Rectangle(x, y, width, height);
 

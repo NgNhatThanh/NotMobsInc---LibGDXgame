@@ -20,14 +20,10 @@ public class Knight extends Enemy {
 
     public Knight(){
         FRAME_DURATION = Constants.FRAME_DURATION[0];
-        sampleTexture = new Texture(Constants.KNIGHT_SAMPLE_TT_PATH);
 
         attackRange = 130;
         currentHealth = 6;
         exp = 4;
-        width = sampleTexture.getWidth();
-        height = sampleTexture.getHeight();
-        sampleTexture.dispose();
 
         normalSpeed = 100;
         currentSpeed = 100;

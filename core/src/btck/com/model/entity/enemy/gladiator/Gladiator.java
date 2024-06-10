@@ -23,11 +23,6 @@ public class Gladiator extends Enemy {
         attackRange = 200;
         currentHealth = 4;
         exp = 5;
-        sampleTexture = new Texture(Constants.GLADIATOR_SAMPLE_TT_PATH);
-
-        width = sampleTexture.getWidth();
-        height = sampleTexture.getHeight();
-        sampleTexture.dispose();
 
         normalSpeed = 100;
         currentSpeed = 100;

@@ -24,12 +24,6 @@ public class Archer extends Enemy {
         currentHealth = 3;
         exp = 5;
 
-        sampleTexture = new Texture(Constants.ARCHER_SAMPLE_TT_PATH);
-
-        width = sampleTexture.getWidth();
-        height = sampleTexture.getHeight();
-        sampleTexture.dispose();
-
         normalSpeed = 100;
         currentSpeed = 100;
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.ARCHER_ATLAS_PATH));
