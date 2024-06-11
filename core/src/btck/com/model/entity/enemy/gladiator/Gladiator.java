@@ -38,6 +38,9 @@ public class Gladiator extends Enemy {
         animations[3] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("dead"));
         animations[4] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("attack"));
 
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
+
         attack = new TeleportationAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }
 

@@ -37,6 +37,9 @@ public class Archer extends Enemy {
         animations[3] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_die"));
         animations[4] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spr_attack"));
 
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
+
         attack = new ArrowShoot(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }
 

@@ -5,6 +5,7 @@ import btck.com.MyGdxGame;
 import btck.com.common.io.IngameInputHandler;
 import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Bullet;
+import btck.com.controller.attack.skill.Skill;
 import btck.com.controller.spawn.Spawner;
 import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
@@ -153,6 +154,7 @@ public class IngameScreen implements Screen {
         cam.update();
 
         MyGdxGame.batch.draw(frame, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        for(Skill skill : GameManager.getInstance().getCurrentPlayer().getSkills()) skill.draw();
 
         updateBtnQuit();
 

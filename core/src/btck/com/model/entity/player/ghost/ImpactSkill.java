@@ -32,6 +32,7 @@ public class ImpactSkill extends Skill {
 
     public ImpactSkill(Entity owner, int slot) {
         super(owner, slot);
+        this.state = SKILL_STATE.AVAILABLE;
         this.cooldown = 5;
         this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/impact/locked.png"));
         this.availableTT = new Texture(Gdx.files.internal("atlas/skill/impact/available.png"));
@@ -81,6 +82,7 @@ public class ImpactSkill extends Skill {
         Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
         ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getBgmVolume() * 3);
         this.state = SKILL_STATE.COOLDOWN;
+        this.cooldownRemain = this.cooldown;
         return false;
     }
     public void draw(){

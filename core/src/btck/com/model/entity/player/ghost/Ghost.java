@@ -45,6 +45,9 @@ public class Ghost extends Player {
         animations[2] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_attack"));
         animations[3] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_die"));
 
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
+
         attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.ONCE);
 
         skills = new Array<>();
@@ -55,7 +58,6 @@ public class Ghost extends Player {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-        for(Skill skill : skills) skill.draw();
         statetime += Gdx.graphics.getDeltaTime();
 
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
