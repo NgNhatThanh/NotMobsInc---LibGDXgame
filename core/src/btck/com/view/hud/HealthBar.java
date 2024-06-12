@@ -44,7 +44,7 @@ public class HealthBar extends Actor {
 
         // Vẽ thanh máu hiện tại (màu đỏ)
         float healthPercentage = (float) player.getCurrentHealth() / player.getMaxHealth();
-        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.setColor(new Color(0.56f, 0.18f, 0.18f, 1f));
         shapeRenderer.rect(getX(), getY(), getWidth() * healthPercentage, getHeight());
 
         shapeRenderer.end();

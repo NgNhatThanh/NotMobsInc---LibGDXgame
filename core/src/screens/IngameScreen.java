@@ -6,6 +6,7 @@ import btck.com.common.io.MouseHandler;
 import btck.com.common.io.sound.ConstantSound;
 import btck.com.controller.spawn.Spawner;
 import btck.com.common.io.Constants;
+import btck.com.model.constant.GameState;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.utils.DEBUG_MODE;
@@ -35,16 +36,17 @@ public class IngameScreen implements Screen {
     private final Random rand;
     private long lastEnemySpawntime;
     private final Spawner spawner;
-    private final Button btnQuit;
-    private final int quitHeight = 50;
-    private final int quitWidth = 135;
-    private final int quitX = Constants.SCREEN_WIDTH - quitWidth - 60;
-    private final int quitY = Constants.SCREEN_HEIGHT - quitHeight - 30;
+    private final Button btnPause;
+    private final int pauseHeight = 50;
+    private final int pauseWidth = 60;
+    private final int pauseX = Constants.SCREEN_WIDTH - pauseWidth - 60;
+    private final int pauseY = Constants.SCREEN_HEIGHT - pauseHeight - 30;
     private final Texture map;
     private final Texture frame;
     private final HUD hud;
     private static Array<Effect> topLayerEffects;
     private static Array<Effect> bottomLayerEffects;
+    private boolean isPaused = false;
 
     Vector3 center = new Vector3((float) Constants.SCREEN_WIDTH / 2, (float) Constants.SCREEN_HEIGHT / 2, 0);
 
@@ -56,7 +58,7 @@ public class IngameScreen implements Screen {
 
         topLayerEffects = new Array<>();
         bottomLayerEffects = new Array<>();
-        this.btnQuit = new Button(quitX, quitY, quitWidth, quitHeight, Constants.QUIT_ICON_INACTIVE_PATH, Constants.QUIT_ICON_ACTIVE_PATH);
+        this.btnPause = new Button(pauseX, pauseY, pauseWidth, pauseHeight, Constants.PAUSE_ICON_INACTIVE_PATH, Constants.PAUSE_ICON_ACTIVE_PATH);
         this.spawner = new Spawner(maxEnemyAmount, maxEnemySpawnAtOnce);
 
         this.cam = new OrthographicCamera();
@@ -80,76 +82,89 @@ public class IngameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
-        if(System.currentTimeMillis() - lastEnemySpawntime >= 5000){
-            lastEnemySpawntime = System.currentTimeMillis();
-            spawner.spawnEnemy();
-        }
-
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         MyGdxGame.batch.setProjectionMatrix(cam.combined);
 
-        MyGdxGame.batch.begin();
-        MyGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-
-        for(Iterator<Effect> eff = bottomLayerEffects.iterator(); eff.hasNext(); ){
-            Effect tmp = eff.next();
-            tmp.draw();
-            if(tmp.isFinished()) eff.remove();
-        }
-
-        for (Iterator<Enemy> enemyIterator = GameManager.getInstance().getEnemies().iterator(); enemyIterator.hasNext(); ) {
-            Enemy tmp = enemyIterator.next();
-
-            tmp.draw(MyGdxGame.batch);
-            if(tmp.isVulnerable() && player.isAttacking() && player.getAttack().hit(tmp)){
-                Rumble.rumble();
-                player.getAttack().addHitEntity(tmp);
+        if (!isPaused) {
+            if (System.currentTimeMillis() - lastEnemySpawntime >= 5000) {
+                lastEnemySpawntime = System.currentTimeMillis();
+                spawner.spawnEnemy();
             }
 
-            if(player.isVulnerable() && tmp.isAttacking() && tmp.getAttack().hit(player)){
-                tmp.getAttack().addHitEntity(player);
+            MyGdxGame.batch.begin();
+            MyGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+
+            for (Iterator<Effect> eff = bottomLayerEffects.iterator(); eff.hasNext(); ) {
+                Effect tmp = eff.next();
+                tmp.draw();
+                if (tmp.isFinished()) eff.remove();
             }
 
-            if(!tmp.isExist()){
+            for (Iterator<Enemy> enemyIterator = GameManager.getInstance().getEnemies().iterator(); enemyIterator.hasNext(); ) {
+                Enemy tmp = enemyIterator.next();
+
+                tmp.draw(MyGdxGame.batch);
+                if (tmp.isVulnerable() && player.isAttacking() && player.getAttack().hit(tmp)) {
+                    Rumble.rumble();
+                    player.getAttack().addHitEntity(tmp);
+                }
+
+                if (player.isVulnerable() && tmp.isAttacking() && tmp.getAttack().hit(player)) {
+                    tmp.getAttack().addHitEntity(player);
+                }
+
+                if (!tmp.isExist()) {
+                    System.out.println("chet");
+                    enemyIterator.remove();
+                }
+            }
+
+            GameManager.getInstance().getCurrentPlayer().draw(MyGdxGame.batch);
+
+            for (Iterator<Effect> eff = topLayerEffects.iterator(); eff.hasNext(); ) {
+                Effect tmp = eff.next();
+                tmp.draw();
+                if (tmp.isFinished()) eff.remove();
+            }
+
+            if (Rumble.isRumbling() && cam.position.equals(center)) cam.translate(Rumble.tick(Gdx.graphics.getDeltaTime()));
+            else cam.position.set(center);
+            cam.update();
+
+            MyGdxGame.batch.draw(frame, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+
+            btnPause.draw(MyGdxGame.batch);
+            MyGdxGame.batch.end();
+
+            btnPause.update();
+
+            hud.draw();
+
+            if (btnPause.isClicked()) {
+                btnPause.setClicked(false);
+                setPaused(true);
+                myGdxGame.setScreen(new PauseScreen(myGdxGame, this));
+            }
+
+            if (Debugger.debugMode == DEBUG_MODE.ON) {
+                Debugger.getInstance();
+                Debugger.debug();
+            }
+
+            if (!GameManager.getInstance().getCurrentPlayer().isExist()) {
                 System.out.println("chet");
-                enemyIterator.remove();
+                this.dispose();
+                myGdxGame.setScreen(new GameOverScreen(myGdxGame));
             }
-        }
-
-        GameManager.getInstance().getCurrentPlayer().draw(MyGdxGame.batch);
-
-        for(Iterator<Effect> eff = topLayerEffects.iterator(); eff.hasNext(); ){
-            Effect tmp = eff.next();
-            tmp.draw();
-            if(tmp.isFinished()) eff.remove();
-        }
-
-        if(Rumble.isRumbling() && cam.position.equals(center)) cam.translate(Rumble.tick(Gdx.graphics.getDeltaTime()));
-        else cam.position.set(center);
-        cam.update();
-
-        MyGdxGame.batch.draw(frame, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-
-        updateBtnQuit();
-
-        MyGdxGame.batch.end();
-
-        hud.draw();
-
-        if(Debugger.debugMode == DEBUG_MODE.ON) {
-            Debugger.getInstance();
-            Debugger.debug();
-        }
-
-        if(!GameManager.getInstance().getCurrentPlayer().isExist()){
-            System.out.println("chet");
-            this.dispose();
-            myGdxGame.setScreen(new GameOverScreen(myGdxGame));
+        } else {
+            MyGdxGame.batch.begin();
+            MyGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+            MyGdxGame.batch.end();
         }
     }
+
 
     public void spawnPlayer(){
         GameManager.getInstance().getCurrentPlayer().setX(playerSpawnX);
@@ -160,25 +175,23 @@ public class IngameScreen implements Screen {
 
     public static void addBottomEffect(Effect eff){ bottomLayerEffects.add(eff); }
 
+    public void setPaused(boolean isPaused) {
+        this.isPaused = isPaused;
+    }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
@@ -186,15 +199,5 @@ public class IngameScreen implements Screen {
         hud.dispose();
         map.dispose();
         frame.dispose();
-    }
-
-    public void updateBtnQuit(){
-        btnQuit.update();
-        btnQuit.draw(MyGdxGame.batch);
-        if(btnQuit.isClicked()){
-            btnQuit.setClicked(false);
-            this.dispose();
-            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
-        }
     }
 }
