@@ -7,10 +7,9 @@ import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.GameState;
 import btck.com.model.entity.player.ghost.Ghost;
 import btck.com.ui.Button;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+
 
 public class PauseScreen implements Screen {
     private final MyGdxGame myGdxGame;
@@ -26,18 +25,17 @@ public class PauseScreen implements Screen {
         this.myGdxGame = myGdxGame;
         this.ingameScreen = ingameScreen;
 
-        int buttonWidth = 80;
-        int buttonHeight = 60;
-        int buttonY = Constants.SCREEN_HEIGHT / 2 - windowHeight / 2 + 100;
-        int spacing = 20; // Khoảng cách giữa các button
+        int buttonWidth = 75;
+        int buttonHeight = 75;
+        int spacing = 40;
 
-        int totalWidth = buttonWidth * 3 + spacing * 2;
-        int startX = Constants.SCREEN_WIDTH / 2 - totalWidth / 2;
 
-        // Tạo và đặt vị trí cho các button
-        this.btnResume = new Button(startX, buttonY, buttonWidth, buttonHeight, Constants.RESUME_ICON_INACTIVE_PATH, Constants.RESUME_ICON_ACTIVE_PATH);
-        this.btnRestart = new Button(startX + buttonWidth + spacing, buttonY, buttonWidth, buttonHeight, Constants.RESTART_ICON_INACTIVE_PATH, Constants.RESTART_ICON_ACTIVE_PATH);
-        this.btnQuit = new Button(startX + buttonWidth * 2 + spacing * 2, buttonY, buttonWidth, buttonHeight, Constants.QUIT2_ICON_INACTIVE_PATH, Constants.QUIT2_ICON_ACTIVE_PATH);
+        int startX = Constants.SCREEN_WIDTH / 2 - windowWidth / 2 + (windowWidth - (buttonWidth * 3 + spacing * 2)) / 2;
+        int startY = Constants.SCREEN_HEIGHT / 2 - windowHeight / 2 + (windowHeight - buttonHeight) / 2;
+
+        this.btnResume = new Button(startX, startY, buttonWidth, buttonHeight, Constants.RESUME_ICON_INACTIVE_PATH, Constants.RESUME_ICON_ACTIVE_PATH);
+        this.btnRestart = new Button(startX + buttonWidth + spacing, startY, buttonWidth, buttonHeight, Constants.RESTART_ICON_INACTIVE_PATH, Constants.RESTART_ICON_ACTIVE_PATH);
+        this.btnQuit = new Button(startX + buttonWidth * 2 + spacing * 2, startY, buttonWidth, buttonHeight, Constants.QUIT2_ICON_INACTIVE_PATH, Constants.QUIT2_ICON_ACTIVE_PATH);
         this.pauseWindow = new Texture(Constants.PAUSE_BG_PATH);
     }
 
@@ -47,21 +45,14 @@ public class PauseScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        // Render phần nền của màn hình ingame
-        ingameScreen.render(0); // Đặt delta = 0 để đảm bảo trạng thái không thay đổi
+        boolean isGamePaused = ingameScreen.isPaused();
+        ingameScreen.setPaused(true);
 
-        // Vẽ nền mờ
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        ingameScreen.render(0);
+        ingameScreen.setPaused(isGamePaused);
+
         MyGdxGame.batch.begin();
-        MyGdxGame.batch.setColor(1, 1, 1, 0.5f);
         MyGdxGame.batch.draw(pauseWindow, Constants.SCREEN_WIDTH / 2 - windowWidth / 2, Constants.SCREEN_HEIGHT / 2 - windowHeight / 2, windowWidth, windowHeight);
-        MyGdxGame.batch.setColor(1, 1, 1, 1);
-        MyGdxGame.batch.end();
-        Gdx.gl.glDisable(GL20.GL_BLEND);
-
-        // Vẽ các nút trong cửa sổ pause
-        MyGdxGame.batch.begin();
         btnResume.draw(MyGdxGame.batch);
         btnRestart.draw(MyGdxGame.batch);
         btnQuit.draw(MyGdxGame.batch);

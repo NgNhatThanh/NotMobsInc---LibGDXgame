@@ -1,5 +1,6 @@
 package btck.com.model.entity;
 
+import btck.com.GameManager;
 import btck.com.common.io.Constants;
 import btck.com.common.io.sound.ConstantSound;
 import btck.com.model.constant.PlayerState;
@@ -23,5 +24,7 @@ public abstract class Player extends Entity{
         if(damage > 0) ConstantSound.getInstance().playPlayerHitSFX();
         if(!dead) Blinking.blink();
     }
-
+    public void drawStill(SpriteBatch batch) {
+        batch.draw(GameManager.getInstance().getCurrentPlayer().sampleTexture, x, y, width, height);
+    }
 }
