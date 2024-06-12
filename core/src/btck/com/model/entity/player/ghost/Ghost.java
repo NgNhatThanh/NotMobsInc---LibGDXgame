@@ -21,7 +21,7 @@ public class Ghost extends Player {
 
     final float FRAME_SPEED = 0.1f;
 
-    private float a, b, x1, y1 ,deltaSP;
+    private float tan, deltaSP;
 
     public Ghost(){
         vulnerable = true;
@@ -147,21 +147,28 @@ public class Ghost extends Player {
             return;
         }
 
-        a = (y - desY) / (x - desX);
-        b = y - a * x;
+        tan = (y - desY) / (x - desX);
 
-        angle = (float)Math.atan(a);
+        angle = (float)Math.atan(tan);
         angle = angle * (float)(180 / Math.PI);
 
-        x1 = x;
-        y1 = y;
-        while(sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y)) < deltaSP){
-            if(x < desX) x1 += deltaSP / (50 * abs(a));
-            else x1 -= deltaSP / (50 * abs(a));
-            y1 = a * x1 + b;
-        }
+        if((angle > 0 && y > desY)
+                || (angle < 0 && y < desY)) angle += 180;
+        else if(angle < 0) angle += 360;
 
-        x = x1;
-        y = y1;
+        xSpeed = (float) sqrt((currentSpeed * currentSpeed) / (1 + tan * tan));
+        ySpeed = abs(xSpeed * tan);
+
+        if(angle > 90 && angle < 270) xSpeed *= -1;
+        if(angle > 180 && angle < 360) ySpeed *= -1;
+
+        float xDist = xSpeed * Gdx.graphics.getDeltaTime();
+        float yDist = ySpeed * Gdx.graphics.getDeltaTime();
+
+        if(desX > x) x = Math.min(desX, x + xDist);
+        else x = Math.max(desX, x + xDist);
+
+        if(desY > y) y = Math.min(desY, y + yDist);
+        else y = Math.max(desY, y + yDist);
     }
 }
