@@ -34,7 +34,6 @@ public class SlowTimeSkill extends Skill {
         curTime = 0;
         Rumble.rumble();
         SlowMo.activateAll();
-        SlowMo.deactivateEntity(owner);
     }
 
     public void updateHitBox(){
@@ -49,8 +48,7 @@ public class SlowTimeSkill extends Skill {
     public void end(){
         this.state = SKILL_STATE.COOLDOWN;
         cooldownRemain = cooldown;
-        SlowMo.deactivateAll();
-        SlowMo.activateEntity(owner);
+        if(SlowMo.activeAll) SlowMo.deactivateAll();
     }
 
 }

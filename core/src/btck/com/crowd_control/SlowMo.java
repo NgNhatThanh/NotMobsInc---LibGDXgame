@@ -25,7 +25,6 @@ public class SlowMo {
         ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getSoundVolume() / 3);
 
         activeAll = true;
-        activateEntity(GameManager.getInstance().getCurrentPlayer());
 
         for(Bullet bullet : IngameScreen.getBullets()){
             bullet.setSpeed(bullet.getSpeed() / slowAmount);
@@ -49,8 +48,6 @@ public class SlowMo {
 
         slowAllSfx.stop();
         ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getSoundVolume() * 3);
-
-        deactivateEntity(GameManager.getInstance().getCurrentPlayer());
 
         for(Bullet bullet : IngameScreen.getBullets()){
             bullet.setSpeed(bullet.getSpeed() * slowAmount);

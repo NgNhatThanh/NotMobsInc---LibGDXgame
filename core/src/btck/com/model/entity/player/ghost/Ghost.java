@@ -194,7 +194,7 @@ public class Ghost extends Player {
         switch (upgradeLevel){
             case 2:
                 atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_2_ATLAS_PATH));
-                sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost3.mp3"));
+                sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost2.mp3"));
                 sfx.play(ConstantSound.constantSound.getSoundVolume());
                 break;
             case 3:
