@@ -3,11 +3,9 @@ package btck.com.model.entity.player.ghost;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.sound.ConstantSound;
 import btck.com.common.Constants;
-import btck.com.controller.attack.skill.Skill;
 import btck.com.model.entity.Player;
 import btck.com.model.entity.player.Blinking;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,7 +19,7 @@ public class Ghost extends Player {
 
     final int NORMAL_SPEED = 200;
 
-    private float a, b, x1, y1 ,deltaSP;
+    private float tan, deltaSP;
 
     public Ghost(){
         FRAME_DURATION = Constants.FRAME_DURATION[0];
@@ -91,11 +89,11 @@ public class Ghost extends Player {
         if(!dead){
             if(!attacking){
                 move(Gdx.input.getX(), Constants.SCREEN_HEIGHT - Gdx.input.getY());
-                System.out.println("moved done");
+//                System.out.println("moved done");
             }
             else{
                 move(attackX, attackY);
-                System.out.println("moved done");
+//                System.out.println("moved done");
             }
         }
 
@@ -135,8 +133,7 @@ public class Ghost extends Player {
         }
         else if(!attacking) animationIdx = 1;
 
-        if(desX < x) flip = false;
-        else flip = true;
+        flip = !(desX < x);
 
         deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
 
@@ -154,21 +151,30 @@ public class Ghost extends Player {
             return;
         }
 
-        a = (y - desY) / (x - desX);
-        b = y - a * x;
+        tan = (y - desY) / (x - desX);
 
-        angle = (float)Math.atan(a);
+        angle = (float)Math.atan(tan);
         angle = angle * (float)(180 / Math.PI);
 
-        x1 = x;
-        y1 = y;
-        while(sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y)) < deltaSP){
-            if(x < desX) x1 += deltaSP / (50 * abs(a));
-            else x1 -= deltaSP / (50 * abs(a));
-            y1 = a * x1 + b;
-        }
+        if((angle > 0 && y > desY)
+                || (angle < 0 && y < desY)) angle += 180;
+        else if(angle < 0) angle += 360;
 
-        x = x1;
-        y = y1;
+        xSpeed = (float) sqrt((currentSpeed * currentSpeed) / (1 + tan * tan));
+        ySpeed = abs(xSpeed * tan);
+
+        System.out.println(xSpeed + " " + ySpeed);
+
+        if(angle > 90 && angle < 270) xSpeed *= -1;
+        if(angle > 180 && angle < 360) ySpeed *= -1;
+
+        float xDist = xSpeed * Gdx.graphics.getDeltaTime();
+        float yDist = ySpeed * Gdx.graphics.getDeltaTime();
+
+        if(desX > x) x = Math.min(desX, x + xDist);
+        else x = Math.max(desX, x + xDist);
+
+        if(desY > y) y = Math.min(desY, y + yDist);
+        else y = Math.max(desY, y + yDist);
     }
 }
