@@ -120,8 +120,6 @@ public class Gladiator extends Enemy {
         xSpeed = (float) sqrt((currentSpeed * currentSpeed) / (1 + tan * tan));
         ySpeed = abs(xSpeed * tan);
 
-        System.out.println(xSpeed + " " + ySpeed);
-
         if(angle > 90 && angle < 270) xSpeed *= -1;
         if(angle > 180 && angle < 360) ySpeed *= -1;
 

@@ -66,7 +66,9 @@ public class DeadlyBounceSkill extends Skill {
 
     public void activate(){
         Gdx.input.setInputProcessor(this);
-        Blinking.stop();
+        Blinking.blinking = false;
+        owner.setVisible(false);
+        owner.setVulnerable(false);
         this.state = SKILL_STATE.ACTIVE;
         this.curRollTime = 0;
         this.statetime = 0;
@@ -75,8 +77,6 @@ public class DeadlyBounceSkill extends Skill {
         this.orbY = owner.getY();
         this.orbCenterX = orbX + orbSize / 2;
         this.orbCenterY = orbY + orbSize / 2;
-        owner.setVisible(false);
-        owner.setVulnerable(false);
         SlowMo.activateAll();
         IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY()));
     }
@@ -145,6 +145,7 @@ public class DeadlyBounceSkill extends Skill {
                         false);
             }
             else{
+                owner.setVisible(false);
                 MyGdxGame.batch.draw(orb, orbX, orbY, orbSize, orbSize);
             }
         }
@@ -188,7 +189,7 @@ public class DeadlyBounceSkill extends Skill {
     public void upgrade(){
         if(this.state == SKILL_STATE.LOCKED){
             this.state = SKILL_STATE.AVAILABLE;
-            this.orbSize = owner.getWidth();
+            this.orbSize = owner.getHeight();
             this.hitbox.width = orbSize;
             this.hitbox.height = orbSize;
         }
@@ -196,7 +197,7 @@ public class DeadlyBounceSkill extends Skill {
             this.cooldown--;
             this.rollTime++;
             this.orbSpeed += 200;
-            this.orbSize += 70;
+            this.orbSize += 30;
             this.hitbox.width = orbSize;
             this.hitbox.height = orbSize;
         }

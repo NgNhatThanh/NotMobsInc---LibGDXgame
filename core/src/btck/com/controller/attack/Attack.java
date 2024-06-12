@@ -49,6 +49,8 @@ public abstract class Attack {
         hitEntities.clear();
     }
 
+    public void upgrade(){}
+
     public abstract void addHitEntity(Entity entity);
 
     public abstract void updateHitbox();

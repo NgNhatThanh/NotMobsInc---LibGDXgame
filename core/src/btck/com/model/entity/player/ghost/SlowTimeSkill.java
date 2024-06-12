@@ -42,7 +42,13 @@ public class SlowTimeSkill extends Skill {
     }
 
     public void upgrade(){
-        this.state = SKILL_STATE.AVAILABLE;
+        if(state == SKILL_STATE.LOCKED){
+            this.state = SKILL_STATE.AVAILABLE;
+        }
+        else{
+            existTime++;
+            cooldown--;
+        }
     }
 
     public void end(){

@@ -48,7 +48,6 @@ public class IngameScreen implements Screen {
     private final int quitX = Constants.SCREEN_WIDTH - quitWidth - 60;
     private final int quitY = Constants.SCREEN_HEIGHT - quitHeight - 30;
     private final Texture map;
-    private final Texture frame;
     private final HUD hud;
     @Getter
     private static Array<Effect> topLayerEffects;
@@ -78,7 +77,6 @@ public class IngameScreen implements Screen {
         ConstantSound.getInstance().bgmIngame.setVolume(ConstantSound.getInstance().getBgmVolume());
         ConstantSound.getInstance().bgmIngame.play();
 
-        frame = new Texture(Constants.FRAME_0_PATH);
         map = new Texture(Constants.MAP_PATH);
     }
 
@@ -153,7 +151,7 @@ public class IngameScreen implements Screen {
         else cam.position.set(center);
         cam.update();
 
-        MyGdxGame.batch.draw(frame, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        MyGdxGame.batch.draw(player.getFrame(), 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         for(Skill skill : GameManager.getInstance().getCurrentPlayer().getSkills()) skill.draw();
 
         updateBtnQuit();
@@ -207,7 +205,6 @@ public class IngameScreen implements Screen {
         ConstantSound.getInstance().bgmIngame.dispose();
         hud.dispose();
         map.dispose();
-        frame.dispose();
     }
 
     public void updateBtnQuit(){

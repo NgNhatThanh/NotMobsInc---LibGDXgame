@@ -9,6 +9,7 @@ import btck.com.view.effect.Upgrade;
 import btck.com.view.screens.IngameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -31,6 +32,7 @@ public class Ghost extends Player {
         expToLevelUp = 6;
         exist = true;
 
+        this.frame = new Texture(Gdx.files.internal("atlas/player/ghost1/frame.png"));
         levelToUpgrade = 2;
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
@@ -93,11 +95,9 @@ public class Ghost extends Player {
         if(!dead){
             if(!attacking){
                 move(Gdx.input.getX(), Constants.SCREEN_HEIGHT - Gdx.input.getY());
-//                System.out.println("moved done");
             }
             else{
                 move(attackX, attackY);
-//                System.out.println("moved done");
             }
         }
 
@@ -168,8 +168,6 @@ public class Ghost extends Player {
         xSpeed = (float) sqrt((currentSpeed * currentSpeed) / (1 + tan * tan));
         ySpeed = abs(xSpeed * tan);
 
-        System.out.println(xSpeed + " " + ySpeed);
-
         if(angle > 90 && angle < 270) xSpeed *= -1;
         if(angle > 180 && angle < 360) ySpeed *= -1;
 
@@ -196,24 +194,33 @@ public class Ghost extends Player {
                 atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_2_ATLAS_PATH));
                 sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost2.mp3"));
                 sfx.play(ConstantSound.constantSound.getSoundVolume());
+                this.FRAME_DURATION = Constants.FRAME_DURATION[1];
                 break;
             case 3:
                 atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_3_ATLAS_PATH));
                 sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost3.mp3"));
                 sfx.play(ConstantSound.constantSound.getSoundVolume());
+                this.FRAME_DURATION = Constants.FRAME_DURATION[0];
                 break;
             case 4:
                 atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_4_ATLAS_PATH));
                 sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost4.mp3"));
                 sfx.play(ConstantSound.constantSound.getSoundVolume());
+                this.FRAME_DURATION = Constants.FRAME_DURATION[0];
                 break;
         }
+
+        this.frame = new Texture("atlas/player/ghost" + upgradeLevel + "/frame.png");
 
         animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
         animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
         animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
         animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_die"));
 
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
+
+        attack.upgrade();
         for(int i = 0; i <= upgradeLevel - 2; ++i) skills.get(i).upgrade();
 
         levelToUpgrade += 2;

@@ -15,7 +15,7 @@ import btck.com.view.screens.IngameScreen;
 
 public class DashAttack extends Attack {
 
-    final int DASH_SPEED = 800;
+    int dashSpeed = 800;
 
     float attackX, attackY;
 
@@ -34,7 +34,7 @@ public class DashAttack extends Attack {
         hitbox.height = owner.height / 2f;
         damage = 2;
         currentDamage = damage;
-        owner.attackSpeed = DASH_SPEED;
+        owner.attackSpeed = dashSpeed;
     }
 
     @Override
@@ -57,14 +57,12 @@ public class DashAttack extends Attack {
     }
 
     public void addHitEntity(Entity entity){
-        if(animation.getKeyFrameIndex(owner.getStatetime()) < 6){
-            updateHitbox();
-            if(hitEntities.contains(entity, false)) return;
-            entity.takeDamage(this.currentDamage);
-            if(currentDamage > 0) IngameScreen.addTopEffect(new Slice(entity.getX(), entity.getY(), owner.getAngle(), owner.getHeight(), SLICE_COLOR.RED));
-            if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
-            hitEntities.add(entity);
-        }
+        updateHitbox();
+        if(hitEntities.contains(entity, false)) return;
+        entity.takeDamage(this.currentDamage);
+        if(currentDamage > 0) IngameScreen.addTopEffect(new Slice(entity.getX(), entity.getY(), owner.getAngle(), owner.getHeight(), SLICE_COLOR.RED));
+        if(entity.isDead()) ((Player) owner).currentExp += ((Enemy)entity).exp;
+        hitEntities.add(entity);
     }
 
     @Override
@@ -76,5 +74,13 @@ public class DashAttack extends Attack {
     public void end(){
         super.end();
         owner.setVulnerable(true);
+    }
+
+    public void upgrade(){
+        dashDistance += 50;
+        dashSpeed += 50;
+        damage++;
+        hitbox.width = owner.getWidth();
+        hitbox.height = (float) owner.getHeight() / 2;
     }
 }
