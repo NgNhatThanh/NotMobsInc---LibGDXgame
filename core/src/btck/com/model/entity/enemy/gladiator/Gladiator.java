@@ -5,7 +5,6 @@ import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -27,16 +26,16 @@ public class Gladiator extends Enemy {
         normalSpeed = 100;
         currentSpeed = 100;
 
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
+        atlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height / 2);
 
-        animations[0] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("spawn"));
-        animations[1] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("idle"));
-        animations[2] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("run"));
-        animations[3] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("dead"));
-        animations[4] = new Animation<>(FRAME_DURATION, textureAtlas.findRegions("attack"));
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spawn"));
+        animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("idle"));
+        animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("run"));
+        animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("dead"));
+        animations[4] = new Animation<>(FRAME_DURATION, atlas.findRegions("attack"));
 
         width = animations[0].getKeyFrame(0).getRegionWidth();
         height = animations[0].getKeyFrame(0).getRegionHeight();

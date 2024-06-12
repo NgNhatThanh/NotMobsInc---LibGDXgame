@@ -5,7 +5,10 @@ import btck.com.common.sound.ConstantSound;
 import btck.com.common.Constants;
 import btck.com.model.entity.Player;
 import btck.com.model.entity.player.Blinking;
+import btck.com.view.effect.Upgrade;
+import btck.com.view.screens.IngameScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -28,6 +31,7 @@ public class Ghost extends Player {
         expToLevelUp = 6;
         exist = true;
 
+        levelToUpgrade = 2;
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
         currentHealth = 100;
@@ -35,13 +39,13 @@ public class Ghost extends Player {
 
         hitbox = new Rectangle(x, y, width, height);
 
-        textureAtlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
+        atlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
         animations = new Animation[4];
 
-        animations[0] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_idle"));
-        animations[1] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_run"));
-        animations[2] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_attack"));
-        animations[3] = new Animation<>(FRAME_DURATION,textureAtlas.findRegions("spr_die"));
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
+        animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
+        animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
+        animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_die"));
 
         width = animations[0].getKeyFrame(0).getRegionWidth();
         height = animations[0].getKeyFrame(0).getRegionHeight();
@@ -51,7 +55,7 @@ public class Ghost extends Player {
         skills = new Array<>();
         skills.add(new ImpactSkill(this, 1));
         skills.add(new DeadlyBounceSkill(this, 2));
-        skills.add(new ShieldSkill(this, 3));
+        skills.add(new SlowTimeSkill(this, 3));
     }
 
     @Override
@@ -106,8 +110,9 @@ public class Ghost extends Player {
         if(currentHealth > 0){
             while(currentExp >= expToLevelUp){
                 expToLevelUp += nextLevelExp;
-                nextLevelExp += 5;
+                nextLevelExp += 3;
                 ++level;
+                if(level == levelToUpgrade) upgrade();
             }
         }
     }
@@ -176,5 +181,42 @@ public class Ghost extends Player {
 
         if(desY > y) y = Math.min(desY, y + yDist);
         else y = Math.max(desY, y + yDist);
+    }
+
+    @Override
+    public void upgrade() {
+        if(upgradeLevel == 4){
+            levelToUpgrade = -1;
+            return;
+        }
+        ++upgradeLevel;
+        Sound sfx;
+        switch (upgradeLevel){
+            case 2:
+                atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_2_ATLAS_PATH));
+                sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost3.mp3"));
+                sfx.play(ConstantSound.constantSound.getSoundVolume());
+                break;
+            case 3:
+                atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_3_ATLAS_PATH));
+                sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost3.mp3"));
+                sfx.play(ConstantSound.constantSound.getSoundVolume());
+                break;
+            case 4:
+                atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_4_ATLAS_PATH));
+                sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost4.mp3"));
+                sfx.play(ConstantSound.constantSound.getSoundVolume());
+                break;
+        }
+
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
+        animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
+        animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
+        animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_die"));
+
+        for(int i = 0; i <= upgradeLevel - 2; ++i) skills.get(i).upgrade();
+
+        levelToUpgrade += 2;
+        IngameScreen.addTopEffect(new Upgrade(x, y));
     }
 }

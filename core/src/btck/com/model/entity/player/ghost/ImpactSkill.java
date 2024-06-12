@@ -52,15 +52,15 @@ public class ImpactSkill extends Skill {
 
     @Override
     public boolean touchDown(int i, int i1, int i2, int i3) {
-        IngameScreen.addTopEffect(new AirStrike(i, Constants.SCREEN_HEIGHT - i1));
         owner.setX(i);
         owner.setY(Constants.SCREEN_HEIGHT - i1);
         owner.setVulnerable(true);
         owner.setVisible(true);
+        SlowMo.deactivateAll();
+        IngameScreen.addTopEffect(new AirStrike(i, Constants.SCREEN_HEIGHT - i1));
 
         hitbox.x = owner.getX() - hitbox.width / 2;
         hitbox.y = owner.getY() - hitbox.height / 2;
-        SlowMo.deactivateAll();
         for(Enemy enemy : GameManager.getInstance().getEnemies()){
             if(enemy.isVulnerable() && enemy.getHitbox().overlaps(this.hitbox)){
                 Rumble.rumble();
@@ -69,6 +69,7 @@ public class ImpactSkill extends Skill {
                 if(enemy.isDead()) ((Player) owner).currentExp += enemy.exp;
             }
         }
+        end();
         return false;
     }
 

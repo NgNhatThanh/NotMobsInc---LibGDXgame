@@ -3,56 +3,54 @@ package btck.com.model.entity.player.ghost;
 import btck.com.common.Constants;
 import btck.com.controller.attack.skill.SKILL_STATE;
 import btck.com.controller.attack.skill.Skill;
+import btck.com.crowd_control.SlowMo;
 import btck.com.model.entity.Entity;
+import btck.com.view.screens.Rumble;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 
-public class ShieldSkill extends Skill {
+public class SlowTimeSkill extends Skill {
 
-    float lastTime = 5;
+    float existTime = 4;
     float curTime;
 
-    public ShieldSkill(Entity owner, int slot) {
+    public SlowTimeSkill(Entity owner, int slot) {
         super(owner, slot);
 
         this.cooldown = 10;
-        this.availableTT = new Texture(Gdx.files.internal(""));
-        this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/shield/locked.png"));
+        this.availableTT = new Texture(Gdx.files.internal("atlas/skill/slowtime/available.png"));
+        this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/slowtime/locked.png"));
         this.FRAME_DURATION = Constants.FRAME_DURATION[0];
-        this.atlas = new TextureAtlas(Gdx.files.internal(""));
+        this.atlas = new TextureAtlas(Gdx.files.internal("atlas/skill/slowtime/active.atlas"));
         this.activeAni = new Animation<>(FRAME_DURATION, atlas.findRegions("active"));
         this.hitbox = new Rectangle();
     }
 
     public void activate(){
         this.state = SKILL_STATE.ACTIVE;
-        owner.setVulnerable(false);
         curTime = 0;
+        Rumble.rumble();
+        SlowMo.activateAll();
+        SlowMo.deactivateEntity(owner);
     }
 
     public void updateHitBox(){
-        hitbox.x = owner.getX();
-        hitbox.y = owner.getY();
-
         curTime += Gdx.graphics.getDeltaTime();
-        if(curTime >= lastTime) end();
+        if(curTime >= existTime) end();
     }
 
     public void upgrade(){
-        if(this.state == SKILL_STATE.LOCKED) this.state = SKILL_STATE.AVAILABLE;
-        else{
-            this.cooldown--;
-            this.lastTime++;
-        }
-        hitbox.width = owner.getWidth();
-        hitbox.height = owner.getHeight();
+        this.state = SKILL_STATE.AVAILABLE;
     }
 
     public void end(){
         this.state = SKILL_STATE.COOLDOWN;
+        cooldownRemain = cooldown;
+        SlowMo.deactivateAll();
+        SlowMo.activateEntity(owner);
     }
 
 }

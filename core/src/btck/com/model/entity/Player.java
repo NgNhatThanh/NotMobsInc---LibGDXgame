@@ -15,6 +15,8 @@ public abstract class Player extends Entity{
     public int currentExp;
     public int expToLevelUp;
     public int nextLevelExp;
+    protected int upgradeLevel = 1;
+    protected int levelToUpgrade;
     public Array<Skill> skills;
 
     public void takeDamage(int damage){
@@ -22,5 +24,7 @@ public abstract class Player extends Entity{
         if(damage > 0) ConstantSound.getInstance().playPlayerHitSFX();
         if(!dead) Blinking.blink();
     }
+
+    public abstract void upgrade();
 
 }

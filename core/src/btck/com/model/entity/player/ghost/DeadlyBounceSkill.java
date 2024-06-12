@@ -50,8 +50,6 @@ public class DeadlyBounceSkill extends Skill {
 
     public DeadlyBounceSkill(Entity owner, int slot) {
         super(owner, slot);
-//        this.orbSize = owner.getHeight();   //
-//        this.state = SKILL_STATE.AVAILABLE;  //
         this.cooldown = 8;
         this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/deadlybounce/locked.png"));
         this.availableTT = new Texture(Gdx.files.internal("atlas/skill/deadlybounce/available.png"));
@@ -81,9 +79,6 @@ public class DeadlyBounceSkill extends Skill {
         owner.setVulnerable(false);
         SlowMo.activateAll();
         IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY()));
-
-//        this.hitbox.width = orbSize;  //
-//        this.hitbox.height = orbSize;  //
     }
 
     public boolean touchDown(int x1, int y1, int x2, int y2){
@@ -191,15 +186,20 @@ public class DeadlyBounceSkill extends Skill {
     }
 
     public void upgrade(){
-        if(this.state == SKILL_STATE.LOCKED) this.state = SKILL_STATE.AVAILABLE;
+        if(this.state == SKILL_STATE.LOCKED){
+            this.state = SKILL_STATE.AVAILABLE;
+            this.orbSize = owner.getWidth();
+            this.hitbox.width = orbSize;
+            this.hitbox.height = orbSize;
+        }
         else{
             this.cooldown--;
             this.rollTime++;
             this.orbSpeed += 200;
+            this.orbSize += 70;
+            this.hitbox.width = orbSize;
+            this.hitbox.height = orbSize;
         }
-        this.orbSize = owner.getHeight() ;
-        this.hitbox.width = orbSize;
-        this.hitbox.height = orbSize;
         this.damage = owner.getAttack().getDamage() * 2;
     }
 

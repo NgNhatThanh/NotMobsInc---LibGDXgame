@@ -9,7 +9,7 @@ public class Rumble {
 
     private static float rumbleDuration = .2f;
     private static float currentTime;
-    private static float power = 3f;
+    private static float power = 5f;
     private static float currentPower;
     private static Random random = new Random();
     private static Vector3 pos = new Vector3(0, 0,0);

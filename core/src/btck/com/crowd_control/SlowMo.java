@@ -19,6 +19,7 @@ public class SlowMo {
     static Sound slowAllSfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/slowtime.mp3"));
 
     public static void activateAll(){
+        if(activeAll) return;
 
         slowAllSfx.play(ConstantSound.getInstance().getSoundVolume());
         ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getSoundVolume() / 3);
@@ -43,6 +44,7 @@ public class SlowMo {
     }
 
     public static void deactivateAll(){
+        if(!activeAll) return;
         activeAll = false;
 
         slowAllSfx.stop();
