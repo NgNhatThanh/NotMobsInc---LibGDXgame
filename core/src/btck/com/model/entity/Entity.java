@@ -20,8 +20,10 @@ public abstract class Entity{
     protected float x, y;
     protected int attackX, attackY;
     public int width, height;
-    public int normalSpeed;
-    public int currentSpeed;
+    public float normalSpeed;
+    public float attackSpeed;
+    public float currentSpeed;
+    public float xSpeed, ySpeed;
     protected boolean vulnerable = false;
     protected boolean attacking;
     protected boolean flip;
