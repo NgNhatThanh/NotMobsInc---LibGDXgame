@@ -18,8 +18,6 @@ public class EarthAttack extends Attack {
 
     private boolean effAdded = false;
 
-    Sound sfx;
-
     public EarthAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         hitbox = new Rectangle();
@@ -30,7 +28,6 @@ public class EarthAttack extends Attack {
         damage = 10;
         currentDamage = damage;
         owner.attackSpeed = owner.normalSpeed;
-        sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/air-strike.mp3"));
     }
 
     @Override
@@ -42,7 +39,6 @@ public class EarthAttack extends Attack {
     public void update(float statetime) {
         if (!effAdded && animation.getKeyFrameIndex(statetime) >= 10) {
             IngameScreen.addTopEffect(new AirStrike(owner.getX(), owner.getY()));
-            sfx.play(ConstantSound.getInstance().getSoundVolume());
             effAdded = true;
         }
     }

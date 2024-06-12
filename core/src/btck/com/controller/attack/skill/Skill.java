@@ -79,7 +79,11 @@ public class Skill implements InputProcessor {
                     MyGdxGame.batch.draw(cooldownTT, x, 0, skillButtonWidth, skillButtonHeight * tmp);
                 }
         }
+
+        if(state == SKILL_STATE.ACTIVE) updateHitBox();
     }
+
+    public void end(){}
 
     @Override
     public boolean keyDown(int i) {

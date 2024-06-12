@@ -1,11 +1,14 @@
 package btck.com.crowd_control;
 
 import btck.com.common.GameManager;
+import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Bullet;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
 import btck.com.view.effect.Effect;
 import btck.com.view.screens.IngameScreen;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 
 public class SlowMo {
 
@@ -13,8 +16,13 @@ public class SlowMo {
 
     public static float slowAmount = 15f;
 
+    static Sound slowAllSfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/slowtime.mp3"));
+
     public static void activateAll(){
-        System.out.println("active");
+
+        slowAllSfx.play(ConstantSound.getInstance().getSoundVolume());
+        ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getSoundVolume() / 3);
+
         activeAll = true;
         activateEntity(GameManager.getInstance().getCurrentPlayer());
 
@@ -35,8 +43,10 @@ public class SlowMo {
     }
 
     public static void deactivateAll(){
-        System.out.println("deactive");
         activeAll = false;
+
+        slowAllSfx.stop();
+        ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getSoundVolume() * 3);
 
         deactivateEntity(GameManager.getInstance().getCurrentPlayer());
 

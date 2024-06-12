@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-import java.util.ConcurrentModificationException;
-
 public class AirStrikeCall extends Effect{
 
     static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("atlas/effect/airstrike-call/airstrike-call.atlas"));

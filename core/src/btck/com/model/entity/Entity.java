@@ -49,7 +49,6 @@ public abstract class Entity{
     }
 
     public void update(){
-        for(Animation<TextureRegion> animation : animations) animation.setFrameDuration(FRAME_DURATION);
         if(currentHealth <= 0){
             attacking = false;
             vulnerable = false;
@@ -57,6 +56,11 @@ public abstract class Entity{
             statetime = 0;
             animationIdx = 3;
         }
+    }
+
+    public void setFRAME_DURATION(float FD){
+        this.FRAME_DURATION = FD;
+        for(Animation<TextureRegion> animation : animations) animation.setFrameDuration(FD);
     }
 
 }

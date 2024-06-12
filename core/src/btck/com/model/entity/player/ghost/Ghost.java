@@ -91,9 +91,11 @@ public class Ghost extends Player {
         if(!dead){
             if(!attacking){
                 move(Gdx.input.getX(), Constants.SCREEN_HEIGHT - Gdx.input.getY());
+                System.out.println("moved done");
             }
             else{
                 move(attackX, attackY);
+                System.out.println("moved done");
             }
         }
 

@@ -26,13 +26,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class ImpactSkill extends Skill {
 
-    Sound slowtimeSound;
-
-    Sound strikeSfx;
-
     public ImpactSkill(Entity owner, int slot) {
         super(owner, slot);
-        this.state = SKILL_STATE.AVAILABLE;
+//        this.state = SKILL_STATE.AVAILABLE;
         this.cooldown = 5;
         this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/impact/locked.png"));
         this.availableTT = new Texture(Gdx.files.internal("atlas/skill/impact/available.png"));
@@ -40,8 +36,6 @@ public class ImpactSkill extends Skill {
         this.atlas = new TextureAtlas(Gdx.files.internal("atlas/skill/impact/active.atlas"));
         this.activeAni = new Animation<>(FRAME_DURATION, atlas.findRegions("active"));
         this.hitbox = new Rectangle(0, 0, 250, 250);
-        slowtimeSound = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/slowtime.mp3"));
-        strikeSfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/air-strike.mp3"));
     }
 
     @Override
@@ -54,15 +48,11 @@ public class ImpactSkill extends Skill {
         owner.setVulnerable(false);
         SlowMo.activateAll();
         IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY()));
-        slowtimeSound.play(ConstantSound.getInstance().getSoundVolume());
-        ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getBgmVolume() / 3);
     }
 
     @Override
     public boolean touchDown(int i, int i1, int i2, int i3) {
         IngameScreen.addTopEffect(new AirStrike(i, Constants.SCREEN_HEIGHT - i1));
-        strikeSfx.play(ConstantSound.constantSound.getSoundVolume());
-        slowtimeSound.stop();
         owner.setX(i);
         owner.setY(Constants.SCREEN_HEIGHT - i1);
         owner.setVulnerable(true);
@@ -72,22 +62,14 @@ public class ImpactSkill extends Skill {
         hitbox.y = owner.getY() - hitbox.height / 2;
         SlowMo.deactivateAll();
         for(Enemy enemy : GameManager.getInstance().getEnemies()){
-            if(enemy.getHitbox().overlaps(this.hitbox)){
+            if(enemy.isVulnerable() && enemy.getHitbox().overlaps(this.hitbox)){
                 Rumble.rumble();
                 IngameScreen.addTopEffect(new Slice(enemy.getX(), enemy.getY(), owner.getAngle(), owner.getHeight(), SLICE_COLOR.RED));
                 enemy.takeDamage(this.damage);
                 if(enemy.isDead()) ((Player) owner).currentExp += enemy.exp;
             }
         }
-        Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
-        ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getBgmVolume() * 3);
-        this.state = SKILL_STATE.COOLDOWN;
-        this.cooldownRemain = this.cooldown;
         return false;
-    }
-    public void draw(){
-        super.draw();
-        if(state == SKILL_STATE.ACTIVE) updateHitBox();
     }
 
     public void updateHitBox(){
@@ -97,7 +79,14 @@ public class ImpactSkill extends Skill {
 
     public void upgrade(){
         if(this.state == SKILL_STATE.LOCKED) this.state = SKILL_STATE.AVAILABLE;
-        this.cooldown--;
+        else this.cooldown--;
         this.damage = owner.getAttack().getDamage() * 3 / 2;
+    }
+
+    public void end(){
+        Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
+        ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getBgmVolume() * 3);
+        this.state = SKILL_STATE.COOLDOWN;
+        this.cooldownRemain = this.cooldown;
     }
 }

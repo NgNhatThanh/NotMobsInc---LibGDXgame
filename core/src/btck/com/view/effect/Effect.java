@@ -47,4 +47,9 @@ public abstract class Effect {
         return ani.isAnimationFinished(currentTime);
     }
 
+    public void setFRAME_DURATION(float FD){
+        this.FRAME_DURATION = FD;
+        ani.setFrameDuration(FD);
+    }
+
 }
