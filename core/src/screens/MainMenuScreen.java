@@ -11,25 +11,36 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import static btck.com.common.io.Constants.inited;
 //import com.sun.tools.jconsole.JConsoleContext;
 
 public class MainMenuScreen  implements Screen {
-    public final int newGameWidth = 500;
-    public final int newGameHeight = 120;
-    public final int exitWidth = 230;
-    public final int exitHeight = 92;
-    public final int creditWidth = 500;
-    public final int creditHeight = 100;
-    public final int settingWidth = 400;
-    public final int settingHeight = 100;
-    int newGameX = (Constants.SCREEN_WIDTH - newGameWidth - 20);
+    float FRAME_SPEED = 0.08f;
+    int width, height;
+    protected TextureAtlas textureAtlas;
+    protected Animation<TextureRegion>[] animations;
+    protected int animationIdx;
+    protected float statetime;
+    public final int newGameWidth = 400;
+    public final int newGameHeight = 96;
+    public final int exitWidth = 150;
+    public final int exitHeight = 60;
+    public final int creditWidth = 400;
+    public final int creditHeight = 80;
+    public final int settingWidth = 300;
+    public final int settingHeight = 75;
+    int newGameX = (Constants.SCREEN_WIDTH - newGameWidth - 40);
     int newGameY = (Constants.SCREEN_HEIGHT - newGameHeight - 50);
     int creditX = newGameX - 15;
-    int creditY = newGameY - 120;
+    int creditY = newGameY - 85;
     int settingX = newGameX;
-    int settingY = creditY - 120;
+    int settingY = creditY - 85;
     int exitX = newGameX + 5;
-    int exitY = settingY - 120;
+    int exitY = settingY - 80;
     MyGdxGame myGdxGame;
     Button btnNewGame;
     Button btnExit;
@@ -40,6 +51,16 @@ public class MainMenuScreen  implements Screen {
     public MainMenuScreen(MyGdxGame myGdxGame) {
         Gdx.input.setInputProcessor(new InputAdapter());
         this.myGdxGame = myGdxGame;
+
+        width = Constants.SCREEN_WIDTH;
+        height = Constants.SCREEN_HEIGHT;
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.MAIN_MENU_SCREEN_ATLAS_PATH));
+        animations = new Animation[2];
+        if(Constants.inited == true) animationIdx = 1;
+        else animationIdx = 0;
+
+        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("tile"));
+        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("loop"));
 
         btnNewGame = new Button(newGameX, newGameY, newGameWidth, newGameHeight, Constants.NEW_GAME_ICON_INACTIVE_PATH, Constants.NEW_GAME_ICON_ACTIVE_PATH);
         btnExit = new Button(exitX, exitY, exitWidth, exitHeight, Constants.EXIT_ICON_INACTIVE_PATH, Constants.EXIT_ICON_ACTIVE_PATH);
@@ -65,11 +86,25 @@ public class MainMenuScreen  implements Screen {
 
     @Override
     public void render(float delta) {
+        statetime += Gdx.graphics.getDeltaTime();
+
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
+        if (animationIdx < animations.length - 1 && animations[animationIdx].isAnimationFinished(statetime)) {
+            animationIdx++;
+        }
+
+        if(animations[0].isAnimationFinished(statetime)) Constants.inited = true;
+
         myGdxGame.batch.begin();
 
-        update();
+        if(animationIdx == 0){
+            myGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, false), 0, 0, width, height);
+        }
+        else myGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, true), 0, 0, width, height);
+        if(animationIdx == 1) update();
 
         myGdxGame.batch.end();
     }

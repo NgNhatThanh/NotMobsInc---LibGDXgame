@@ -147,7 +147,7 @@ public class IngameScreen implements Screen {
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
             System.out.println("chet");
             this.dispose();
-            myGdxGame.setScreen(new GameOverScreen(myGdxGame));
+            myGdxGame.setScreen(new GetBackToWork(myGdxGame));
         }
     }
 

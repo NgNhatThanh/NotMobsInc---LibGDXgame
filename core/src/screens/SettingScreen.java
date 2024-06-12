@@ -94,6 +94,7 @@ public class SettingScreen implements Screen {
         if(btnArrow.isClicked()){
             btnArrow.setClicked(false);
             this.dispose();
+            System.out.println(Constants.inited);
             myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
         }
     }
