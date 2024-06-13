@@ -33,10 +33,8 @@ public class HealthBar extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        // Dừng batch trước khi vẽ với ShapeRenderer
         batch.end();
-
-        // Vẽ nền của thanh máu (màu xám đậm)
+        // nền của thanh máu
         shapeRenderer.setProjectionMatrix(getStage().getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.DARK_GRAY);
@@ -49,7 +47,6 @@ public class HealthBar extends Actor {
 
         shapeRenderer.end();
 
-        // Bắt đầu lại batch sau khi sử dụng ShapeRenderer
         batch.begin();
 
         // Vẽ số máu hiện tại và tối đa
