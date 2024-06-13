@@ -8,6 +8,7 @@ import btck.com.controller.attack.Bullet;
 import btck.com.controller.attack.skill.Skill;
 import btck.com.controller.spawn.Spawner;
 import btck.com.common.Constants;
+import btck.com.crowd_control.SlowMo;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Player;
 import btck.com.utils.DEBUG_MODE;
@@ -47,7 +48,8 @@ public class IngameScreen implements Screen {
     private final int quitWidth = 135;
     private final int quitX = Constants.SCREEN_WIDTH - quitWidth - 60;
     private final int quitY = Constants.SCREEN_HEIGHT - quitHeight - 30;
-    private final Texture map;
+    @Getter
+    private static Texture map;
     private final HUD hud;
     @Getter
     private static Array<Effect> topLayerEffects;
@@ -63,6 +65,7 @@ public class IngameScreen implements Screen {
         this.rand = new Random();
         this.player = GameManager.getInstance().getCurrentPlayer();
         hud = new HUD();
+        SlowMo.deactivateAll();
 
         topLayerEffects = new Array<>();
         bottomLayerEffects = new Array<>();
@@ -103,6 +106,8 @@ public class IngameScreen implements Screen {
 
         MyGdxGame.batch.begin();
         MyGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+
+        if(ShockWave.getInstance().enabled) ShockWave.getInstance().draw();
 
         for(Iterator<Effect> eff = bottomLayerEffects.iterator(); eff.hasNext(); ){
             Effect tmp = eff.next();

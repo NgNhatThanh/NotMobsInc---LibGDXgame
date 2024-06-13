@@ -6,6 +6,7 @@ import btck.com.controller.attack.skill.Skill;
 import btck.com.crowd_control.SlowMo;
 import btck.com.model.entity.Entity;
 import btck.com.view.screens.Rumble;
+import btck.com.view.screens.ShockWave;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -20,6 +21,7 @@ public class SlowTimeSkill extends Skill {
     public SlowTimeSkill(Entity owner, int slot) {
         super(owner, slot);
 
+        this.state = SKILL_STATE.AVAILABLE;
         this.cooldown = 10;
         this.availableTT = new Texture(Gdx.files.internal("atlas/skill/slowtime/available.png"));
         this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/slowtime/locked.png"));
@@ -32,6 +34,7 @@ public class SlowTimeSkill extends Skill {
     public void activate(){
         this.state = SKILL_STATE.ACTIVE;
         curTime = 0;
+        ShockWave.getInstance().start(owner.getX(), owner.getY());
         Rumble.rumble();
         SlowMo.activateAll();
     }
