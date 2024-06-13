@@ -157,7 +157,6 @@ public class IngameScreen implements Screen {
         cam.update();
 
         MyGdxGame.batch.draw(player.getFrame(), 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-        for(Skill skill : GameManager.getInstance().getCurrentPlayer().getSkills()) skill.draw();
 
         updateBtnQuit();
 

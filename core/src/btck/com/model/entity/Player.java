@@ -29,4 +29,9 @@ public abstract class Player extends Entity{
 
     public abstract void upgrade();
 
+    public void update(){
+        super.update();
+        for(Skill skill : skills) skill.update();
+    }
+
 }

@@ -7,6 +7,7 @@ import btck.com.model.entity.Player;
 import btck.com.model.entity.player.Blinking;
 import btck.com.view.effect.Upgrade;
 import btck.com.view.screens.IngameScreen;
+import btck.com.view.screens.ShockWave;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -55,9 +56,9 @@ public class Ghost extends Player {
         attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.ONCE);
 
         skills = new Array<>();
-        skills.add(new ImpactSkill(this, 1));
-        skills.add(new DeadlyBounceSkill(this, 2));
-        skills.add(new SlowTimeSkill(this, 3));
+        skills.add(new ImpactSkill(this));
+        skills.add(new DeadlyBounceSkill(this));
+        skills.add(new SlowTimeSkill(this));
     }
 
     @Override
@@ -207,6 +208,7 @@ public class Ghost extends Player {
                 sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost4.mp3"));
                 sfx.play(ConstantSound.constantSound.getSoundVolume());
                 this.FRAME_DURATION = Constants.FRAME_DURATION[0];
+                ShockWave.getInstance().start(x, y);
                 break;
         }
 

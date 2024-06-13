@@ -6,6 +6,7 @@ import btck.com.common.Constants;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import lombok.Getter;
 
 public class HUD{
 
@@ -14,6 +15,9 @@ public class HUD{
     LevelLabel levelLabel;
 
     Viewport viewport;
+
+    @Getter
+    SkillButton qBtn, wBtn, eBtn;
 
     public HUD(){
         viewport = new FitViewport(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -28,6 +32,14 @@ public class HUD{
         // thêm Level
         this.levelLabel = new LevelLabel(GameManager.getInstance().getCurrentPlayer());
         stage.addActor(levelLabel);
+
+        qBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(0), 1);
+        wBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(1), 2);
+        eBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(2), 3);
+
+        stage.addActor(qBtn);
+        stage.addActor(wBtn);
+        stage.addActor(eBtn);
     }
 
     public void dispose(){

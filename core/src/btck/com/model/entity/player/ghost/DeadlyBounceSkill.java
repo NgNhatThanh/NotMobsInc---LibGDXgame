@@ -48,14 +48,12 @@ public class DeadlyBounceSkill extends Skill {
 
     Array<Enemy> hitEntities;
 
-    public DeadlyBounceSkill(Entity owner, int slot) {
-        super(owner, slot);
+    public DeadlyBounceSkill(Entity owner) {
+        super(owner);
         this.cooldown = 8;
         this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/deadlybounce/locked.png"));
         this.availableTT = new Texture(Gdx.files.internal("atlas/skill/deadlybounce/available.png"));
         this.FRAME_DURATION = Constants.FRAME_DURATION[0];
-        this.atlas = new TextureAtlas(Gdx.files.internal("atlas/skill/deadlybounce/active.atlas"));
-        this.activeAni = new Animation<>(FRAME_DURATION, atlas.findRegions("active"));
 
         this.hitEntities = new Array<>();
         this.hitbox = new Rectangle();
@@ -124,8 +122,7 @@ public class DeadlyBounceSkill extends Skill {
         return false;
     }
 
-    public void draw(){
-        super.draw();
+    public void update(){
         if(state == SKILL_STATE.ACTIVE){
             if(calling){
                 MyGdxGame.batch.draw(orbCall, orbX - orbSize / 2, orbY - orbSize / 2, orbSize * 2, orbSize * 1.7f);
@@ -146,6 +143,7 @@ public class DeadlyBounceSkill extends Skill {
             }
             else{
                 owner.setVisible(false);
+                updateHitBox();
                 MyGdxGame.batch.draw(orb, orbX, orbY, orbSize, orbSize);
             }
         }
@@ -205,8 +203,8 @@ public class DeadlyBounceSkill extends Skill {
     }
 
     public void end(){
+        IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY()));
         this.state = SKILL_STATE.COOLDOWN;
-        cooldownRemain = cooldown;
         owner.setVisible(true);
         owner.setVulnerable(true);
         Gdx.input.setInputProcessor(IngameInputHandler.getInstance());

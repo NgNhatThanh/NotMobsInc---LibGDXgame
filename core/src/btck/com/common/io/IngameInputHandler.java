@@ -5,6 +5,7 @@ import btck.com.controller.attack.skill.SKILL_STATE;
 import btck.com.model.state.GameState;
 import btck.com.utils.DEBUG_MODE;
 import btck.com.utils.Debugger;
+import btck.com.view.screens.ShockWave;
 import com.badlogic.gdx.InputProcessor;
 
 public class IngameInputHandler implements InputProcessor {

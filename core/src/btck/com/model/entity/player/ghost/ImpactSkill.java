@@ -26,14 +26,12 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class ImpactSkill extends Skill {
 
-    public ImpactSkill(Entity owner, int slot) {
-        super(owner, slot);
+    public ImpactSkill(Entity owner) {
+        super(owner);
         this.cooldown = 5;
         this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/impact/locked.png"));
         this.availableTT = new Texture(Gdx.files.internal("atlas/skill/impact/available.png"));
         this.FRAME_DURATION = Constants.FRAME_DURATION[0];
-        this.atlas = new TextureAtlas(Gdx.files.internal("atlas/skill/impact/active.atlas"));
-        this.activeAni = new Animation<>(FRAME_DURATION, atlas.findRegions("active"));
         this.hitbox = new Rectangle(0, 0, 250, 250);
     }
 
@@ -90,6 +88,5 @@ public class ImpactSkill extends Skill {
         Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
         ConstantSound.getInstance().setBgmVolume(ConstantSound.getInstance().getBgmVolume() * 3);
         this.state = SKILL_STATE.COOLDOWN;
-        this.cooldownRemain = this.cooldown;
     }
 }

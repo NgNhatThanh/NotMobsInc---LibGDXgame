@@ -1,6 +1,7 @@
 package btck.com.model.entity;
 
 import btck.com.controller.attack.Attack;
+import btck.com.controller.attack.skill.Skill;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;

@@ -18,16 +18,13 @@ public class SlowTimeSkill extends Skill {
     float existTime = 4;
     float curTime;
 
-    public SlowTimeSkill(Entity owner, int slot) {
-        super(owner, slot);
+    public SlowTimeSkill(Entity owner) {
+        super(owner);
 
-        this.state = SKILL_STATE.AVAILABLE;
         this.cooldown = 10;
         this.availableTT = new Texture(Gdx.files.internal("atlas/skill/slowtime/available.png"));
         this.lockedTT = new Texture(Gdx.files.internal("atlas/skill/slowtime/locked.png"));
         this.FRAME_DURATION = Constants.FRAME_DURATION[0];
-        this.atlas = new TextureAtlas(Gdx.files.internal("atlas/skill/slowtime/active.atlas"));
-        this.activeAni = new Animation<>(FRAME_DURATION, atlas.findRegions("active"));
         this.hitbox = new Rectangle();
     }
 
@@ -56,7 +53,6 @@ public class SlowTimeSkill extends Skill {
 
     public void end(){
         this.state = SKILL_STATE.COOLDOWN;
-        cooldownRemain = cooldown;
         if(SlowMo.activeAll) SlowMo.deactivateAll();
     }
 

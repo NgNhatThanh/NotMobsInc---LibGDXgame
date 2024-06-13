@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class LevelLabel extends Actor {
-//    private Viewport viewport;
     private BitmapFont customFont;
     private Player player;
     private GlyphLayout layout;
@@ -19,7 +18,6 @@ public class LevelLabel extends Actor {
     public LevelLabel(Player player) {
         this.player = player;
         this.layout = new GlyphLayout();
-//        viewport = new FitViewport(Constants.screenWidth, Constants.screenHeight, new OrthographicCamera());
         initFont();
     }
 
@@ -34,10 +32,9 @@ public class LevelLabel extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         String labelText = "LEVEL " + player.getLevel();
         layout.setText(customFont, labelText);
-        customFont.draw(batch, labelText, 330, Constants.SCREEN_HEIGHT - layout.height - 35);
+        customFont.draw(batch, labelText, 330, Constants.SCREEN_HEIGHT - layout.height - 40);
     }
 
     public void dispose() {
