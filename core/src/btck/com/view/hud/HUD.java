@@ -3,6 +3,7 @@ package btck.com.view.hud;
 import btck.com.common.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.Constants;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -10,10 +11,12 @@ import lombok.Getter;
 
 public class HUD{
 
+
     public Stage stage;
     HealthBar healthBar;
     LevelLabel levelLabel;
 
+    public OrthographicCamera cam;
     Viewport viewport;
 
     @Getter
@@ -21,6 +24,8 @@ public class HUD{
 
     public HUD(){
         viewport = new FitViewport(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        cam = new OrthographicCamera();
+        viewport.setCamera(cam);
         stage = new Stage(viewport, MyGdxGame.batch);
 
         //         Thêm Health Bar vào stage

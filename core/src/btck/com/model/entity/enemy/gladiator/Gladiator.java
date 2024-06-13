@@ -18,9 +18,10 @@ public class Gladiator extends Enemy {
     private float tan, deltaSP;
 
     public Gladiator(){
+        super();
         FRAME_DURATION = Constants.FRAME_DURATION[0];
         attackRange = 200;
-        currentHealth = 4;
+        currentHealth = 5 + bonusHealth;
         exp = 5;
 
         normalSpeed = 100;

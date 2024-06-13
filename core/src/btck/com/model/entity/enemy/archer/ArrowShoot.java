@@ -6,6 +6,7 @@ import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.Bullet;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.Constants;
+import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
@@ -31,7 +32,7 @@ public class ArrowShoot extends Attack {
 
     public ArrowShoot(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
-        damage = 4;
+        damage = 4 + ((Enemy) owner).bonusDamage;
         currentDamage = damage;
 
         frameToShoot = 6;

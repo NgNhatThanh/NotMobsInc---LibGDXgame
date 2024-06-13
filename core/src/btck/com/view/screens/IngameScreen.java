@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -37,10 +38,11 @@ public class IngameScreen implements Screen {
     private final MyGdxGame myGdxGame;
     private final OrthographicCamera cam;
     private final Viewport viewport;
-    private final int maxEnemyAmount = 10;
-    private final int maxEnemySpawnAtOnce = 3;
+    private int maxEnemyAmount = 10;
+    private int maxEnemySpawnAtOnce = 3;
     private final Player player;
-    private final Random rand;
+    private float timeToSpawnEnemies;
+    private float spawnTimeShorten;
     private long lastEnemySpawntime;
     private final Spawner spawner;
     private final Button btnQuit;
@@ -58,15 +60,17 @@ public class IngameScreen implements Screen {
     @Getter
     private static Array<Bullet> bullets;
 
-    Vector3 center = new Vector3((float) Constants.SCREEN_WIDTH / 2, (float) Constants.SCREEN_HEIGHT / 2, 0);
+    Vector2 center = new Vector2((float) Constants.SCREEN_WIDTH / 2, (float) Constants.SCREEN_HEIGHT / 2);
+
+    Vector2 translateV;
 
     public IngameScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
-        this.rand = new Random();
         this.player = GameManager.getInstance().getCurrentPlayer();
         hud = new HUD();
         SlowMo.deactivateAll();
 
+        timeToSpawnEnemies = 5000;
         topLayerEffects = new Array<>();
         bottomLayerEffects = new Array<>();
         bullets = new Array<>();
@@ -83,18 +87,17 @@ public class IngameScreen implements Screen {
         map = new Texture(Constants.MAP_PATH);
     }
 
-    int playerSpawnX = Constants.SCREEN_WIDTH / 2 - GameManager.getInstance().getCurrentPlayer().width / 2;
-    int playerSpawnY = Constants.SCREEN_HEIGHT / 2 - GameManager.getInstance().getCurrentPlayer().height / 2;
-
     @Override
     public void show() {
-        spawnPlayer();
+        spawner.spawnPlayer();
     }
 
     @Override
     public void render(float delta) {
 
-        if(System.currentTimeMillis() - lastEnemySpawntime >= 5000){
+        spawnTimeShorten = (float) player.getLevel() / 15 * 1000;
+
+        if(GameManager.getInstance().getEnemies().isEmpty() || System.currentTimeMillis() - lastEnemySpawntime >= timeToSpawnEnemies - spawnTimeShorten){
             lastEnemySpawntime = System.currentTimeMillis();
             spawner.spawnEnemy();
         }
@@ -152,8 +155,16 @@ public class IngameScreen implements Screen {
             if(tmp.isFinished()) eff.remove();
         }
 
-        if(Rumble.isRumbling() && cam.position.equals(center)) cam.translate(Rumble.tick(Gdx.graphics.getDeltaTime()));
-        else cam.position.set(center);
+        if(Rumble.isRumbling() && cam.position.equals(center)){
+            translateV = Rumble.tick(Gdx.graphics.getDeltaTime());
+            cam.translate(translateV);
+            hud.cam.translate(translateV);
+        }
+        else{
+            cam.position.set(center, 0);
+            hud.cam.position.set(center, 0);
+        }
+        hud.cam.update();
         cam.update();
 
         MyGdxGame.batch.draw(player.getFrame(), 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -171,11 +182,6 @@ public class IngameScreen implements Screen {
             this.dispose();
             myGdxGame.setScreen(new GameOverScreen(myGdxGame));
         }
-    }
-
-    public void spawnPlayer(){
-        GameManager.getInstance().getCurrentPlayer().setX(playerSpawnX);
-        GameManager.getInstance().getCurrentPlayer().setY(playerSpawnY);
     }
 
     public static void addTopEffect(Effect eff){ topLayerEffects.add(eff); }

@@ -18,10 +18,11 @@ public class Knight extends Enemy {
     private float tan, deltaSP;
 
     public Knight(){
+        super();
         FRAME_DURATION = Constants.FRAME_DURATION[0];
 
         attackRange = 130;
-        currentHealth = 6;
+        currentHealth = 6 + bonusHealth;
         exp = 4;
 
         normalSpeed = 100;
@@ -45,7 +46,6 @@ public class Knight extends Enemy {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-//        System.out.println(health);
         statetime += Gdx.graphics.getDeltaTime();
 
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();

@@ -4,6 +4,7 @@ import btck.com.common.GameManager;
 import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
+import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
@@ -37,7 +38,7 @@ public class TeleportationAttack extends Attack {
         hitbox = new Rectangle();
         hitbox.width = owner.width;
         hitbox.height = owner.height;
-        damage = 6;
+        damage = 6 + ((Enemy) owner).bonusDamage;
         currentDamage = damage;
         coolDown = 1000;
         lastAttackTime = 0;

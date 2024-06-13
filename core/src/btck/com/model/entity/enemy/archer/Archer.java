@@ -18,9 +18,10 @@ public class Archer extends Enemy {
     private float tan, deltaSP;
 
     public Archer(){
+        super();
         FRAME_DURATION = Constants.FRAME_DURATION[0];
         attackRange = 200;
-        currentHealth = 3;
+        currentHealth = 4 + bonusHealth;
         exp = 5;
 
         normalSpeed = 100;

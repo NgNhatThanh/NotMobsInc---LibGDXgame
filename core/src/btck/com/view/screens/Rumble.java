@@ -1,6 +1,6 @@
 package btck.com.view.screens;
 
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import lombok.Getter;
 
 import java.util.Random;
@@ -12,7 +12,7 @@ public class Rumble {
     private static float power = 5f;
     private static float currentPower;
     private static Random random = new Random();
-    private static Vector3 pos = new Vector3(0, 0,0);
+    private static Vector2 pos = new Vector2(0, 0);
     static int cnt = 0;
     @Getter
     private static boolean rumbling = false;
@@ -22,7 +22,7 @@ public class Rumble {
         rumbling = true;
     }
 
-    public static Vector3 tick(float delta){
+    public static Vector2 tick(float delta){
         if(currentTime <= rumbleDuration){
             ++cnt;
             currentPower = power * ((rumbleDuration - currentTime) / rumbleDuration);

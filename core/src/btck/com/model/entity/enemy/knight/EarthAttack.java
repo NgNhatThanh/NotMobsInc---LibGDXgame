@@ -3,6 +3,7 @@ package btck.com.model.entity.enemy.knight;
 import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
+import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
 import btck.com.view.effect.AirStrike;
 import btck.com.view.effect.SLICE_COLOR;
@@ -25,7 +26,7 @@ public class EarthAttack extends Attack {
         hitbox.height = 260;
         frameToDealDamage = new int[1];
         frameToDealDamage[0] = 10;
-        damage = 10;
+        damage = 10 + ((Enemy) owner).bonusDamage;
         currentDamage = damage;
         owner.attackSpeed = owner.normalSpeed;
     }

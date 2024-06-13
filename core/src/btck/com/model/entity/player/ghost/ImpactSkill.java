@@ -43,6 +43,8 @@ public class ImpactSkill extends Skill {
         this.statetime = 0;
         owner.setVisible(false);
         owner.setVulnerable(false);
+        owner.setAttacking(false);
+        owner.setCurrentSpeed(0);
         SlowMo.activateAll();
         IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY()));
     }
@@ -53,6 +55,7 @@ public class ImpactSkill extends Skill {
         owner.setY(Constants.SCREEN_HEIGHT - i1);
         owner.setVulnerable(true);
         owner.setVisible(true);
+        owner.setCurrentSpeed(owner.getNormalSpeed());
         SlowMo.deactivateAll();
         IngameScreen.addTopEffect(new AirStrike(i, Constants.SCREEN_HEIGHT - i1));
 
@@ -78,7 +81,7 @@ public class ImpactSkill extends Skill {
     public void upgrade(){
         if(this.state == SKILL_STATE.LOCKED) this.state = SKILL_STATE.AVAILABLE;
         else{
-            this.cooldown--;
+            this.cooldown -= 0.5f;
             hitbox.width += 10;
         }
         this.damage = owner.getAttack().getDamage() * 3 / 2;

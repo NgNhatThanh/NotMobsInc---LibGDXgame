@@ -1,5 +1,6 @@
 package btck.com.model.entity;
 
+import btck.com.common.GameManager;
 import btck.com.common.sound.ConstantSound;
 import btck.com.view.effect.Bloodstain;
 import btck.com.view.screens.IngameScreen;
@@ -7,9 +8,10 @@ import btck.com.view.screens.IngameScreen;
 public abstract class Enemy extends Entity{
     public int exp;
     public int attackRange;
+    public int bonusHealth, bonusDamage;
 
-    public int getExp() {
-        return exp;
+    public Enemy(){
+        bonusDamage = bonusHealth = GameManager.getInstance().getCurrentPlayer().getUpgradeLevel() - 1;
     }
 
     public void takeDamage(int damage){

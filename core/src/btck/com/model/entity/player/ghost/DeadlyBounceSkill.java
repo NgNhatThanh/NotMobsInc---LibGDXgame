@@ -67,6 +67,8 @@ public class DeadlyBounceSkill extends Skill {
         Blinking.blinking = false;
         owner.setVisible(false);
         owner.setVulnerable(false);
+        owner.setAttacking(false);
+        owner.setCurrentSpeed(0);
         this.state = SKILL_STATE.ACTIVE;
         this.curRollTime = 0;
         this.statetime = 0;
@@ -192,8 +194,8 @@ public class DeadlyBounceSkill extends Skill {
             this.hitbox.height = orbSize;
         }
         else{
-            this.cooldown--;
-            this.rollTime++;
+            this.cooldown -= 0.5f;
+            this.rollTime += 0.5f;
             this.orbSpeed += 200;
             this.orbSize += 30;
             this.hitbox.width = orbSize;
@@ -207,6 +209,7 @@ public class DeadlyBounceSkill extends Skill {
         this.state = SKILL_STATE.COOLDOWN;
         owner.setVisible(true);
         owner.setVulnerable(true);
+        owner.setCurrentSpeed(owner.getNormalSpeed());
         Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
     }
 }

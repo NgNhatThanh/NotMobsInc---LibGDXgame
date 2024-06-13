@@ -132,6 +132,7 @@ public class Ghost extends Player {
 
     @Override
     public void move(float desX, float desY){
+        if(currentSpeed == 0) System.out.println("dung im dum");
         if(abs(x - desX) < 5 && abs(y - desY) < 5) {
             if(!attacking) animationIdx = 0;
             angle = 0;
