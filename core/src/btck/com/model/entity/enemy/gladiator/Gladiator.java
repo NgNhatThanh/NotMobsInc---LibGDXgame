@@ -22,7 +22,7 @@ public class Gladiator extends Enemy {
         FRAME_DURATION = Constants.FRAME_DURATION[0];
         attackRange = 200;
         currentHealth = 5 + bonusHealth;
-        exp = 5;
+        exp = 6;
 
         normalSpeed = 100;
         currentSpeed = normalSpeed;

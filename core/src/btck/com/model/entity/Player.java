@@ -6,6 +6,7 @@ import btck.com.crowd_control.SlowMo;
 import btck.com.model.entity.player.Blinking;
 import btck.com.view.effect.AirStrikeCall;
 import btck.com.view.screens.IngameScreen;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import lombok.Getter;
@@ -37,6 +38,7 @@ public abstract class Player extends Entity{
         if(dead){
             animationIdx = 0;
             visible = false;
+            Gdx.input.setInputProcessor(null);
             IngameScreen.addTopEffect(new AirStrikeCall(x, y, true));
             SlowMo.activateAll();
             SlowMo.activateEntity(this);

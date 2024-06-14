@@ -33,7 +33,7 @@ public class Ghost extends Player {
         exist = true;
 
         this.frame = new Texture(Gdx.files.internal("atlas/player/ghost1/frame.png"));
-        levelToUpgrade = 2;
+        levelToUpgrade = 10;
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
         maxHealth = 100;
@@ -42,12 +42,11 @@ public class Ghost extends Player {
         hitbox = new Rectangle(x, y, width, height);
 
         atlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
-        animations = new Animation[4];
+        animations = new Animation[3];
 
         animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
         animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
         animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
-        animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_die"));
 
         width = animations[0].getKeyFrame(0).getRegionWidth();
         height = animations[0].getKeyFrame(0).getRegionHeight();
@@ -105,7 +104,7 @@ public class Ghost extends Player {
         if(currentHealth > 0){
             while(currentExp >= expToLevelUp){
                 expToLevelUp += nextLevelExp;
-                nextLevelExp += 3;
+                nextLevelExp += 2;
                 ++level;
                 if(level == levelToUpgrade) upgrade();
             }
@@ -208,7 +207,6 @@ public class Ghost extends Player {
         animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
         animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
         animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
-        animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_die"));
 
         width = animations[0].getKeyFrame(0).getRegionWidth();
         height = animations[0].getKeyFrame(0).getRegionHeight();
@@ -216,7 +214,7 @@ public class Ghost extends Player {
         attack.upgrade();
         for(int i = 0; i <= upgradeLevel - 2; ++i) skills.get(i).upgrade();
 
-        levelToUpgrade += 2;
+        levelToUpgrade += 10;
         IngameScreen.addTopEffect(new Upgrade(x, y));
     }
 }

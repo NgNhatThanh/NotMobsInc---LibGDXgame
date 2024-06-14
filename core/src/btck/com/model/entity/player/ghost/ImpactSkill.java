@@ -84,7 +84,7 @@ public class ImpactSkill extends Skill {
             this.cooldown -= 0.5f;
             hitbox.width += 10;
         }
-        this.damage = owner.getAttack().getDamage() * 3 / 2;
+        this.damage = owner.getAttack().getDamage() * 2;
     }
 
     public void end(){

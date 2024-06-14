@@ -22,7 +22,7 @@ public class Archer extends Enemy {
         FRAME_DURATION = Constants.FRAME_DURATION[0];
         attackRange = 200;
         currentHealth = 4 + bonusHealth;
-        exp = 5;
+        exp = 4;
 
         normalSpeed = 100;
         currentSpeed = 100;
@@ -31,7 +31,7 @@ public class Archer extends Enemy {
 
         hitbox = new Rectangle(0, 0, width, height);
 
-        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_spawn"));
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr-spawn"));
         animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
         animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
         animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_die"));
