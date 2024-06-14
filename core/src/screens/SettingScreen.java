@@ -79,8 +79,8 @@ public class SettingScreen implements Screen {
     private void initFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("HUD/Minecraft.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        params.size = 24;
-        params.color = new Color(147 /255.0f, 0, 0, 1.0f);
+        params.size = 27;
+        params.color = Color.WHITE;
         customFont = generator.generateFont(params);
         generator.dispose();
     }
@@ -151,7 +151,7 @@ public class SettingScreen implements Screen {
 
         table.add(lBgm);
         bgmSlider = new Slider(0, 1, 0.1f, false, sliderStyle);
-        table.add(bgmSlider).width(500).padLeft(10);
+        table.add(bgmSlider).width(400).padLeft(10);
         bgmSlider.setValue(ConstantSound.getInstance().getBgmVolume());
         bgmSlider.addListener(new ChangeListener() {
             @Override
@@ -169,8 +169,8 @@ public class SettingScreen implements Screen {
         Label lSound = new Label("Sound", labelStyle);
         table.setFillParent(true);
 
-        table.add(lSound).padTop(50);
-        table.add(soundSlider).width(500).padLeft(10).padTop(50);
+        table.add(lSound).padTop(25);
+        table.add(soundSlider).width(400).padLeft(10).padTop(25);
         soundSlider.setValue(ConstantSound.getInstance().getSoundVolume());
         soundSlider.addListener(new ChangeListener() {
             @Override
