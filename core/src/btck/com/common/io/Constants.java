@@ -56,7 +56,7 @@ public class Constants {
 
     static public final String UISKIN_PATH = "uiskin/uiskin.json";
     static public final String GET_BACK_TO_WORK_ATLAS_PATH = "atlas/screen/fired/fired.atlas";
-    static public final String MAIN_MENU_SCREEN_ATLAS_PATH = "atlas/screen/main menu screen/into the game.atlas";
+    static public final String MAIN_MENU_SCREEN_ATLAS_PATH = "atlas/screen/main menu screen/main menu screen.atlas";
     static public final String BACKGROUND_ATLAS = "atlas/screen/background/background.atlas";
     static public final String SWITCH_SCREEN_ATLAS = "atlas/screen/switch screen/switch screen.atlas";
 }

@@ -33,7 +33,7 @@ public class Ghost extends Player {
 
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        currentHealth = 100;
+        currentHealth = 10;
         maxHealth = 100;
         width = sampleTexture.getWidth();
         height = sampleTexture.getHeight();

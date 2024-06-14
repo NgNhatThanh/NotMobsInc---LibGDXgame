@@ -55,12 +55,13 @@ public class MainMenuScreen  implements Screen {
         width = Constants.SCREEN_WIDTH;
         height = Constants.SCREEN_HEIGHT;
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.MAIN_MENU_SCREEN_ATLAS_PATH));
-        animations = new Animation[2];
+        animations = new Animation[3];
         if(Constants.inited == true) animationIdx = 1;
         else animationIdx = 0;
 
         animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("tile"));
         animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("loop"));
+        animations[2] = new Animation<>(0.2f, textureAtlas.findRegions("close"));
 
         btnNewGame = new Button(newGameX, newGameY, newGameWidth, newGameHeight, Constants.NEW_GAME_ICON_INACTIVE_PATH, Constants.NEW_GAME_ICON_ACTIVE_PATH);
         btnExit = new Button(exitX, exitY, exitWidth, exitHeight, Constants.EXIT_ICON_INACTIVE_PATH, Constants.EXIT_ICON_ACTIVE_PATH);
@@ -92,7 +93,7 @@ public class MainMenuScreen  implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        if (animationIdx < animations.length - 1 && animations[animationIdx].isAnimationFinished(statetime)) {
+        if (animationIdx < animations.length - 2 && animations[animationIdx].isAnimationFinished(statetime)) {
             animationIdx++;
         }
 
@@ -141,13 +142,16 @@ public class MainMenuScreen  implements Screen {
                 menuButton.setClicked(false);
                 switch (menuButton.getText()) {
                     case "New game":
-                        ConstantSound.getInstance().bgmMenu.dispose();
-                        this.dispose();
-                        GameManager.getInstance().setCurrentPlayer(new Ghost());
-                        GameManager.getInstance().gameState = GameState.INGAME;
-                        // Clear enemies
-                        GameManager.getInstance().getEnemies().clear();
-                        myGdxGame.setScreen(new IngameScreen(myGdxGame));
+                        myGdxGame.batch.draw(animations[2].getKeyFrame(statetime, false), 0, 0, width, height);
+                        if(animations[2].isAnimationFinished(statetime)){
+                            ConstantSound.getInstance().bgmMenu.dispose();
+                            this.dispose();
+                            GameManager.getInstance().setCurrentPlayer(new Ghost());
+                            GameManager.getInstance().gameState = GameState.INGAME;
+                            // Clear enemies
+                            GameManager.getInstance().getEnemies().clear();
+                            myGdxGame.setScreen(new IngameScreen(myGdxGame));
+                        }
                         break;
                     case "Settings":
                         myGdxGame.setScreen(new SettingScreen(myGdxGame));

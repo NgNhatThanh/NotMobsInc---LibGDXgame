@@ -30,11 +30,7 @@ import java.util.Random;
 
 public class IngameScreen implements Screen {
     private final MyGdxGame myGdxGame;
-    float FRAME_SPEED = 0.1f;
-    int width, height;
-    protected TextureAtlas textureAtlas;
-    protected Animation<TextureRegion>[] animations;
-    protected float statetime;
+
     private final OrthographicCamera cam;
     private final Viewport viewport;
     private final int maxEnemyAmount = 10;
@@ -76,12 +72,6 @@ public class IngameScreen implements Screen {
 
         frame = new Texture(Constants.FRAME_0_PATH);
         map = new Texture(Constants.MAP_PATH);
-
-        width = Constants.SCREEN_WIDTH;
-        height = Constants.SCREEN_HEIGHT;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.SWITCH_SCREEN_ATLAS));
-        animations = new Animation[1];
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("close"));
     }
 
     int playerSpawnX = Constants.SCREEN_WIDTH / 2 - GameManager.getInstance().getCurrentPlayer().width / 2;
@@ -97,7 +87,6 @@ public class IngameScreen implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        statetime += Gdx.graphics.getDeltaTime();
 
         if(System.currentTimeMillis() - lastEnemySpawntime >= 5000){
             lastEnemySpawntime = System.currentTimeMillis();
@@ -107,7 +96,6 @@ public class IngameScreen implements Screen {
         MyGdxGame.batch.setProjectionMatrix(cam.combined);
 
         MyGdxGame.batch.begin();
-        MyGdxGame.batch.draw(animations[0].getKeyFrame(statetime, false), 0, 0, width, height);
         MyGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
         for(Iterator<Effect> eff = bottomLayerEffects.iterator(); eff.hasNext(); ){

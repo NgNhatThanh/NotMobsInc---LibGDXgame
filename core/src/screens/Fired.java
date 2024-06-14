@@ -52,7 +52,7 @@ public class Fired implements Screen {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("HUD/Minecraft.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
         params.size = 45;
-        params.color = Color.RED;
+        params.color = new Color(147 / 255.0f, 0/255.0f, 0 / 255.0f, 1.0f);
         customFont = generator.generateFont(params);
         generator.dispose();
     }
