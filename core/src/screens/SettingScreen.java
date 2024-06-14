@@ -6,10 +6,12 @@ import btck.com.common.io.Constants;
 import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,8 +26,12 @@ public class SettingScreen implements Screen {
     Skin skin;
     MyGdxGame myGdxGame;
     Table table;
+    Skin customSkin;
+    private BitmapFont customFont;
     public static Slider bgmSlider;
     public static Slider soundSlider;
+    Slider.SliderStyle sliderStyle;
+    Label.LabelStyle labelStyle;
 
     protected TextureAtlas textureAtlas;
     protected Animation<TextureRegion>[] animations;
@@ -48,13 +54,35 @@ public class SettingScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        skin = new Skin(Gdx.files.internal(Constants.UISKIN_PATH));
         table = new Table();
 
         btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.BACK_ARROW_INACTIVE_ICON_PATH, Constants.BACK_ARROW_ACTIVE_ICON_PATH);
 
+        customSkin = new Skin();
+
+        customSkin.add("slider", new Texture(Gdx.files.internal("uiskin/slider.png")));
+        customSkin.add("knob", new Texture(Gdx.files.internal("uiskin/knob.png")));
+
+        sliderStyle = new Slider.SliderStyle();
+        sliderStyle.background = customSkin.getDrawable("slider");
+        sliderStyle.knob = customSkin.getDrawable("knob");
+
+        initFont();
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = customFont;
+
         adjustBgm();
         adjustSound();
+
+    }
+
+    private void initFont() {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("HUD/Minecraft.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        params.size = 24;
+        params.color = new Color(147 /255.0f, 0, 0, 1.0f);
+        customFont = generator.generateFont(params);
+        generator.dispose();
     }
 
     @Override
@@ -117,12 +145,12 @@ public class SettingScreen implements Screen {
     }
 
     public void adjustBgm(){
-        Label lBgm = new Label("Music", skin);
+        Label lBgm = new Label("Music", labelStyle);
         table.setFillParent(true);
         stage.addActor(table);
 
         table.add(lBgm);
-        bgmSlider = new Slider(0, 1, 0.1f, false, skin);
+        bgmSlider = new Slider(0, 1, 0.1f, false, sliderStyle);
         table.add(bgmSlider).width(500).padLeft(10);
         bgmSlider.setValue(ConstantSound.getInstance().getBgmVolume());
         bgmSlider.addListener(new ChangeListener() {
@@ -137,13 +165,12 @@ public class SettingScreen implements Screen {
 
     public void adjustSound(){
         table.row();
-        soundSlider = new Slider(0, 1, 0.1f, false, skin);
-        Label lSound = new Label("Sound", skin);
-
+        soundSlider = new Slider(0, 1, 0.1f, false, sliderStyle);
+        Label lSound = new Label("Sound", labelStyle);
         table.setFillParent(true);
 
-        table.add(lSound);
-        table.add(soundSlider).width(500).padLeft(10);
+        table.add(lSound).padTop(50);
+        table.add(soundSlider).width(500).padLeft(10).padTop(50);
         soundSlider.setValue(ConstantSound.getInstance().getSoundVolume());
         soundSlider.addListener(new ChangeListener() {
             @Override

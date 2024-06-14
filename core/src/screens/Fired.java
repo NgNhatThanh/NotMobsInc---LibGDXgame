@@ -51,7 +51,7 @@ public class Fired implements Screen {
     private void initFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("HUD/Minecraft.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        params.size = 45;
+        params.size = 55;
         params.color = new Color(147 / 255.0f, 0/255.0f, 0 / 255.0f, 1.0f);
         customFont = generator.generateFont(params);
         generator.dispose();
@@ -117,7 +117,7 @@ public class Fired implements Screen {
 
         myGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, false), 0, 0, width, height);
         if(animationIdx == 1){
-            customFont.draw(myGdxGame.batch, layout, (Constants.SCREEN_WIDTH - layout.width)/2, (Constants.SCREEN_HEIGHT - layout.height)/2 + 100);
+            customFont.draw(myGdxGame.batch, layout, (Constants.SCREEN_WIDTH - layout.width)/2, (Constants.SCREEN_HEIGHT - layout.height)/2 + 125);
         }
         myGdxGame.batch.end();
     }

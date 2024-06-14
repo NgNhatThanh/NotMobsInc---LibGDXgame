@@ -10,6 +10,7 @@ import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -25,6 +26,7 @@ public class MainMenuScreen  implements Screen {
     protected Animation<TextureRegion>[] animations;
     protected int animationIdx;
     protected float statetime;
+    static Sound sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/door.ogg"));
     public final int newGameWidth = 400;
     public final int newGameHeight = 96;
     public final int exitWidth = 150;
@@ -61,7 +63,7 @@ public class MainMenuScreen  implements Screen {
 
         animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("tile"));
         animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("loop"));
-        animations[2] = new Animation<>(0.2f, textureAtlas.findRegions("close"));
+        animations[2] = new Animation<>(0.1f, textureAtlas.findRegions("close"));
 
         btnNewGame = new Button(newGameX, newGameY, newGameWidth, newGameHeight, Constants.NEW_GAME_ICON_INACTIVE_PATH, Constants.NEW_GAME_ICON_ACTIVE_PATH);
         btnExit = new Button(exitX, exitY, exitWidth, exitHeight, Constants.EXIT_ICON_INACTIVE_PATH, Constants.EXIT_ICON_ACTIVE_PATH);
@@ -98,16 +100,26 @@ public class MainMenuScreen  implements Screen {
         }
 
         if(animations[0].isAnimationFinished(statetime)) Constants.inited = true;
+        if(animationIdx == 2 && animations[2].isAnimationFinished(statetime)){
+            ConstantSound.getInstance().bgmMenu.dispose();
+            this.dispose();
+            GameManager.getInstance().setCurrentPlayer(new Ghost());
+            GameManager.getInstance().gameState = GameState.INGAME;
+            // Clear enemies
+            GameManager.getInstance().getEnemies().clear();
+            myGdxGame.setScreen(new IngameScreen(myGdxGame));
+        }
 
         myGdxGame.batch.begin();
 
-        if(animationIdx == 0){
+        if(animationIdx == 0 || animationIdx == 2){
             myGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, false), 0, 0, width, height);
         }
         else myGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, true), 0, 0, width, height);
         if(animationIdx == 1) update();
 
         myGdxGame.batch.end();
+
     }
 
     @Override
@@ -142,16 +154,9 @@ public class MainMenuScreen  implements Screen {
                 menuButton.setClicked(false);
                 switch (menuButton.getText()) {
                     case "New game":
-                        myGdxGame.batch.draw(animations[2].getKeyFrame(statetime, false), 0, 0, width, height);
-                        if(animations[2].isAnimationFinished(statetime)){
-                            ConstantSound.getInstance().bgmMenu.dispose();
-                            this.dispose();
-                            GameManager.getInstance().setCurrentPlayer(new Ghost());
-                            GameManager.getInstance().gameState = GameState.INGAME;
-                            // Clear enemies
-                            GameManager.getInstance().getEnemies().clear();
-                            myGdxGame.setScreen(new IngameScreen(myGdxGame));
-                        }
+                        animationIdx = 2;
+                        sfx.play(ConstantSound.getInstance().getSoundVolume());
+                        statetime = 0f;
                         break;
                     case "Settings":
                         myGdxGame.setScreen(new SettingScreen(myGdxGame));
