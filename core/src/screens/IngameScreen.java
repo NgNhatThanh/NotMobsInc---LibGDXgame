@@ -200,6 +200,7 @@ public void renderGame(){
         hud.dispose();
         map.dispose();
         frame.dispose();
+        btnPause.dispose();
     }
     public void updateBtnQPause(){
         btnPause.update();

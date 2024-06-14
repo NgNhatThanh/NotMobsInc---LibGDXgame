@@ -49,6 +49,8 @@ public class PauseScreen implements Screen {
         this.btnSFX = new Button(startX + buttonWidth * 2 + spacing + 20, startY - 250, buttonWidth, buttonHeight, Constants.SFX_ICON_INACTIVE_PATH, Constants.SFX_ICON_ACTIVE_PATH);
         this.pauseWindow = new Texture(Constants.PAUSE_BG_PATH);
         initFont();
+        this.musicActive = GameManager.getInstance().isMusicActive();
+        this.sfxActive = GameManager.getInstance().isSfxActive();
     }
 
     @Override
@@ -81,7 +83,6 @@ public class PauseScreen implements Screen {
         float textYOffset = 60;
         MyGdxGame.batch.end();
 
-
         MyGdxGame.batch.begin();
         musicLayout.setText(musicFont, bgMusic);
         float musicWidth = musicLayout.width;
@@ -92,33 +93,29 @@ public class PauseScreen implements Screen {
         float sfxWidth = sfxLayout.width;
         float sfxX = startX + buttonWidth * 2 + spacing * 2 - sfxWidth / 2;
         sfxFont.draw(MyGdxGame.batch, SFX, sfxX, startY - textYOffset);
-
         if (btnMusic.isClicked()) {
             musicActive = !musicActive;
+            GameManager.getInstance().setMusicActive(musicActive);
             btnMusic.setClicked(false);
         }
-
         if (musicActive) {
             btnMusic.drawActive(MyGdxGame.batch);
         } else {
             btnMusic.drawInactive(MyGdxGame.batch);
         }
 
-
+        // vẽ button sfx
         if (btnSFX.isClicked()) {
             sfxActive = !sfxActive;
+            GameManager.getInstance().setSfxActive(sfxActive);
             btnSFX.setClicked(false);
         }
-
-        // Vẽ btnSFX dựa trên trạng thái active
         if (sfxActive) {
             btnSFX.drawActive(MyGdxGame.batch);
         } else {
             btnSFX.drawInactive(MyGdxGame.batch);
         }
-
         MyGdxGame.batch.end();
-
 
         btnResume.update();
         btnRestart.update();
@@ -130,7 +127,7 @@ public class PauseScreen implements Screen {
         updateButtonHome();
         updateButtonRestart();
         updateButtonMusic();
-//        updateButtonSFX();
+        updateButtonSFX();
     }
 
     public void updateButtonResume(){
@@ -157,6 +154,7 @@ public class PauseScreen implements Screen {
             GameManager.getInstance().gameState = GameState.INGAME;
             // Clear enemies
             GameManager.getInstance().getEnemies().clear();
+            GameManager.getInstance().resetSoundSettings();
             myGdxGame.setScreen(new IngameScreen(myGdxGame));
         }
     }
@@ -169,32 +167,23 @@ public class PauseScreen implements Screen {
                 ConstantSound.getInstance().bgmIngame.stop();
                 musicActive = true;
             }
+            GameManager.getInstance().setMusicActive(musicActive);
             btnMusic.setClicked(false);
         }
     }
-//    public void updateButtonSFX() {
-//        if (btnSFX.isClicked()) {
-//            sfxActive = true;
-//            btnSFX.setClicked(false);
-//        }
-//        else {
-//            sfxActive = false;
-//            btnSFX.setClicked(false);
-//        }
-//        if (sfxActive) {
-//            ConstantSound.getInstance().playEnemyHitSound();
-//                ConstantSound.getInstance().playPlayerHitSFX();
-//                ConstantSound.getInstance().playSlashSound();
-//            } else {
-//                ConstantSound.getInstance().stopAllSounds();
-//            }
-//        }
-
-
-
-
-
-
+    public void updateButtonSFX() {
+        if (btnSFX.isClicked()) {
+            if (sfxActive) {
+                ConstantSound.getInstance().setSoundVolume(0.5f);
+                sfxActive = false;
+            } else {
+                ConstantSound.getInstance().setSoundVolume(0f);
+                sfxActive = true;
+            }
+            GameManager.getInstance().setSfxActive(sfxActive);
+            btnSFX.setClicked(false);
+        }
+    }
 
     private void initFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("PauseScreen/upheavtt.ttf"));

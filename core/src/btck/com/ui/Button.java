@@ -27,7 +27,6 @@ public class Button {
     public void setText(String text) {
         this.text = text;
     }
-    private boolean clicked = false;
     public boolean isClicked() {
         return isClicked;
     }
