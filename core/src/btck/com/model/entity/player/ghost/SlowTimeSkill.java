@@ -5,12 +5,10 @@ import btck.com.controller.attack.skill.SKILL_STATE;
 import btck.com.controller.attack.skill.Skill;
 import btck.com.crowd_control.SlowMo;
 import btck.com.model.entity.Entity;
-import btck.com.view.screens.Rumble;
-import btck.com.view.screens.ShockWave;
+import btck.com.view.screens.eff.Rumble;
+import btck.com.view.screens.eff.ShockWave;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 
 public class SlowTimeSkill extends Skill {

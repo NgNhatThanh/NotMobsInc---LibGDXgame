@@ -17,11 +17,12 @@ public class SkillButtonManager extends Group {
     SkillButton qBtn, wBtn, eBtn;
 
     public void setButtons(int slot1, int slot2, int slot3){
+        this.clear();
+
         qBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(slot1 - 1), 1);
         wBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(slot2 - 1), 2);
         eBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(slot3 - 1), 3);
 
-        this.clear();
         this.addActor(qBtn);
         this.addActor(wBtn);
         this.addActor(eBtn);

@@ -7,7 +7,7 @@ import btck.com.model.entity.Player;
 import btck.com.model.entity.player.Blinking;
 import btck.com.view.effect.Upgrade;
 import btck.com.view.screens.IngameScreen;
-import btck.com.view.screens.ShockWave;
+import btck.com.view.screens.eff.ShockWave;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;

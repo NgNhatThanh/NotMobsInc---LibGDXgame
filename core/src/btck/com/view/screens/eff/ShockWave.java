@@ -1,7 +1,8 @@
-package btck.com.view.screens;
+package btck.com.view.screens.eff;
 
 import btck.com.MyGdxGame;
 import btck.com.common.Constants;
+import btck.com.view.screens.IngameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;

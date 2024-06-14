@@ -4,7 +4,6 @@ import btck.com.MyGdxGame;
 import btck.com.common.Constants;
 import btck.com.common.GameManager;
 import btck.com.common.io.IngameInputHandler;
-import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.skill.SKILL_STATE;
 import btck.com.controller.attack.skill.Skill;
 import btck.com.crowd_control.SlowMo;
@@ -16,17 +15,11 @@ import btck.com.view.effect.AirStrikeCall;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
 import btck.com.view.screens.IngameScreen;
-import btck.com.view.screens.Rumble;
-import com.badlogic.gdx.Game;
+import btck.com.view.screens.eff.Rumble;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import static java.lang.Math.*;
 
