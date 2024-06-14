@@ -1,0 +1,18 @@
+switch screen.png
+size:2048,256
+repeat:none
+close
+index:4
+bounds:2,2,322,242
+close
+index:1
+bounds:326,2,322,242
+close
+index:3
+bounds:650,2,322,242
+close
+index:0
+bounds:974,2,322,242
+close
+index:2
+bounds:1298,2,322,242

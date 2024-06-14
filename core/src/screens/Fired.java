@@ -4,17 +4,14 @@ import btck.com.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.io.Constants;
 import btck.com.common.io.sound.ConstantSound;
-import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.utils.Null;
-import jdk.vm.ci.meta.Constant;
 
-public class GetBackToWork implements Screen {
+public class Fired implements Screen {
     MyGdxGame myGdxGame;
     private BitmapFont customFont;
     private GlyphLayout layout;
@@ -31,7 +28,7 @@ public class GetBackToWork implements Screen {
                             Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/close door.ogg"))};
     private boolean sfx0Played = false, sfx1Played = false, sfx2Played = false;
 
-    public GetBackToWork(MyGdxGame myGdxGame){
+    public Fired(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         this.layout = new GlyphLayout();
         width = Constants.SCREEN_WIDTH;

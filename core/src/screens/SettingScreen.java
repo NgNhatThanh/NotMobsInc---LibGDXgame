@@ -7,6 +7,9 @@ import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,18 +19,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class SettingScreen implements Screen {
+    float FRAME_SPEED = 0.15f;
     Stage stage;
     Skin skin;
     MyGdxGame myGdxGame;
     Table table;
     public static Slider bgmSlider;
     public static Slider soundSlider;
+
+    protected TextureAtlas textureAtlas;
+    protected Animation<TextureRegion>[] animations;
+    protected float statetime;
+    int width, height;
     Button btnArrow;
     int arrowPositions = 50;
     int arrowEdge = 50;
 
     public SettingScreen(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
+
+        width = Constants.SCREEN_WIDTH;
+        height = Constants.SCREEN_HEIGHT;
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.BACKGROUND_ATLAS));
+        animations = new Animation[1];
+
+        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("loop"));
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -50,12 +66,13 @@ public class SettingScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        statetime += Gdx.graphics.getDeltaTime();
 
         // Bắt đầu vẽ batch
         myGdxGame.batch.begin();
 
+        myGdxGame.batch.draw(animations[0].getKeyFrame(statetime, true), 0, 0, width, height);
         updateArrow();
-
         myGdxGame.batch.end();
 
         stage.act(Gdx.graphics.getDeltaTime());
