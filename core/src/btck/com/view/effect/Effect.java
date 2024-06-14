@@ -5,11 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import lombok.Getter;
+import lombok.Setter;
 
 public abstract class Effect {
 
     Animation<TextureRegion> ani;
     float x, y, width, heigth, angle;
+    @Getter @Setter
     float FRAME_DURATION;
     float currentTime = 0;
     boolean fixedSize = true;
@@ -42,6 +45,11 @@ public abstract class Effect {
 
     public boolean isFinished(){
         return ani.isAnimationFinished(currentTime);
+    }
+
+    public void setFRAME_DURATION(float FD){
+        this.FRAME_DURATION = FD;
+        ani.setFrameDuration(FD);
     }
 
 }

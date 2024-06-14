@@ -1,7 +1,7 @@
 package btck.com.model.entity;
 
 import btck.com.controller.attack.Attack;
-import com.badlogic.gdx.graphics.Texture;
+import btck.com.controller.attack.skill.Skill;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -24,6 +24,7 @@ public abstract class Entity{
     public float attackSpeed;
     public float currentSpeed;
     public float xSpeed, ySpeed;
+    protected boolean visible = true;
     protected boolean vulnerable = false;
     protected boolean attacking;
     protected boolean flip;
@@ -33,9 +34,9 @@ public abstract class Entity{
     protected boolean isHit;
     protected Attack attack;
     protected float angle;
-    protected TextureAtlas textureAtlas;
+    protected TextureAtlas atlas;
     protected Animation<TextureRegion>[] animations;
-    protected Texture sampleTexture;
+    protected float FRAME_DURATION;
     protected float statetime;
     protected int animationIdx;
     public abstract void draw(SpriteBatch spriteBatch);
@@ -44,6 +45,7 @@ public abstract class Entity{
 
     public void takeDamage(int damage){
         this.currentHealth -= damage;
+        if(this.currentHealth < 0) this.currentHealth = 0;
         update();
     }
 
@@ -55,6 +57,11 @@ public abstract class Entity{
             statetime = 0;
             animationIdx = 3;
         }
+    }
+
+    public void setFRAME_DURATION(float FD){
+        this.FRAME_DURATION = FD;
+        for(Animation<TextureRegion> animation : animations) animation.setFrameDuration(FD);
     }
 
 }

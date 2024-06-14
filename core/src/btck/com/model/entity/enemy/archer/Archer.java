@@ -1,11 +1,10 @@
 package btck.com.model.entity.enemy.archer;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,33 +15,30 @@ import static java.lang.Math.sqrt;
 
 public class Archer extends Enemy {
 
-    float FRAME_SPEED = 0.1f;
-
     private float tan, deltaSP;
 
     public Archer(){
+        super();
+        FRAME_DURATION = Constants.FRAME_DURATION[0];
         attackRange = 200;
-        currentHealth = 3;
-        exp = 5;
-
-        sampleTexture = new Texture(Constants.ARCHER_SAMPLE_TT_PATH);
-
-        width = sampleTexture.getWidth();
-        height = sampleTexture.getHeight();
-        sampleTexture.dispose();
+        currentHealth = 4 + bonusHealth;
+        exp = 4;
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.ARCHER_ATLAS_PATH));
+        atlas = new TextureAtlas(Gdx.files.internal(Constants.ARCHER_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_spawn"));
-        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_idle"));
-        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_run"));
-        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_die"));
-        animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_attack"));
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr-spawn"));
+        animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
+        animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
+        animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_die"));
+        animations[4] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
+
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
 
         attack = new ArrowShoot(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }

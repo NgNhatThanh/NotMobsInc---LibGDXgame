@@ -1,11 +1,10 @@
 package btck.com.model.entity.enemy.gladiator;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,33 +15,31 @@ import static java.lang.Math.sqrt;
 
 public class Gladiator extends Enemy {
 
-    float FRAME_SPEED = 0.1f;
-
     private float tan, deltaSP;
 
     public Gladiator(){
+        super();
+        FRAME_DURATION = Constants.FRAME_DURATION[0];
         attackRange = 200;
-        currentHealth = 4;
-        exp = 5;
-        sampleTexture = new Texture(Constants.GLADIATOR_SAMPLE_TT_PATH);
-
-        width = sampleTexture.getWidth();
-        height = sampleTexture.getHeight();
-        sampleTexture.dispose();
+        currentHealth = 5 + bonusHealth;
+        exp = 6;
 
         normalSpeed = 100;
-        currentSpeed = 100;
+        currentSpeed = normalSpeed;
 
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
+        atlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height / 2);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spawn"));
-        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("idle"));
-        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("run"));
-        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("dead"));
-        animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("attack"));
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spawn"));
+        animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("idle"));
+        animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("run"));
+        animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("dead"));
+        animations[4] = new Animation<>(FRAME_DURATION, atlas.findRegions("attack"));
+
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
 
         attack = new TeleportationAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }

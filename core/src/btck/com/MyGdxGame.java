@@ -1,12 +1,13 @@
 package btck.com;
 
-import btck.com.common.io.MouseHandler;
-import btck.com.model.constant.GameState;
+import btck.com.common.GameManager;
+import btck.com.common.io.IngameInputHandler;
+import btck.com.model.state.GameState;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import screens.MainMenuScreen;
+import btck.com.view.screens.MainMenuScreen;
 
 public class MyGdxGame extends Game {
 
@@ -15,7 +16,7 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		Gdx.input.setInputProcessor(MouseHandler.getInstance());
+		Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
 		GameManager.getInstance().gameState = GameState.MENU;
 
 		Pixmap pm = new Pixmap(Gdx.files.internal("cursorImage.png"));

@@ -1,6 +1,6 @@
 package btck.com.ui;
 
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,10 +15,6 @@ public class Button {
     private boolean isHovered, isClicked;
     Texture textureInactive;
     Texture textureActive;
-    TextureRegion trActive;
-    TextureRegion trInactive;
-    TextureRegionDrawable trdInactive;
-    TextureRegionDrawable trdActive;
 
     public String getText() {
         return text;
@@ -43,10 +39,6 @@ public class Button {
         this.height = height;
         textureInactive = new Texture(Gdx.files.internal(inactiveImg));
         textureActive = new Texture(Gdx.files.internal(activeImg));
-        trActive = new TextureRegion(textureActive);
-        trInactive = new TextureRegion(textureInactive);
-        trdInactive = new TextureRegionDrawable(trInactive);
-        trdActive = new TextureRegionDrawable(trActive);
     }
 
     public void update(){
@@ -65,10 +57,10 @@ public class Button {
     }
     public void draw(SpriteBatch batch){
         if(isHovered){
-            trdActive.draw(batch, x, y, width, height);
+            batch.draw(textureActive,x , y, width, height);
         }
         else{
-            trdInactive.draw(batch, x, y, width, height);
+            batch.draw(textureInactive,x , y, width, height);
         }
 
     }
