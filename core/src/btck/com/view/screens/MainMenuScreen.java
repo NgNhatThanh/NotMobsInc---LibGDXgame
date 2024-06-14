@@ -10,6 +10,7 @@ import btck.com.ui.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 
 public class MainMenuScreen  implements Screen {
@@ -38,6 +39,7 @@ public class MainMenuScreen  implements Screen {
     private Button[] menuButtons = new Button[menuItems.length];
     public MainMenuScreen(MyGdxGame myGdxGame) {
         Gdx.input.setInputProcessor(new InputAdapter());
+        MyGdxGame.batch.setColor(Color.WHITE);
         this.myGdxGame = myGdxGame;
 
         btnNewGame = new Button(newGameX, newGameY, newGameWidth, newGameHeight, Constants.NEW_GAME_ICON_INACTIVE_PATH, Constants.NEW_GAME_ICON_ACTIVE_PATH);

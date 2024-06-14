@@ -9,6 +9,7 @@
     import btck.com.ui.Button;
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.Screen;
+    import com.badlogic.gdx.graphics.Color;
     import com.badlogic.gdx.graphics.GL20;
 
     public class GameOverScreen  implements Screen {
@@ -27,12 +28,14 @@
         Button btnMainMenu;
         public GameOverScreen(MyGdxGame myGdxGame){
             this.myGdxGame = myGdxGame;
+            MyGdxGame.batch.setColor(Color.WHITE);
+            Gdx.input.setInputProcessor(null);
             ConstantSound.getInstance().bgmMenu.play();
         }
     
         @Override
         public void show() {
-    
+
         }
     
         @Override

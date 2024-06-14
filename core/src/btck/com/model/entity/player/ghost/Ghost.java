@@ -36,7 +36,7 @@ public class Ghost extends Player {
         levelToUpgrade = 2;
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        maxHealth = 10;
+        maxHealth = 100;
         currentHealth = maxHealth;
 
         hitbox = new Rectangle(x, y, width, height);

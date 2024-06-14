@@ -19,6 +19,7 @@ import btck.com.view.effect.Slice;
 import btck.com.view.hud.HUD;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -103,6 +104,8 @@ public class IngameScreen implements Screen {
         MyGdxGame.batch.setProjectionMatrix(cam.combined);
 
         MyGdxGame.batch.begin();
+        if(player.isDead()) MyGdxGame.batch.setColor(Color.LIGHT_GRAY);
+
         MyGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
         if(ShockWave.getInstance().enabled) ShockWave.getInstance().draw();
