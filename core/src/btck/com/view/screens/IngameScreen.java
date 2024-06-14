@@ -17,6 +17,8 @@ import btck.com.view.effect.Effect;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
 import btck.com.view.hud.HUD;
+import btck.com.view.screens.eff.Rumble;
+import btck.com.view.screens.eff.ShockWave;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;

@@ -77,7 +77,7 @@ public class SkillButton extends Actor {
     }
 
     public void activate(){
-        skill.activate();
+        if(skill.getState() == SKILL_STATE.AVAILABLE) skill.activate();
     }
 
 }

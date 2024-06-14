@@ -16,12 +16,9 @@ import btck.com.view.effect.AirStrikeCall;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
 import btck.com.view.screens.IngameScreen;
-import btck.com.view.screens.Rumble;
+import btck.com.view.screens.eff.Rumble;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 
 public class ImpactSkill extends Skill {

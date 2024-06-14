@@ -3,6 +3,7 @@ package btck.com.view.hud;
 import btck.com.common.GameManager;
 import btck.com.MyGdxGame;
 import btck.com.common.Constants;
+import btck.com.controller.SkillButtonManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -38,13 +39,9 @@ public class HUD{
         this.levelLabel = new LevelLabel(GameManager.getInstance().getCurrentPlayer());
         stage.addActor(levelLabel);
 
-        qBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(0), 1);
-        wBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(1), 2);
-        eBtn = new SkillButton(GameManager.getInstance().getCurrentPlayer().skills.get(2), 3);
+        SkillButtonManager.getInstance().setButtons(1, 2, 3);
 
-        stage.addActor(qBtn);
-        stage.addActor(wBtn);
-        stage.addActor(eBtn);
+        stage.addActor(SkillButtonManager.getInstance());
     }
 
     public void dispose(){
