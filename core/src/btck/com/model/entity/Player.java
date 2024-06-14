@@ -2,7 +2,10 @@ package btck.com.model.entity;
 
 import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.skill.Skill;
+import btck.com.crowd_control.SlowMo;
 import btck.com.model.entity.player.Blinking;
+import btck.com.view.effect.AirStrikeCall;
+import btck.com.view.screens.IngameScreen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import lombok.Getter;
@@ -31,6 +34,13 @@ public abstract class Player extends Entity{
 
     public void update(){
         super.update();
+        if(dead){
+            animationIdx = 0;
+            visible = false;
+            IngameScreen.addTopEffect(new AirStrikeCall(x, y, true));
+            SlowMo.activateAll();
+            SlowMo.activateEntity(this);
+        }
         for(Skill skill : skills) skill.update();
     }
 

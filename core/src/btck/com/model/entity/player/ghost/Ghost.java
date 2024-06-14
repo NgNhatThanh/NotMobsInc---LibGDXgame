@@ -17,8 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 public class Ghost extends Player {
 
@@ -37,8 +36,8 @@ public class Ghost extends Player {
         levelToUpgrade = 2;
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        currentHealth = 100;
-        maxHealth = 100;
+        maxHealth = 10;
+        currentHealth = maxHealth;
 
         hitbox = new Rectangle(x, y, width, height);
 
@@ -63,6 +62,7 @@ public class Ghost extends Player {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        if(!exist) return;
         statetime += Gdx.graphics.getDeltaTime();
 
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
@@ -73,12 +73,6 @@ public class Ghost extends Player {
 
         hitbox.width = width - 10;
         hitbox.height = height / 2;
-
-        if(dead && animations[animationIdx].isAnimationFinished(statetime)){
-            exist = false;
-            System.out.println("bay mau");
-            return;
-        }
 
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;
@@ -132,7 +126,6 @@ public class Ghost extends Player {
 
     @Override
     public void move(float desX, float desY){
-        if(currentSpeed == 0) System.out.println("dung im dum");
         if(abs(x - desX) < 5 && abs(y - desY) < 5) {
             if(!attacking) animationIdx = 0;
             angle = 0;

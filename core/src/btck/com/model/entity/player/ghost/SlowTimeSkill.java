@@ -30,6 +30,7 @@ public class SlowTimeSkill extends Skill {
 
     public void activate(){
         this.state = SKILL_STATE.ACTIVE;
+        owner.setVulnerable(false);
         curTime = 0;
         ShockWave.getInstance().start(owner.getX(), owner.getY());
         Rumble.rumble();
@@ -52,6 +53,7 @@ public class SlowTimeSkill extends Skill {
     }
 
     public void end(){
+        owner.setVulnerable(true);
         this.state = SKILL_STATE.COOLDOWN;
         if(SlowMo.activeAll) SlowMo.deactivateAll();
     }

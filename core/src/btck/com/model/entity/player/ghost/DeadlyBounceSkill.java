@@ -78,7 +78,7 @@ public class DeadlyBounceSkill extends Skill {
         this.orbCenterX = orbX + orbSize / 2;
         this.orbCenterY = orbY + orbSize / 2;
         SlowMo.activateAll();
-        IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY()));
+        IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY(), false));
     }
 
     public boolean touchDown(int x1, int y1, int x2, int y2){
@@ -205,7 +205,7 @@ public class DeadlyBounceSkill extends Skill {
     }
 
     public void end(){
-        IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY()));
+        IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY(), false));
         this.state = SKILL_STATE.COOLDOWN;
         owner.setVisible(true);
         owner.setVulnerable(true);

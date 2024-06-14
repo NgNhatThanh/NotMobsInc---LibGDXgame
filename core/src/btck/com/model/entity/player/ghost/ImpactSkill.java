@@ -46,7 +46,7 @@ public class ImpactSkill extends Skill {
         owner.setAttacking(false);
         owner.setCurrentSpeed(0);
         SlowMo.activateAll();
-        IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY()));
+        IngameScreen.addTopEffect(new AirStrikeCall(owner.getX(), owner.getY(), false));
     }
 
     @Override

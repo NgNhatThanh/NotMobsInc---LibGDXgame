@@ -26,8 +26,6 @@
         Button btnTryAgain;
         Button btnMainMenu;
         public GameOverScreen(MyGdxGame myGdxGame){
-            System.out.println(WIDTH);
-            System.out.println(HEIGHT);
             this.myGdxGame = myGdxGame;
             ConstantSound.getInstance().bgmMenu.play();
         }
@@ -39,8 +37,6 @@
     
         @Override
         public void render(float delta) {
-            System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
-
             Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             myGdxGame.batch.begin();

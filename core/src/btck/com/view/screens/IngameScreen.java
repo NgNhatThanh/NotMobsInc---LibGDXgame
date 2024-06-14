@@ -5,7 +5,6 @@ import btck.com.MyGdxGame;
 import btck.com.common.io.IngameInputHandler;
 import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Bullet;
-import btck.com.controller.attack.skill.Skill;
 import btck.com.controller.spawn.Spawner;
 import btck.com.common.Constants;
 import btck.com.crowd_control.SlowMo;
@@ -25,14 +24,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import lombok.Getter;
-
-import java.util.Iterator;
-import java.util.Random;
 
 public class IngameScreen implements Screen {
     private final MyGdxGame myGdxGame;
@@ -112,25 +107,25 @@ public class IngameScreen implements Screen {
 
         if(ShockWave.getInstance().enabled) ShockWave.getInstance().draw();
 
-        for(Iterator<Effect> eff = bottomLayerEffects.iterator(); eff.hasNext(); ){
-            Effect tmp = eff.next();
+        for(int i = 0; i < bottomLayerEffects.size; ++i){
+            Effect tmp = bottomLayerEffects.get(i);
             tmp.draw();
-            if(tmp.isFinished()) eff.remove();
+            if(tmp.isFinished()) bottomLayerEffects.removeIndex(i);
         }
 
         updateBullets();
 
-        for(Bullet bullet : bullets){
-            if(player.isVulnerable() && bullet.getHitbox().overlaps(player.getHitbox())){
-                player.takeDamage(bullet.getDamage());
+        for(int i = 0; i < bullets.size; ++i){
+            Bullet tmp = bullets.get(i);
+            if(player.isVulnerable() && tmp.getHitbox().overlaps(player.getHitbox())){
+                player.takeDamage(tmp.getDamage());
                 addTopEffect(new Slice(player.getX(), player.getY(), 45, player.getHeight(), SLICE_COLOR.WHITE));
-                bullets.removeValue(bullet, false);
+                bullets.removeIndex(i);
             }
         }
 
-        for (Iterator<Enemy> enemyIterator = GameManager.getInstance().getEnemies().iterator(); enemyIterator.hasNext(); ) {
-            Enemy tmp = enemyIterator.next();
-
+        for (int i = 0; i < GameManager.getInstance().getEnemies().size; ++i) {
+            Enemy tmp = GameManager.getInstance().getEnemies().get(i);
             tmp.draw(MyGdxGame.batch);
             if(tmp.isVulnerable() && player.isAttacking() && player.getAttack().hit(tmp)){
                 Rumble.rumble();
@@ -142,17 +137,16 @@ public class IngameScreen implements Screen {
             }
 
             if(!tmp.isExist()){
-                System.out.println("chet");
-                enemyIterator.remove();
+                GameManager.getInstance().getEnemies().removeIndex(i);
             }
         }
 
         GameManager.getInstance().getCurrentPlayer().draw(MyGdxGame.batch);
 
-        for(Iterator<Effect> eff = topLayerEffects.iterator(); eff.hasNext(); ){
-            Effect tmp = eff.next();
+        for(int i = 0; i < topLayerEffects.size; ++i){
+            Effect tmp = topLayerEffects.get(i);
             tmp.draw();
-            if(tmp.isFinished()) eff.remove();
+            if(tmp.isFinished()) topLayerEffects.removeIndex(i);
         }
 
         if(Rumble.isRumbling() && cam.position.equals(center)){
@@ -178,7 +172,6 @@ public class IngameScreen implements Screen {
         if(Debugger.debugMode == DEBUG_MODE.ON) Debugger.getInstance().debug();
 
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
-            System.out.println("chet");
             this.dispose();
             myGdxGame.setScreen(new GameOverScreen(myGdxGame));
         }
