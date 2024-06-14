@@ -1,6 +1,7 @@
 package btck.com.common.io;
 
 import btck.com.common.GameManager;
+import btck.com.controller.SkillButtonManager;
 import btck.com.controller.attack.skill.SKILL_STATE;
 import btck.com.model.state.GameState;
 import btck.com.utils.DEBUG_MODE;
@@ -32,19 +33,13 @@ public class IngameInputHandler implements InputProcessor {
         character = Character.toLowerCase(character);
         switch (character){
             case 'q':
-                if(GameManager.getInstance().getCurrentPlayer().getSkills().first().getState() == SKILL_STATE.AVAILABLE){
-                    GameManager.getInstance().getCurrentPlayer().getSkills().first().activate();
-                }
+                SkillButtonManager.getInstance().active(1);
                 break;
             case 'w':
-                if(GameManager.getInstance().getCurrentPlayer().getSkills().get(1).getState() == SKILL_STATE.AVAILABLE){
-                    GameManager.getInstance().getCurrentPlayer().getSkills().get(1).activate();
-                }
+                SkillButtonManager.getInstance().active(2);
                 break;
             case 'e':
-                if(GameManager.getInstance().getCurrentPlayer().getSkills().get(2).getState() == SKILL_STATE.AVAILABLE){
-                    GameManager.getInstance().getCurrentPlayer().getSkills().get(2).activate();
-                }
+                SkillButtonManager.getInstance().active(3);
                 break;
             case 'd':
                 if(Debugger.debugMode == DEBUG_MODE.ON) Debugger.setDebugMode(DEBUG_MODE.OFF);
