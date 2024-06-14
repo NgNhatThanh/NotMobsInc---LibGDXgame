@@ -25,7 +25,7 @@ public class Gladiator extends Enemy {
         exp = 5;
 
         normalSpeed = 100;
-        currentSpeed = 100;
+        currentSpeed = normalSpeed;
 
         atlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
         animations = new Animation[5];

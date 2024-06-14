@@ -154,17 +154,26 @@ public class DeadlyBounceSkill extends Skill {
     public void updateHitBox(){
         if(calling) return;
         curRollTime += Gdx.graphics.getDeltaTime();
-        if(orbX <= 0 || orbX + hitbox.width >= Constants.SCREEN_WIDTH) xSpeed *= -1;
-        if(orbY <= 0 || orbY + hitbox.height >= Constants.SCREEN_HEIGHT) ySpeed *= -1;
 
         float xDist = xSpeed * Gdx.graphics.getDeltaTime();
         float yDist = ySpeed * Gdx.graphics.getDeltaTime();
 
-        orbCenterX += xDist;
-        orbCenterY += yDist;
+        orbX += xDist;
+        orbY += yDist;
 
-        orbX = orbCenterX - orbSize / 2;
-        orbY = orbCenterY - orbSize / 2;
+        if(orbX <= 0 || orbX + hitbox.width >= Constants.SCREEN_WIDTH){
+            xSpeed *= -1;
+            if(orbX < 0) orbX = 0;
+            else orbX = Constants.SCREEN_WIDTH - hitbox.width;
+        }
+        if(orbY <= 0 || orbY + hitbox.height >= Constants.SCREEN_HEIGHT){
+            ySpeed *= -1;
+            if(orbY < 0) orbY = 0;
+            else orbY = Constants.SCREEN_HEIGHT - hitbox.height;
+        }
+
+        orbCenterX = orbX + orbSize / 2;
+        orbCenterY = orbY - orbSize / 2;
 
         hitbox.x = orbX;
         hitbox.y = orbY;

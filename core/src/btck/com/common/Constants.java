@@ -16,6 +16,8 @@ public class Constants {
     static public final String ARCHER_ATLAS_PATH = "atlas/enemy/archer/archer.atlas";
     static public final String KNIGHT_ATLAS_PATH = "atlas/enemy/knight/knight.atlas";
     static public final String GLADIATOR_ATLAS_PATH = "atlas/enemy/gladiator/gladiator.atlas";
+    static public final String RUNNER_ATLAS_PATH = "atlas/enemy/runner/runner.atlas";
+
 
     static public final String GHOST_1_ATLAS_PATH = "atlas/player/ghost1/ghost1.atlas";
     static public final String GHOST_2_ATLAS_PATH = "atlas/player/ghost2/ghost2.atlas";

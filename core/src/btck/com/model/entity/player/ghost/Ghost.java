@@ -189,19 +189,16 @@ public class Ghost extends Player {
                 atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_2_ATLAS_PATH));
                 sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost2.mp3"));
                 sfx.play(ConstantSound.constantSound.getSoundVolume());
-                this.FRAME_DURATION = Constants.FRAME_DURATION[1];
                 break;
             case 3:
                 atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_3_ATLAS_PATH));
                 sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost3.mp3"));
                 sfx.play(ConstantSound.constantSound.getSoundVolume());
-                this.FRAME_DURATION = Constants.FRAME_DURATION[0];
                 break;
             case 4:
                 atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_4_ATLAS_PATH));
                 sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost4.mp3"));
                 sfx.play(ConstantSound.constantSound.getSoundVolume());
-                this.FRAME_DURATION = Constants.FRAME_DURATION[0];
                 ShockWave.getInstance().start(x, y);
                 break;
         }
