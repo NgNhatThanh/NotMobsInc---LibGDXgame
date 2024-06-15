@@ -34,6 +34,19 @@ public class Constants {
     static public final String TRY_AGAIN_ICON_INACTIVE_PATH = "GameOverScreen/TryAgainInactive.png";
     static public final String MAIN_MENU_ICON_ACTIVE_PATH = "GameOverScreen/MainMenuActive.png";
     static public final String MAIN_MENU_ICON_INACTIVE_PATH = "GameOverScreen/MainMenuInactive.png";
+    static public final String PAUSE_ICON_INACTIVE_PATH = "PauseScreen/pause_inactive.png";
+    static public final String PAUSE_ICON_ACTIVE_PATH = "PauseScreen/pause_active.png";
+    static public final String PAUSE_BG_PATH = "ingame/pauseWindow.png";
+    static public final String HOME_ICON_INACTIVE_PATH = "PauseScreen/home_inactive.png";
+    static public final String HOME_ICON_ACTIVE_PATH = "PauseScreen/home_active.png";
+    static public final String RESTART_ICON_INACTIVE_PATH = "PauseScreen/restart_inactive.png";
+    static public final String RESTART_ICON_ACTIVE_PATH = "PauseScreen/restart_active.png";
+    static public final String RESUME_ICON_INACTIVE_PATH = "PauseScreen/resume_inactive.png";
+    static public final String RESUME_ICON_ACTIVE_PATH = "PauseScreen/resume_active.png";
+    static public final String BGMUSIC_ICON_ACTIVE_PATH = "PauseScreen/bgMusic_active.png";
+    static public final String BGMUSIC_ICON_INACTIVE_PATH = "PauseScreen/bgMusic_inactive.png";
+    static public final String SFX_ICON_INACTIVE_PATH = "PauseScreen/SFX_inactive.png";
+    static public final String SFX_ICON_ACTIVE_PATH = "PauseScreen/SFX_active.png";
 
     static public final String QUIT_ICON_ACTIVE_PATH = "ingame/quit active-02.png";
     static public final String QUIT_ICON_INACTIVE_PATH = "ingame/quit-02.png";

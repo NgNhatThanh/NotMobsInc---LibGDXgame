@@ -43,11 +43,11 @@ public class IngameScreen implements Screen {
     private float spawnTimeShorten;
     private long lastEnemySpawntime;
     private final Spawner spawner;
-    private final Button btnQuit;
-    private final int quitHeight = 50;
-    private final int quitWidth = 135;
-    private final int quitX = Constants.SCREEN_WIDTH - quitWidth - 60;
-    private final int quitY = Constants.SCREEN_HEIGHT - quitHeight - 30;
+    private final Button btnPause;
+    private final int pauseHeight = 80;
+    private final int pauseWidth = 80;
+    private final int pauseX = Constants.SCREEN_WIDTH - pauseWidth - 60;
+    private final int pauseY = Constants.SCREEN_HEIGHT - pauseHeight - 30;
     @Getter
     private static Texture map;
     private final HUD hud;
@@ -57,12 +57,12 @@ public class IngameScreen implements Screen {
     private static Array<Effect> bottomLayerEffects;
     @Getter
     private static Array<Bullet> bullets;
-
+    private boolean isPaused = false;
     Vector2 center = new Vector2((float) Constants.SCREEN_WIDTH / 2, (float) Constants.SCREEN_HEIGHT / 2);
 
     Vector2 translateV;
 
-    public IngameScreen(MyGdxGame myGdxGame){
+    public IngameScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
         this.player = GameManager.getInstance().getCurrentPlayer();
         hud = new HUD();
@@ -72,9 +72,8 @@ public class IngameScreen implements Screen {
         topLayerEffects = new Array<>();
         bottomLayerEffects = new Array<>();
         bullets = new Array<>();
-        this.btnQuit = new Button(quitX, quitY, quitWidth, quitHeight, Constants.QUIT_ICON_INACTIVE_PATH, Constants.QUIT_ICON_ACTIVE_PATH);
         this.spawner = new Spawner(maxEnemyAmount, maxEnemySpawnAtOnce);
-
+        this.btnPause = new Button(pauseX, pauseY, pauseWidth, pauseHeight, Constants.PAUSE_ICON_INACTIVE_PATH, Constants.PAUSE_ICON_ACTIVE_PATH);
         this.cam = new OrthographicCamera();
         this.viewport = new FitViewport(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, cam);
 
@@ -92,13 +91,27 @@ public class IngameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        MyGdxGame.batch.setProjectionMatrix(cam.combined);
+        if (!isPaused) {
+            renderGame();
+            if (btnPause.isClicked()) {
+                btnPause.setClicked(false);
+                setPaused(true);
+                myGdxGame.setScreen(new PauseScreen(myGdxGame, this));
+            }
+        }
+    }
+
+    public void renderGame() {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
         spawnTimeShorten = (float) player.getLevel() / 15 * 1000;
 
-        if(GameManager.getInstance().getEnemies().isEmpty() || System.currentTimeMillis() - lastEnemySpawntime >= timeToSpawnEnemies - spawnTimeShorten){
+        if (GameManager.getInstance().getEnemies().isEmpty() || System.currentTimeMillis() - lastEnemySpawntime >= timeToSpawnEnemies - spawnTimeShorten) {
             lastEnemySpawntime = System.currentTimeMillis();
             spawner.spawnEnemy();
         }
@@ -106,23 +119,25 @@ public class IngameScreen implements Screen {
         MyGdxGame.batch.setProjectionMatrix(cam.combined);
 
         MyGdxGame.batch.begin();
-        if(player.isDead()) MyGdxGame.batch.setColor(Color.LIGHT_GRAY);
+        if (player.isDead()) MyGdxGame.batch.setColor(Color.LIGHT_GRAY);
 
         MyGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-        if(ShockWave.getInstance().enabled) ShockWave.getInstance().draw();
+        if (ShockWave.getInstance().enabled) ShockWave.getInstance().draw();
 
-        for(int i = 0; i < bottomLayerEffects.size; ++i){
+        updateBtnQPause();
+
+        for (int i = 0; i < bottomLayerEffects.size; ++i) {
             Effect tmp = bottomLayerEffects.get(i);
             tmp.draw();
-            if(tmp.isFinished()) bottomLayerEffects.removeIndex(i);
+            if (tmp.isFinished()) bottomLayerEffects.removeIndex(i);
         }
 
         updateBullets();
 
-        for(int i = 0; i < bullets.size; ++i){
+        for (int i = 0; i < bullets.size; ++i) {
             Bullet tmp = bullets.get(i);
-            if(player.isVulnerable() && tmp.getHitbox().overlaps(player.getHitbox())){
+            if (player.isVulnerable() && tmp.getHitbox().overlaps(player.getHitbox())) {
                 player.takeDamage(tmp.getDamage());
                 addTopEffect(new Slice(player.getX(), player.getY(), 45, player.getHeight(), SLICE_COLOR.WHITE));
                 bullets.removeIndex(i);
@@ -168,8 +183,6 @@ public class IngameScreen implements Screen {
 
         MyGdxGame.batch.draw(player.getFrame(), 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-        updateBtnQuit();
-
         MyGdxGame.batch.end();
 
         hud.draw();
@@ -186,6 +199,14 @@ public class IngameScreen implements Screen {
 
     public static void addBottomEffect(Effect eff){ bottomLayerEffects.add(eff); }
 
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean isPaused) {
+        this.isPaused = isPaused;
+    }
+
     public static void addBullet(Bullet bullet){ bullets.add(bullet); }
 
     @Override
@@ -195,17 +216,14 @@ public class IngameScreen implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
@@ -213,15 +231,14 @@ public class IngameScreen implements Screen {
         ConstantSound.getInstance().bgmIngame.dispose();
         hud.dispose();
         map.dispose();
+        btnPause.dispose();
     }
-
-    public void updateBtnQuit(){
-        btnQuit.update();
-        btnQuit.draw(MyGdxGame.batch);
-        if(btnQuit.isClicked()){
-            btnQuit.setClicked(false);
-            this.dispose();
-            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+    public void updateBtnQPause(){
+        btnPause.update();
+        btnPause.draw(MyGdxGame.batch);
+        if(btnPause.isClicked()){
+            btnPause.setClicked(false);
+            myGdxGame.setScreen(new PauseScreen(myGdxGame, this));
         }
     }
 

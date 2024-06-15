@@ -23,7 +23,6 @@ public class Button {
     public void setText(String text) {
         this.text = text;
     }
-
     public boolean isClicked() {
         return isClicked;
     }
@@ -40,7 +39,13 @@ public class Button {
         textureInactive = new Texture(Gdx.files.internal(inactiveImg));
         textureActive = new Texture(Gdx.files.internal(activeImg));
     }
+    public void drawActive(SpriteBatch batch) {
+        batch.draw(textureActive, x, y, width, height);
+    }
 
+    public void drawInactive(SpriteBatch batch) {
+        batch.draw(textureInactive, x, y, width, height);
+    }
     public void update(){
         int mouseX = Gdx.input.getX();
         int mouseY = Constants.SCREEN_HEIGHT - Gdx.input.getY();

@@ -47,7 +47,6 @@ public class ConstantSound {
         int idx = rand.nextInt(3);
         enemyHitSFX[idx].play(soundVolume);
     }
-
     public void playPlayerHitSFX(){
         playerHitSFX.play(soundVolume);
     }
