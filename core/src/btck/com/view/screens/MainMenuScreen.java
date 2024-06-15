@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import static btck.com.common.io.Constants.inited;
 //import com.sun.tools.jconsole.JConsoleContext;
 
 public class MainMenuScreen  implements Screen {

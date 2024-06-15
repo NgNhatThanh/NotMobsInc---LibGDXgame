@@ -1,9 +1,9 @@
-package screens;
+package btck.com.view.screens;
 
-import btck.com.GameManager;
 import btck.com.MyGdxGame;
-import btck.com.common.io.Constants;
-import btck.com.common.io.sound.ConstantSound;
+import btck.com.common.Constants;
+import btck.com.common.GameManager;
+import btck.com.common.sound.ConstantSound;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -59,7 +59,7 @@ public class Fired implements Screen {
 
     @Override
     public void show() {
-
+        MyGdxGame.batch.setColor(Color.WHITE);
     }
 
     @Override
