@@ -7,9 +7,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class CreditsScene implements Screen {
+    float FRAME_SPEED = 0.15f;
 
     public static final int creditWidth = 700;
     public static final int creditHeight = 350;
@@ -17,14 +21,32 @@ public class CreditsScene implements Screen {
     MyGdxGame myGdxGame;
     Texture creditPng;
     Button btnArrow;
+    Button btnGithub;
+    Button btnMobinc;
+
+    protected TextureAtlas textureAtlas;
+    protected Animation<TextureRegion>[] animations;
+    protected float statetime;
+    int width, height;
     int arrowPositions = 50;
     int arrowEdge = 50;
+    int githubPositon = 250;
+    int githubEgde = 75;
+    int mobincWidth = 350;
+    int mobincHeight = 37;
 
     public CreditsScene(MyGdxGame myGdxGame){
         this.myGdxGame = myGdxGame;
         creditPng = new Texture(Constants.CREDIT_IMG_PATH);
         btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.BACK_ARROW_INACTIVE_ICON_PATH, Constants.BACK_ARROW_ACTIVE_ICON_PATH);
+        btnGithub = new Button(githubPositon, githubPositon, githubEgde, githubEgde, Constants.GITHUB_INACTIVE_PATH, Constants.GITHUB_INACTIVE_PATH);
+        btnMobinc = new Button((Constants.SCREEN_WIDTH - mobincWidth)/2, 20, mobincWidth, mobincHeight, Constants.MOBINC_INACTIVE_PATH, Constants.MOBINC_ACTIVE_PATH);
+        width = Constants.SCREEN_WIDTH;
+        height = Constants.SCREEN_HEIGHT;
+        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.BACKGROUND_ATLAS));
+        animations = new Animation[1];
 
+        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("loop"));
     }
 
     @Override
@@ -36,10 +58,15 @@ public class CreditsScene implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        statetime += Gdx.graphics.getDeltaTime();
+
         myGdxGame.batch.begin();
 
+        myGdxGame.batch.draw(animations[0].getKeyFrame(statetime, true), 0, 0, width, height);
         updateArrow();
-        myGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2, (Constants.SCREEN_HEIGHT - creditHeight) / 2, creditWidth, creditHeight);
+        updateIcon();
+        myGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2 - 100, (Constants.SCREEN_HEIGHT - creditHeight) / 2 + 100, creditWidth, creditHeight);
 
 
         myGdxGame.batch.end();
@@ -75,6 +102,20 @@ public class CreditsScene implements Screen {
         if(btnArrow.isClicked()){
             btnArrow.setClicked(false);
             myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+        }
+    }
+    public void updateIcon(){
+        btnGithub.update();
+        btnGithub.draw(MyGdxGame.batch);
+        if(btnGithub.isClicked()){
+            btnGithub.setClicked(false);
+            Gdx.net.openURI("https://github.com/NgNhatThanh/ProGamejam_BTCK");
+        }
+        btnMobinc.update();
+        btnMobinc.draw(MyGdxGame.batch);
+        if(btnMobinc.isClicked()){
+            btnMobinc.setClicked(false);
+            Gdx.net.openURI("https://overboy.itch.io/mobs-inc");
         }
     }
 }

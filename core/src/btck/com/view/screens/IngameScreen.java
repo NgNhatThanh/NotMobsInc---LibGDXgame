@@ -92,6 +92,9 @@ public class IngameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         spawnTimeShorten = (float) player.getLevel() / 15 * 1000;
 
@@ -99,9 +102,6 @@ public class IngameScreen implements Screen {
             lastEnemySpawntime = System.currentTimeMillis();
             spawner.spawnEnemy();
         }
-
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1); // Màu xám trung bình
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         MyGdxGame.batch.setProjectionMatrix(cam.combined);
 
@@ -178,7 +178,7 @@ public class IngameScreen implements Screen {
 
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
             this.dispose();
-            myGdxGame.setScreen(new GameOverScreen(myGdxGame));
+            myGdxGame.setScreen(new Fired(myGdxGame));
         }
     }
 
