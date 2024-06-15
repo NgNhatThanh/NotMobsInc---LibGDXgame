@@ -1,6 +1,6 @@
 package btck.com.ui;
 
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -57,11 +57,10 @@ public class Button {
     }
     public void draw(SpriteBatch batch){
         if(isHovered){
-            System.out.println(width + " " + height);
-            batch.draw(textureActive, x, y, width, height);
+            batch.draw(textureActive,x , y, width, height);
         }
         else{
-            batch.draw(textureInactive, x, y, width, height);
+            batch.draw(textureInactive,x , y, width, height);
         }
 
     }

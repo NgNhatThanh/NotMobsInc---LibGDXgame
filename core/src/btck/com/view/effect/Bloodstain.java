@@ -1,5 +1,6 @@
 package btck.com.view.effect;
 
+import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -28,7 +29,7 @@ public class Bloodstain extends Effect{
         super.draw();
         if(currentTime >= timeToDisappear){
             currentTime = 0;
-            ani.setFrameDuration(0.08f);
+            ani.setFrameDuration(Constants.FRAME_DURATION[1]);
         }
     }
 }

@@ -1,15 +1,13 @@
 package btck.com.model.entity.enemy.knight;
 
-import btck.com.GameManager;
+import btck.com.common.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.common.io.Constants;
+import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import static java.lang.Math.abs;
@@ -17,43 +15,37 @@ import static java.lang.Math.sqrt;
 
 public class Knight extends Enemy {
 
-    ShapeRenderer shapeRenderer;
-
-    float FRAME_SPEED = 0.1f;
-    private float a, b, x1, y1 ,deltaSP;
+    private float tan, deltaSP;
 
     public Knight(){
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
+        super();
+        FRAME_DURATION = Constants.FRAME_DURATION[0];
 
-        sampleTexture = new Texture(Constants.KNIGHT_SAMPLE_TT_PATH);
-
-        attackRange = 150;
-        currentHealth = 6;
-        exp = 4;
-        width = sampleTexture.getWidth();
-        height = sampleTexture.getHeight();
-        sampleTexture.dispose();
+        attackRange = 130;
+        currentHealth = 6 + bonusHealth;
+        exp = 7;
 
         normalSpeed = 100;
         currentSpeed = 100;
-        textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.KNIGHT_ATLAS_PATH));
+        atlas = new TextureAtlas(Gdx.files.internal(Constants.KNIGHT_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height);
 
-        animations[0] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_spawn"));
-        animations[1] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_idle"));
-        animations[2] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_run"));
-        animations[3] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_die"));
-        animations[4] = new Animation<>(FRAME_SPEED, textureAtlas.findRegions("spr_attack"));
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr-spawn"));
+        animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
+        animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
+        animations[3] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_die"));
+        animations[4] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
+
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
 
         attack = new EarthAttack(animations[4], this, DEAL_DAMAGE_TIME.ONCE);
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-//        System.out.println(health);
         statetime += Gdx.graphics.getDeltaTime();
 
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
@@ -96,8 +88,7 @@ public class Knight extends Enemy {
             return;
         }
 
-        if(desX < x) flip = true;
-        else flip = false;
+        flip = desX < x;
 
         deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
 
@@ -113,19 +104,29 @@ public class Knight extends Enemy {
             return;
         }
 
-        a = (y - desY) / (x - desX);
-        b = y - a * x;
+        tan = (y - desY) / (x - desX);
 
-        x1 = x;
-        y1 = y;
-        while(sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y)) < deltaSP){
-            if(x < desX) x1 += deltaSP / (50 * abs(a));
-            else x1 -= deltaSP / (50 * abs(a));
-            y1 = a * x1 + b;
-        }
+        angle = (float)Math.atan(tan);
+        angle = angle * (float)(180 / Math.PI);
 
-        x = x1;
-        y = y1;
+        if((angle > 0 && y > desY)
+                || (angle < 0 && y < desY)) angle += 180;
+        else if(angle < 0) angle += 360;
+
+        xSpeed = (float) sqrt((currentSpeed * currentSpeed) / (1 + tan * tan));
+        ySpeed = abs(xSpeed * tan);
+
+        if(angle > 90 && angle < 270) xSpeed *= -1;
+        if(angle > 180 && angle < 360) ySpeed *= -1;
+
+        float xDist = xSpeed * Gdx.graphics.getDeltaTime();
+        float yDist = ySpeed * Gdx.graphics.getDeltaTime();
+
+        if(desX > x) x = Math.min(desX, x + xDist);
+        else x = Math.max(desX, x + xDist);
+
+        if(desY > y) y = Math.min(desY, y + yDist);
+        else y = Math.max(desY, y + yDist);
     }
 
     @Override
