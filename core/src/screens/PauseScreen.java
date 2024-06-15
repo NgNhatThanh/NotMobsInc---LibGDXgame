@@ -145,7 +145,7 @@ public class PauseScreen implements Screen {
             ConstantSound.getInstance().bgmIngame.dispose();
         }
     }
-    public void updateButtonRestart(){
+    public void updateButtonRestart() {
         if (btnRestart.isClicked()) {
             btnRestart.setClicked(false);
             this.dispose();
@@ -155,9 +155,18 @@ public class PauseScreen implements Screen {
             // Clear enemies
             GameManager.getInstance().getEnemies().clear();
             GameManager.getInstance().resetSoundSettings();
+
+            // Update SFX volume based on the reset settings
+            if (GameManager.getInstance().isSfxActive()) {
+                ConstantSound.getInstance().setSoundVolume(0f);
+            } else {
+                ConstantSound.getInstance().setSoundVolume(0.5f);
+            }
+
             myGdxGame.setScreen(new IngameScreen(myGdxGame));
         }
     }
+
     public void updateButtonMusic(){
         if (btnMusic.isClicked()) {
             if (musicActive) {

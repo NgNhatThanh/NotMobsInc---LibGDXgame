@@ -51,5 +51,4 @@ public class ConstantSound {
     public void playPlayerHitSFX(){
         playerHitSFX.play(soundVolume);
     }
-
 }
