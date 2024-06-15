@@ -13,8 +13,11 @@ public class MyGdxGame extends Game {
 
 	public static SpriteBatch batch;
 
+	public static MyGdxGame myGdxGame;
+
 	@Override
 	public void create () {
+		myGdxGame = this;
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
 		GameManager.getInstance().gameState = GameState.MENU;
@@ -23,7 +26,7 @@ public class MyGdxGame extends Game {
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 32, 32));
 		pm.dispose();
 
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(new MainMenuScreen());
 	}
 
 	public void render () {

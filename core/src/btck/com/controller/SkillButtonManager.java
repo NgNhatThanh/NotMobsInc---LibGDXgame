@@ -2,7 +2,6 @@ package btck.com.controller;
 
 import btck.com.common.GameManager;
 import btck.com.view.hud.SkillButton;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 public class SkillButtonManager extends Group {

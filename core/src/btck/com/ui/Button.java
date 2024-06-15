@@ -1,28 +1,22 @@
 package btck.com.ui;
 
+import btck.com.MyGdxGame;
 import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Button {
     private int x, y, width, height;
-    private String inactiveImg;
-    private String activeImg;
+    @Getter
+    @Setter
     private String text;
     private boolean isHovered, isClicked;
     Texture textureInactive;
     Texture textureActive;
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
     public boolean isClicked() {
         return isClicked;
     }
@@ -49,23 +43,15 @@ public class Button {
     public void update(){
         int mouseX = Gdx.input.getX();
         int mouseY = Constants.SCREEN_HEIGHT - Gdx.input.getY();
-        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
-            isHovered = true;
-        } else {
-            isHovered = false;
-        }
-        if (isHovered && Gdx.input.isButtonJustPressed(0)) {
-            isClicked = true;
-        } else {
-            isClicked = false;
-        }
+        isHovered = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+        isClicked = isHovered && Gdx.input.isButtonJustPressed(0);
     }
-    public void draw(SpriteBatch batch){
+    public void draw(){
         if(isHovered){
-            batch.draw(textureActive,x , y, width, height);
+            MyGdxGame.batch.draw(textureActive,x , y, width, height);
         }
         else{
-            batch.draw(textureInactive,x , y, width, height);
+            MyGdxGame.batch.draw(textureInactive,x , y, width, height);
         }
 
     }

@@ -24,7 +24,6 @@ public class SettingScreen implements Screen {
     float FRAME_SPEED = 0.15f;
     Stage stage;
     Skin skin;
-    MyGdxGame myGdxGame;
     Table table;
     Skin customSkin;
     private BitmapFont customFont;
@@ -41,9 +40,7 @@ public class SettingScreen implements Screen {
     int arrowPositions = 50;
     int arrowEdge = 50;
 
-    public SettingScreen(MyGdxGame myGdxGame){
-        this.myGdxGame = myGdxGame;
-
+    public SettingScreen(){
         width = Constants.SCREEN_WIDTH;
         height = Constants.SCREEN_HEIGHT;
         textureAtlas = new TextureAtlas(Gdx.files.internal(Constants.BACKGROUND_ATLAS));
@@ -97,11 +94,11 @@ public class SettingScreen implements Screen {
         statetime += Gdx.graphics.getDeltaTime();
 
         // Bắt đầu vẽ batch
-        myGdxGame.batch.begin();
+        MyGdxGame.batch.begin();
 
-        myGdxGame.batch.draw(animations[0].getKeyFrame(statetime, true), 0, 0, width, height);
+        MyGdxGame.batch.draw(animations[0].getKeyFrame(statetime, true), 0, 0, width, height);
         updateArrow();
-        myGdxGame.batch.end();
+        MyGdxGame.batch.end();
 
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
@@ -135,12 +132,11 @@ public class SettingScreen implements Screen {
 
     public void updateArrow(){
         btnArrow.update();
-        btnArrow.draw(myGdxGame.batch);
+        btnArrow.draw();
         if(btnArrow.isClicked()){
             btnArrow.setClicked(false);
             this.dispose();
-            System.out.println(Constants.inited);
-            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+            MyGdxGame.myGdxGame.setScreen(new MainMenuScreen());
         }
     }
 

@@ -1,6 +1,5 @@
 package btck.com.model.entity.enemy.archer;
 
-import btck.com.MyGdxGame;
 import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.Bullet;
@@ -15,9 +14,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 import btck.com.view.screens.IngameScreen;
 
 public class ArrowShoot extends Attack {

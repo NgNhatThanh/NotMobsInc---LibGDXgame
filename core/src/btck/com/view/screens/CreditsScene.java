@@ -18,7 +18,6 @@ public class CreditsScene implements Screen {
     public static final int creditWidth = 700;
     public static final int creditHeight = 350;
 
-    MyGdxGame myGdxGame;
     Texture creditPng;
     Button btnArrow;
     Button btnGithub;
@@ -35,8 +34,7 @@ public class CreditsScene implements Screen {
     int mobincWidth = 350;
     int mobincHeight = 37;
 
-    public CreditsScene(MyGdxGame myGdxGame){
-        this.myGdxGame = myGdxGame;
+    public CreditsScene(){
         creditPng = new Texture(Constants.CREDIT_IMG_PATH);
         btnArrow = new Button(arrowPositions, arrowPositions, arrowEdge, arrowEdge, Constants.BACK_ARROW_INACTIVE_ICON_PATH, Constants.BACK_ARROW_ACTIVE_ICON_PATH);
         btnGithub = new Button(githubPositon, githubPositon, githubEgde, githubEgde, Constants.GITHUB_INACTIVE_PATH, Constants.GITHUB_INACTIVE_PATH);
@@ -61,15 +59,15 @@ public class CreditsScene implements Screen {
 
         statetime += Gdx.graphics.getDeltaTime();
 
-        myGdxGame.batch.begin();
+        MyGdxGame.batch.begin();
 
-        myGdxGame.batch.draw(animations[0].getKeyFrame(statetime, true), 0, 0, width, height);
+        MyGdxGame.batch.draw(animations[0].getKeyFrame(statetime, true), 0, 0, width, height);
         updateArrow();
         updateIcon();
-        myGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2 - 100, (Constants.SCREEN_HEIGHT - creditHeight) / 2 + 100, creditWidth, creditHeight);
+        MyGdxGame.batch.draw(creditPng, (Constants.SCREEN_WIDTH - creditWidth) / 2 - 100, (Constants.SCREEN_HEIGHT - creditHeight) / 2 + 100, creditWidth, creditHeight);
 
 
-        myGdxGame.batch.end();
+        MyGdxGame.batch.end();
     }
 
     @Override
@@ -98,21 +96,21 @@ public class CreditsScene implements Screen {
 
     public void updateArrow(){
         btnArrow.update();
-        btnArrow.draw(myGdxGame.batch);
+        btnArrow.draw();
         if(btnArrow.isClicked()){
             btnArrow.setClicked(false);
-            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+            MyGdxGame.myGdxGame.setScreen(new MainMenuScreen());
         }
     }
     public void updateIcon(){
         btnGithub.update();
-        btnGithub.draw(MyGdxGame.batch);
+        btnGithub.draw();
         if(btnGithub.isClicked()){
             btnGithub.setClicked(false);
             Gdx.net.openURI("https://github.com/NgNhatThanh/ProGamejam_BTCK");
         }
         btnMobinc.update();
-        btnMobinc.draw(MyGdxGame.batch);
+        btnMobinc.draw();
         if(btnMobinc.isClicked()){
             btnMobinc.setClicked(false);
             Gdx.net.openURI("https://overboy.itch.io/mobs-inc");

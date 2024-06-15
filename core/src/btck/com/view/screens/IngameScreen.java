@@ -33,7 +33,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import lombok.Getter;
 
 public class IngameScreen implements Screen {
-    private final MyGdxGame myGdxGame;
     private final OrthographicCamera cam;
     private final Viewport viewport;
     private int maxEnemyAmount = 10;
@@ -62,8 +61,7 @@ public class IngameScreen implements Screen {
 
     Vector2 translateV;
 
-    public IngameScreen(MyGdxGame myGdxGame) {
-        this.myGdxGame = myGdxGame;
+    public IngameScreen() {
         this.player = GameManager.getInstance().getCurrentPlayer();
         hud = new HUD();
         SlowMo.deactivateAll();
@@ -99,7 +97,7 @@ public class IngameScreen implements Screen {
             if (btnPause.isClicked()) {
                 btnPause.setClicked(false);
                 setPaused(true);
-                myGdxGame.setScreen(new PauseScreen(myGdxGame, this));
+                MyGdxGame.myGdxGame.setScreen(new PauseScreen(this));
             }
         }
     }
@@ -146,7 +144,7 @@ public class IngameScreen implements Screen {
 
         for (int i = 0; i < GameManager.getInstance().getEnemies().size; ++i) {
             Enemy tmp = GameManager.getInstance().getEnemies().get(i);
-            tmp.draw(MyGdxGame.batch);
+            tmp.draw();
             if(tmp.isVulnerable() && player.isAttacking() && player.getAttack().hit(tmp)){
                 Rumble.rumble();
                 player.getAttack().addHitEntity(tmp);
@@ -161,7 +159,7 @@ public class IngameScreen implements Screen {
             }
         }
 
-        GameManager.getInstance().getCurrentPlayer().draw(MyGdxGame.batch);
+        GameManager.getInstance().getCurrentPlayer().draw();
 
         for(int i = 0; i < topLayerEffects.size; ++i){
             Effect tmp = topLayerEffects.get(i);
@@ -191,7 +189,7 @@ public class IngameScreen implements Screen {
 
         if(!GameManager.getInstance().getCurrentPlayer().isExist()){
             this.dispose();
-            myGdxGame.setScreen(new Fired(myGdxGame));
+            MyGdxGame.myGdxGame.setScreen(new Fired());
         }
     }
 
@@ -235,10 +233,10 @@ public class IngameScreen implements Screen {
     }
     public void updateBtnQPause(){
         btnPause.update();
-        btnPause.draw(MyGdxGame.batch);
+        btnPause.draw();
         if(btnPause.isClicked()){
             btnPause.setClicked(false);
-            myGdxGame.setScreen(new PauseScreen(myGdxGame, this));
+            MyGdxGame.myGdxGame.setScreen(new PauseScreen(this));
         }
     }
 
@@ -252,18 +250,18 @@ public class IngameScreen implements Screen {
             else MyGdxGame.batch.draw(bullet.getTexture(),
                     thisHitbox.x,
                     thisHitbox.y,
-                    thisHitbox.width / 2,
+                    0,
                     thisHitbox.height / 2,
                     thisHitbox.width,
                     thisHitbox.height,
                     1,
                     1,
-                    bullet.getRotation(),
+                    bullet.getAngle(),
                     0,
                     0,
                     (int)thisHitbox.width,
                     (int)thisHitbox.height,
-                    bullet.isFlip(),
+                    false,
                     false);
         }
     }

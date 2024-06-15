@@ -1,5 +1,6 @@
 package btck.com.model.entity.player.ghost;
 
+import btck.com.MyGdxGame;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.sound.ConstantSound;
 import btck.com.common.Constants;
@@ -12,7 +13,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -60,7 +60,7 @@ public class Ghost extends Player {
     }
 
     @Override
-    public void draw(SpriteBatch spriteBatch) {
+    public void draw() {
         if(!exist) return;
         statetime += Gdx.graphics.getDeltaTime();
 
@@ -84,7 +84,7 @@ public class Ghost extends Player {
 
         if(Blinking.blinking) Blinking.update();
 
-        if(visible) spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
+        if(visible) MyGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if(!dead){
             if(!attacking){

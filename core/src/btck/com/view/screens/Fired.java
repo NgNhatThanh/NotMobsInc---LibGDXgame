@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Fired implements Screen {
-    MyGdxGame myGdxGame;
     private BitmapFont customFont;
     private GlyphLayout layout;
     float FRAME_SPEED = 0.08f;
@@ -28,8 +27,7 @@ public class Fired implements Screen {
                             Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/close door.ogg"))};
     private boolean sfx0Played = false, sfx1Played = false, sfx2Played = false;
 
-    public Fired(MyGdxGame myGdxGame){
-        this.myGdxGame = myGdxGame;
+    public Fired(){
         this.layout = new GlyphLayout();
         width = Constants.SCREEN_WIDTH;
         height = Constants.SCREEN_HEIGHT;
@@ -110,16 +108,16 @@ public class Fired implements Screen {
         }
 
         if (animationIdx == 3 && animations[animationIdx].isAnimationFinished(statetime)) {
-            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+            MyGdxGame.myGdxGame.setScreen(new MainMenuScreen());
         }
 
-        myGdxGame.batch.begin();
+        MyGdxGame.batch.begin();
 
-        myGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, false), 0, 0, width, height);
+        MyGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, false), 0, 0, width, height);
         if(animationIdx == 1){
-            customFont.draw(myGdxGame.batch, layout, (Constants.SCREEN_WIDTH - layout.width)/2, (Constants.SCREEN_HEIGHT - layout.height)/2 + 125);
+            customFont.draw(MyGdxGame.batch, layout, (Constants.SCREEN_WIDTH - layout.width)/2, (Constants.SCREEN_HEIGHT - layout.height)/2 + 125);
         }
-        myGdxGame.batch.end();
+        MyGdxGame.batch.end();
     }
 
     @Override

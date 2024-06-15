@@ -9,13 +9,12 @@ import btck.com.view.effect.Slice;
 import btck.com.view.screens.IngameScreen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 
-public class DumpAttack extends Attack {
+public class AutoAttack extends Attack {
 
     boolean touched;
 
-    public DumpAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
+    public AutoAttack(Animation<TextureRegion> animation, Entity owner, DEAL_DAMAGE_TIME dealDamageType) {
         super(animation, owner, dealDamageType);
         hitbox = owner.getHitbox();
         damage = 4 + ((Enemy) owner).bonusDamage;
