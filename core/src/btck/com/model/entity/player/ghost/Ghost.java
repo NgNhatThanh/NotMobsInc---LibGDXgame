@@ -1,58 +1,67 @@
 package btck.com.model.entity.player.ghost;
 
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
-import btck.com.common.io.sound.ConstantSound;
-import btck.com.common.io.Constants;
+import btck.com.common.sound.ConstantSound;
+import btck.com.common.Constants;
 import btck.com.model.entity.Player;
 import btck.com.model.entity.player.Blinking;
+import btck.com.view.effect.Upgrade;
+import btck.com.view.screens.IngameScreen;
+import btck.com.view.screens.eff.ShockWave;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 public class Ghost extends Player {
 
     final int NORMAL_SPEED = 200;
 
-    final float FRAME_SPEED = 0.1f;
-
-    private float a, b, x1, y1 ,deltaSP;
+    private float tan, deltaSP;
 
     public Ghost(){
+        FRAME_DURATION = Constants.FRAME_DURATION[0];
         vulnerable = true;
         nextLevelExp = 5;
         expToLevelUp = 6;
         exist = true;
 
-        sampleTexture = new Texture(Constants.GHOST_1_SAMPLE_TT_PATH);
-
+        this.frame = new Texture(Gdx.files.internal("atlas/player/ghost1/frame.png"));
+        levelToUpgrade = 10;
         normalSpeed = NORMAL_SPEED;
         currentSpeed = normalSpeed;
-        currentHealth = 100;
         maxHealth = 100;
-        width = sampleTexture.getWidth();
-        height = sampleTexture.getHeight();
+        currentHealth = maxHealth;
 
         hitbox = new Rectangle(x, y, width, height);
 
-        textureAtlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
-        animations = new Animation[4];
+        atlas = new TextureAtlas(Constants.GHOST_1_ATLAS_PATH);
+        animations = new Animation[3];
 
-        animations[0] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_idle"));
-        animations[1] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_run"));
-        animations[2] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_attack"));
-        animations[3] = new Animation<>(FRAME_SPEED,textureAtlas.findRegions("spr_die"));
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
+        animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
+        animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
+
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
 
         attack = new DashAttack(animations[2], this, DEAL_DAMAGE_TIME.ONCE);
+
+        skills = new Array<>();
+        skills.add(new ImpactSkill(this));
+        skills.add(new DeadlyBounceSkill(this));
+        skills.add(new SlowTimeSkill(this));
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        if(!exist) return;
         statetime += Gdx.graphics.getDeltaTime();
 
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
@@ -63,12 +72,6 @@ public class Ghost extends Player {
 
         hitbox.width = width - 10;
         hitbox.height = height / 2;
-
-        if(dead && animations[animationIdx].isAnimationFinished(statetime)){
-            exist = false;
-            System.out.println("bay mau");
-            return;
-        }
 
         if(attacking && animations[animationIdx].isAnimationFinished(statetime)){
             statetime = 0;
@@ -81,7 +84,7 @@ public class Ghost extends Player {
 
         if(Blinking.blinking) Blinking.update();
 
-        if(Blinking.appearing) spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
+        if(visible) spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if(!dead){
             if(!attacking){
@@ -101,8 +104,9 @@ public class Ghost extends Player {
         if(currentHealth > 0){
             while(currentExp >= expToLevelUp){
                 expToLevelUp += nextLevelExp;
-                nextLevelExp += 5;
+                nextLevelExp += 2;
                 ++level;
+                if(level == levelToUpgrade) upgrade();
             }
         }
     }
@@ -128,8 +132,7 @@ public class Ghost extends Player {
         }
         else if(!attacking) animationIdx = 1;
 
-        if(desX < x) flip = false;
-        else flip = true;
+        flip = !(desX < x);
 
         deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
 
@@ -147,21 +150,71 @@ public class Ghost extends Player {
             return;
         }
 
-        a = (y - desY) / (x - desX);
-        b = y - a * x;
+        tan = (y - desY) / (x - desX);
 
-        angle = (float)Math.atan(a);
+        angle = (float)Math.atan(tan);
         angle = angle * (float)(180 / Math.PI);
 
-        x1 = x;
-        y1 = y;
-        while(sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y)) < deltaSP){
-            if(x < desX) x1 += deltaSP / (50 * abs(a));
-            else x1 -= deltaSP / (50 * abs(a));
-            y1 = a * x1 + b;
+        if((angle > 0 && y > desY)
+                || (angle < 0 && y < desY)) angle += 180;
+        else if(angle < 0) angle += 360;
+
+        xSpeed = (float) sqrt((currentSpeed * currentSpeed) / (1 + tan * tan));
+        ySpeed = abs(xSpeed * tan);
+
+        if(angle > 90 && angle < 270) xSpeed *= -1;
+        if(angle > 180 && angle < 360) ySpeed *= -1;
+
+        float xDist = xSpeed * Gdx.graphics.getDeltaTime();
+        float yDist = ySpeed * Gdx.graphics.getDeltaTime();
+
+        if(desX > x) x = Math.min(desX, x + xDist);
+        else x = Math.max(desX, x + xDist);
+
+        if(desY > y) y = Math.min(desY, y + yDist);
+        else y = Math.max(desY, y + yDist);
+    }
+
+    @Override
+    public void upgrade() {
+        if(upgradeLevel == 4){
+            levelToUpgrade = -1;
+            return;
+        }
+        ++upgradeLevel;
+        Sound sfx;
+        switch (upgradeLevel){
+            case 2:
+                atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_2_ATLAS_PATH));
+                sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost2.mp3"));
+                sfx.play(ConstantSound.constantSound.getSoundVolume());
+                break;
+            case 3:
+                atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_3_ATLAS_PATH));
+                sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost3.mp3"));
+                sfx.play(ConstantSound.constantSound.getSoundVolume());
+                break;
+            case 4:
+                atlas = new TextureAtlas(Gdx.files.internal(Constants.GHOST_4_ATLAS_PATH));
+                sfx = Gdx.audio.newSound(Gdx.files.internal("sound/sound ingame/ghost4.mp3"));
+                sfx.play(ConstantSound.constantSound.getSoundVolume());
+                ShockWave.getInstance().start(x, y);
+                break;
         }
 
-        x = x1;
-        y = y1;
+        this.frame = new Texture("atlas/player/ghost" + upgradeLevel + "/frame.png");
+
+        animations[0] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_idle"));
+        animations[1] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_run"));
+        animations[2] = new Animation<>(FRAME_DURATION, atlas.findRegions("spr_attack"));
+
+        width = animations[0].getKeyFrame(0).getRegionWidth();
+        height = animations[0].getKeyFrame(0).getRegionHeight();
+
+        attack.upgrade();
+        for(int i = 0; i <= upgradeLevel - 2; ++i) skills.get(i).upgrade();
+
+        levelToUpgrade += 10;
+        IngameScreen.addTopEffect(new Upgrade(x, y));
     }
 }

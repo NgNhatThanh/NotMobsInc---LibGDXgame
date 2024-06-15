@@ -1,11 +1,12 @@
 package btck.com.controller.spawn;
 
-import btck.com.GameManager;
-import btck.com.common.io.Constants;
+import btck.com.common.GameManager;
+import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.enemy.archer.Archer;
 import btck.com.model.entity.enemy.knight.Knight;
 import btck.com.model.entity.enemy.gladiator.Gladiator;
+import btck.com.model.entity.enemy.runner.Runner;
 import lombok.Setter;
 
 import java.util.Random;
@@ -13,8 +14,12 @@ import java.util.Random;
 public class Spawner {
 
     @Setter
-    int maxEnemyAmount = 5;
+    int maxEnemyAmount;
     int maxEnemySpawnAtOnce;
+    int bonusSpawn;
+
+    int playerSpawnX = Constants.SCREEN_WIDTH / 2 - GameManager.getInstance().getCurrentPlayer().width / 2;
+    int playerSpawnY = Constants.SCREEN_HEIGHT / 2 - GameManager.getInstance().getCurrentPlayer().height / 2;
 
     Random rand;
 
@@ -25,29 +30,34 @@ public class Spawner {
     }
 
     public void spawnEnemy(){
-        int spawnAmount = rand.nextInt( maxEnemySpawnAtOnce) + 1;
+        bonusSpawn = GameManager.getInstance().getCurrentPlayer().getLevel() / 5;
+
+        int spawnAmount = rand.nextInt( maxEnemySpawnAtOnce) + 1 + bonusSpawn;
 
         int current = GameManager.getInstance().getCurrentEnemyAmount();
 
-        if(current + spawnAmount > maxEnemyAmount) spawnAmount = maxEnemyAmount - current;
+        if(current + spawnAmount > maxEnemyAmount + bonusSpawn) spawnAmount = maxEnemyAmount + bonusSpawn - current;
 
         while(spawnAmount-- > 0){
             Enemy spawnEnemy = null;
             EnemyEnum enemyEnum = EnemyEnum.getRandom();
             switch (enemyEnum){
-                case MUSHROOM :
+                case KNIGHT:
                     spawnEnemy = new Knight();
                     break;
-                case MAGE:
+                case ARCHER:
                     spawnEnemy = new Archer();
                     break;
                 case GLADIATOR:
                     spawnEnemy = new Gladiator();
                     break;
+                case RUNNER:
+                    spawnEnemy = new Runner();
+                    break;
             }
 
-            float randomX = rand.nextInt((int) (Constants.SCREEN_WIDTH - spawnEnemy.width));
-            float randomY = rand.nextInt((int) (Constants.SCREEN_HEIGHT - spawnEnemy.height));
+            float randomX = rand.nextInt(Constants.SCREEN_WIDTH - 100) + 50;
+            float randomY = rand.nextInt(Constants.SCREEN_HEIGHT - 200) + 100;
             spawnEnemy.setX(randomX);
             spawnEnemy.setY(randomY);
             GameManager.getInstance().addEnemy(spawnEnemy);
@@ -55,7 +65,8 @@ public class Spawner {
     }
 
     public void spawnPlayer(){
-
+        GameManager.getInstance().getCurrentPlayer().setX(playerSpawnX);
+        GameManager.getInstance().getCurrentPlayer().setY(playerSpawnY);
     }
 
 }

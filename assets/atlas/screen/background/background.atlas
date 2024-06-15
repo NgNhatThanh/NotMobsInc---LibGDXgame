@@ -1,0 +1,15 @@
+background.png
+size:2048,256
+repeat:none
+loop
+index:1
+bounds:2,6,322,242
+loop
+index:3
+bounds:326,6,322,242
+loop
+index:2
+bounds:650,6,322,242
+loop
+index:4
+bounds:974,6,322,242
