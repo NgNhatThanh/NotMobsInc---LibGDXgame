@@ -39,15 +39,7 @@ public abstract class Attack {
 
     public abstract void update(float statetime);
 
-    public void dealDamage(){
-        for(Entity entity : hitEntities){
-            entity.takeDamage(this.currentDamage);
-        }
-
-        dealed[frameToDealDamageIdx] = true;
-        ++frameToDealDamageIdx;
-        hitEntities.clear();
-    }
+    public void upgrade(){}
 
     public abstract void addHitEntity(Entity entity);
 

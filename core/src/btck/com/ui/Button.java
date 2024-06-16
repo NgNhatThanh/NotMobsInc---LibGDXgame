@@ -1,32 +1,21 @@
 package btck.com.ui;
 
-import btck.com.common.io.Constants;
+import btck.com.MyGdxGame;
+import btck.com.common.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Button {
     private int x, y, width, height;
-    private String inactiveImg;
-    private String activeImg;
+    @Getter
+    @Setter
     private String text;
     private boolean isHovered, isClicked;
     Texture textureInactive;
     Texture textureActive;
-    TextureRegion trActive;
-    TextureRegion trInactive;
-    TextureRegionDrawable trdInactive;
-    TextureRegionDrawable trdActive;
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 
     public boolean isClicked() {
         return isClicked;
@@ -43,32 +32,26 @@ public class Button {
         this.height = height;
         textureInactive = new Texture(Gdx.files.internal(inactiveImg));
         textureActive = new Texture(Gdx.files.internal(activeImg));
-        trActive = new TextureRegion(textureActive);
-        trInactive = new TextureRegion(textureInactive);
-        trdInactive = new TextureRegionDrawable(trInactive);
-        trdActive = new TextureRegionDrawable(trActive);
+    }
+    public void drawActive(SpriteBatch batch) {
+        batch.draw(textureActive, x, y, width, height);
     }
 
+    public void drawInactive(SpriteBatch batch) {
+        batch.draw(textureInactive, x, y, width, height);
+    }
     public void update(){
         int mouseX = Gdx.input.getX();
         int mouseY = Constants.SCREEN_HEIGHT - Gdx.input.getY();
-        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
-            isHovered = true;
-        } else {
-            isHovered = false;
-        }
-        if (isHovered && Gdx.input.isButtonJustPressed(0)) {
-            isClicked = true;
-        } else {
-            isClicked = false;
-        }
+        isHovered = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+        isClicked = isHovered && Gdx.input.isButtonJustPressed(0);
     }
-    public void draw(SpriteBatch batch){
+    public void draw(){
         if(isHovered){
-            trdActive.draw(batch, x, y, width, height);
+            MyGdxGame.batch.draw(textureActive,x , y, width, height);
         }
         else{
-            trdInactive.draw(batch, x, y, width, height);
+            MyGdxGame.batch.draw(textureInactive,x , y, width, height);
         }
 
     }

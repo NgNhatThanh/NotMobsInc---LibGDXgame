@@ -1,9 +1,10 @@
 package btck.com.model.entity.enemy.gladiator;
 
-import btck.com.GameManager;
-import btck.com.common.io.sound.ConstantSound;
+import btck.com.common.GameManager;
+import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
+import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
@@ -12,10 +13,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import screens.IngameScreen;
-
+import btck.com.view.screens.IngameScreen;
 import java.util.Random;
-
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 
@@ -37,11 +36,12 @@ public class TeleportationAttack extends Attack {
         hitbox = new Rectangle();
         hitbox.width = owner.width;
         hitbox.height = owner.height;
-        damage = 6;
+        damage = 6 + ((Enemy) owner).bonusDamage;
         currentDamage = damage;
         coolDown = 1000;
         lastAttackTime = 0;
         sfxIdx = rnd.nextInt(2);
+        owner.attackSpeed = teleportSpeed;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class TeleportationAttack extends Attack {
         targetY = GameManager.getInstance().getCurrentPlayer().getY();
         currentDamage = 0;
         owner.setFlip(!(targetX > owner.getX()));
-        owner.currentSpeed = teleportSpeed;
+        owner.currentSpeed = owner.attackSpeed;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class TeleportationAttack extends Attack {
         if(currentFrame > frameToTeleport){
             updateHitbox();
             if(hitEntities.contains(entity, false)) return;
-            IngameScreen.addTopEffect(new Slice(entity.getX() - 125, entity.getY() + entity.getHeight() / 2, 45, SLICE_COLOR.WHITE));
+            IngameScreen.addTopEffect(new Slice(entity.getX(), entity.getY(), 45, owner.getHeight(), SLICE_COLOR.WHITE));
             entity.takeDamage(this.currentDamage);
             hitEntities.add(entity);
         }

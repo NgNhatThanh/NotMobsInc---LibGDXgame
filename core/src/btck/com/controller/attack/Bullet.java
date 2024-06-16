@@ -1,72 +1,69 @@
 package btck.com.controller.attack;
 
-import btck.com.common.io.Constants;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import lombok.Getter;
+import lombok.Setter;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
+import static java.lang.Math.tan;
 
+@Getter
 public class Bullet {
 
     float desX, desY;
-    int speed;
-
-    @Getter
+    @Setter
+    float speed;
+    float xSpeed, ySpeed;
+    Texture texture;
     Rectangle hitbox;
-    @Getter
-    float rotation;
-    @Getter
-    boolean flip = true;
-    float a, b, x1, y1, deltaSP;
+    float angle;
+    int damage;
 
-    public Bullet(float x, float y, float desX, float desY, int speed, float width, float height){
+    public Bullet(Texture texture, int damage, float x, float y, float desX, float desY, int speed, float width, float height){
+        this.texture = texture;
+        this.damage = damage;
         this.speed = speed;
         this.hitbox = new Rectangle();
         this.hitbox.x = x;
         this.hitbox.y = y;
         this.hitbox.width = width;
         this.hitbox.height = height;
-        if(desX < x) flip = false;
 
-        if(desX > x) this.desX = Constants.SCREEN_WIDTH + 10;
-        else this.desX = -10;
+        if(abs(x - desX) <= 5){
+            if(y <= desY) angle = 270;
+            else angle = 90;
+        }
+        else if(abs(y - desY) <= 5){
+            if(x <= desX) angle = 180;
+            else angle = 0;
+        }
+        else{
+            float tan = (y - desY) / (x - desX);
+            angle = (float) Math.atan(tan);
+            angle = angle * (float)(180 / Math.PI);
 
-        a = (y - desY) / (x - desX);
-        b = y - a * x;
+            if((angle > 0 && desY < y)
+                    || (angle < 0 && desY > y)) angle += 180;
+            else if(angle < 0) angle += 360;
+        }
 
-        rotation = (float) Math.atan(a);
-        rotation = rotation * (float)(180 / Math.PI);
+        float radiusAngle = (float) (angle * PI / 180);
+        float tan = abs((float)tan(radiusAngle));
+        xSpeed = (float) sqrt((speed * speed) / (1 + tan * tan));
+        ySpeed = xSpeed * tan;
+        if(angle > 90 && angle < 270) xSpeed *= -1;
+        if(angle > 180 && angle < 360) ySpeed *= -1;
 
-        this.desY = a * this.desX + b;
+        System.out.println(angle);
     }
 
     public void move(){
-        deltaSP = speed * Gdx.graphics.getDeltaTime();
+        float xDist = xSpeed * Gdx.graphics.getDeltaTime();
+        float yDist = ySpeed * Gdx.graphics.getDeltaTime();
 
-        if(abs(hitbox.x - desX) < 5){
-            if(desY > hitbox.y) hitbox.y += deltaSP;
-            else hitbox.y -= deltaSP;
-            return;
-        }
-
-        if(abs(hitbox.y - desY) < 5){
-            if(desX > hitbox.x) hitbox.x += deltaSP;
-            else hitbox.x -= deltaSP;
-            return;
-        }
-
-        x1 = hitbox.x;
-        y1 = hitbox.y;
-        while(sqrt((x1 - hitbox.x) * (x1 - hitbox.x) + (y1 - hitbox.y) * (y1 - hitbox.y)) < deltaSP){
-            if(hitbox.x < desX) x1 += deltaSP / (50 * abs(a));
-            else x1 -= deltaSP / (50 * abs(a));
-            y1 = a * x1 + b;
-        }
-
-        hitbox.x = x1;
-        hitbox.y = y1;
+        hitbox.x += xDist;
+        hitbox.y += yDist;
     }
-
 }
