@@ -23,7 +23,7 @@ Once completing a branch, team will create a Pull Request to review code as well
   - `develop`: Contains latest code going through the test and review process.
   - `feature`/: Contains ongoing development code, which are short-lived and will be merged into `develop` once completing.
 
-    ![img.png](img.png)
+    ![gitflow](assets/readme/gitflow.png)
 
 At the end of each week, team will merge `develop` into `main/master` to release a new version.
 
@@ -62,14 +62,23 @@ At the end of each week, team will merge `develop` into `main/master` to release
 - **assets**: Contains resources related to images and sounds.
 - **core**: Contains main classes such as model, view, controller, common, ui... 
 - **desktop**: Contains classes to run on other different platforms.
+
 # 5. Image and Video Demo
-- Image Demo: 
-- Video Demo: 
+- Demo video: [Link](https://www.youtube.com/watch?v=tqEaoUc-8so)
+- Demo images:
+![demo1](assets/readme/demo1.png)
+![demo2](assets/readme/demo2.png)
+![demo3](assets/readme/demo3.png)
+![demo4](assets/readme/demo4.png)
+![demo5](assets/readme/demo5.png)
+![demo6](assets/readme/demo6.png)
 
 # 6. Encountered Problems
 ### Problem 1: Using very small decimal values in a loop to move a character that leads to a program crash.
 #### Solution: Change the formula to one that doesn't require a loop
 
 ### Problem 2: instantiate Button class too many times in render function that leads to continuous increasement of memory
-#### Solution: Reduce the memory usage of Button class, and instantiate them only one time when show the screen
+#### Solution: Reduce the memory usage of Button class by removing abundant properties, and instantiate them only one time with the screen
 # 7. Conclusion
+After this project, our team does have the opportunity to gain knowledge related to Gitflow, collaboration skill and getting to know how a project can be operated in real life, which remarkably improve the programming skill. Hope everyone will enjoy the game.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

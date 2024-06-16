@@ -80,13 +80,13 @@ public class IngameScreen implements Screen {
         ConstantSound.getInstance().bgmIngame.play();
 
         map = new Texture(Constants.MAP_PATH);
+        spawner.spawnPlayer();
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
         MyGdxGame.batch.setColor(Color.WHITE);
-        spawner.spawnPlayer();
     }
 
     @Override
@@ -237,6 +237,8 @@ public class IngameScreen implements Screen {
         btnPause.update();
         btnPause.draw();
         if(btnPause.isClicked()){
+            player.setAttacking(false);
+            player.getAttack().end();
             btnPause.setClicked(false);
             MyGdxGame.myGdxGame.setScreen(new PauseScreen(this));
         }

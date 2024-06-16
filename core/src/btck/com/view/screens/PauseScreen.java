@@ -142,7 +142,7 @@ public class PauseScreen implements Screen {
         if (btnHome.isClicked()) {
             btnHome.setClicked(false);
             MyGdxGame.myGdxGame.setScreen(new MainMenuScreen());
-            ConstantSound.getInstance().bgmIngame.dispose();
+            ConstantSound.getInstance().bgmIngame.stop();
         }
     }
     public void updateButtonRestart() {

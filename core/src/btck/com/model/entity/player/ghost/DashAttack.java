@@ -73,6 +73,7 @@ public class DashAttack extends Attack {
 
     public void end(){
         super.end();
+        owner.setAnimationIdx(1);
         owner.setVulnerable(true);
     }
 
