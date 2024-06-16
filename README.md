@@ -64,7 +64,7 @@ At the end of each week, team will merge `develop` into `main/master` to release
 - **desktop**: Contains classes to run on other different platforms.
 
 # 5. Image and Video Demo
-- Demo video: [Link](https://www.youtube.com/watch?v=tqEaoUc-8so)
+- Demo video: [Link](https://www.youtube.com/watch?v=Akm06mMiO2o)
 - Demo images:
 ![demo1](assets/readme/demo1.png)
 ![demo2](assets/readme/demo2.png)
