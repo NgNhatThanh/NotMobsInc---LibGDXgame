@@ -67,5 +67,9 @@ At the end of each week, team will merge `develop` into `main/master` to release
 - Video Demo: 
 
 # 6. Encountered Problems
+### Problem 1: Using very small decimal values in a loop to move a character that leads to a program crash.
+#### Solution: Change the formula to one that doesn't require a loop
 
+### Problem 2: instantiate Button class too many times in render function that leads to continuous increasement of memory
+#### Solution: Reduce the memory usage of Button class, and instantiate them only one time when show the screen
 # 7. Conclusion
