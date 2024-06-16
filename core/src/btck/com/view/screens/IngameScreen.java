@@ -86,6 +86,7 @@ public class IngameScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(IngameInputHandler.getInstance());
         MyGdxGame.batch.setColor(Color.WHITE);
         spawner.spawnPlayer();
     }
@@ -125,8 +126,6 @@ public class IngameScreen implements Screen {
         MyGdxGame.batch.draw(map, 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
         if (ShockWave.getInstance().enabled) ShockWave.getInstance().draw();
-
-        updateBtnQPause();
 
         for (int i = 0; i < bottomLayerEffects.size; ++i) {
             Effect tmp = bottomLayerEffects.get(i);
@@ -184,6 +183,8 @@ public class IngameScreen implements Screen {
 
         MyGdxGame.batch.draw(player.getFrame(), 0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
+        updateBtnPause();
+
         MyGdxGame.batch.end();
 
         hud.draw();
@@ -234,7 +235,7 @@ public class IngameScreen implements Screen {
         map.dispose();
         btnPause.dispose();
     }
-    public void updateBtnQPause(){
+    public void updateBtnPause(){
         btnPause.update();
         btnPause.draw(MyGdxGame.batch);
         if(btnPause.isClicked()){

@@ -56,6 +56,7 @@ public class PauseScreen implements Screen {
     @Override
     public void show() {
         MyGdxGame.batch.setColor(Color.WHITE);
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
