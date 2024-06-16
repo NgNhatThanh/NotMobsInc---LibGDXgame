@@ -14,9 +14,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import btck.com.view.screens.IngameScreen;
-
 import java.util.Random;
-
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 

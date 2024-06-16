@@ -1,4 +1,5 @@
 package btck.com.view.hud;
+
 import btck.com.model.entity.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

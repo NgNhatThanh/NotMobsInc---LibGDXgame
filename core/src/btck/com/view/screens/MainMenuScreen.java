@@ -43,17 +43,15 @@ public class MainMenuScreen  implements Screen {
     int settingY = creditY - 85;
     int exitX = newGameX + 5;
     int exitY = settingY - 80;
-    MyGdxGame myGdxGame;
     Button btnNewGame;
     Button btnExit;
     Button btnSetting;
     Button btnCredit;
     private String[] menuItems = new String[]{"New game", "Settings", "Credits", "Exit"};
     private Button[] menuButtons = new Button[menuItems.length];
-    public MainMenuScreen(MyGdxGame myGdxGame) {
+    public MainMenuScreen() {
         Gdx.input.setInputProcessor(new InputAdapter());
         MyGdxGame.batch.setColor(Color.WHITE);
-        this.myGdxGame = myGdxGame;
 
         width = Constants.SCREEN_WIDTH;
         height = Constants.SCREEN_HEIGHT;
@@ -108,18 +106,18 @@ public class MainMenuScreen  implements Screen {
             GameManager.getInstance().gameState = GameState.INGAME;
             // Clear enemies
             GameManager.getInstance().getEnemies().clear();
-            myGdxGame.setScreen(new IngameScreen(myGdxGame));
+            MyGdxGame.myGdxGame.setScreen(new IngameScreen());
         }
 
-        myGdxGame.batch.begin();
+        MyGdxGame.batch.begin();
 
         if(animationIdx == 0 || animationIdx == 2){
-            myGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, false), 0, 0, width, height);
+            MyGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, false), 0, 0, width, height);
         }
-        else myGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, true), 0, 0, width, height);
+        else MyGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, true), 0, 0, width, height);
         if(animationIdx == 1) update();
 
-        myGdxGame.batch.end();
+        MyGdxGame.batch.end();
 
     }
 
@@ -150,7 +148,7 @@ public class MainMenuScreen  implements Screen {
     public void update() {
         for (Button menuButton : menuButtons) {
             menuButton.update();
-            menuButton.draw(myGdxGame.batch);
+            menuButton.draw();
             if (menuButton.isClicked()) {
                 menuButton.setClicked(false);
                 switch (menuButton.getText()) {
@@ -160,10 +158,10 @@ public class MainMenuScreen  implements Screen {
                         statetime = 0f;
                         break;
                     case "Settings":
-                        myGdxGame.setScreen(new SettingScreen(myGdxGame));
+                        MyGdxGame.myGdxGame.setScreen(new SettingScreen());
                         break;
                     case "Credits":
-                        myGdxGame.setScreen(new CreditsScene(myGdxGame));
+                        MyGdxGame.myGdxGame.setScreen(new CreditsScene());
                         break;
                     case "Exit":
                         ConstantSound.getInstance().dispose();

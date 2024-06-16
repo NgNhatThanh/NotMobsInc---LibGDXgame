@@ -1,6 +1,5 @@
 package btck.com.model.entity.enemy.knight;
 
-import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Attack;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Enemy;
@@ -8,8 +7,6 @@ import btck.com.model.entity.Entity;
 import btck.com.view.effect.AirStrike;
 import btck.com.view.effect.SLICE_COLOR;
 import btck.com.view.effect.Slice;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;

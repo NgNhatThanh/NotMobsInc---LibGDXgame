@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class PauseScreen implements Screen {
-    private final MyGdxGame myGdxGame;
     private final IngameScreen ingameScreen;
     private final Button btnResume;
     private final Button btnHome;
@@ -39,8 +38,7 @@ public class PauseScreen implements Screen {
     int startX = Constants.SCREEN_WIDTH / 2 - windowWidth / 2 + (windowWidth - (buttonWidth * 3 + spacing * 2)) / 2;
     int startY = Constants.SCREEN_HEIGHT / 2 - windowHeight / 2 + (windowHeight - buttonHeight) / 2 + 50;
 
-    public PauseScreen(MyGdxGame myGdxGame, IngameScreen ingameScreen) {
-        this.myGdxGame = myGdxGame;
+    public PauseScreen(IngameScreen ingameScreen) {
         this.ingameScreen = ingameScreen;
         this.btnResume = new Button(startX, startY, buttonWidth, buttonHeight, Constants.RESUME_ICON_INACTIVE_PATH, Constants.RESUME_ICON_ACTIVE_PATH);
         this.btnRestart = new Button(startX + buttonWidth + spacing, startY, buttonWidth, buttonHeight, Constants.RESTART_ICON_INACTIVE_PATH, Constants.RESTART_ICON_ACTIVE_PATH);
@@ -76,9 +74,9 @@ public class PauseScreen implements Screen {
         float titleX = (Constants.SCREEN_WIDTH - titleWidth) / 2;
         customFont.draw(MyGdxGame.batch, gameTitle, titleX, Constants.SCREEN_HEIGHT / 2 + windowHeight / 2 - 150);
 
-        btnResume.draw(MyGdxGame.batch);
-        btnRestart.draw(MyGdxGame.batch);
-        btnHome.draw(MyGdxGame.batch);
+        btnResume.draw();
+        btnRestart.draw();
+        btnHome.draw();
 
         bgMusic = "MUSIC";
         SFX = "SFX";
@@ -136,14 +134,14 @@ public class PauseScreen implements Screen {
         if(btnResume.isClicked()){
             btnResume.setClicked(false);
             ingameScreen.setPaused(false);
-            myGdxGame.setScreen(ingameScreen);
+            MyGdxGame.myGdxGame.setScreen(ingameScreen);
         }
     }
 
     public  void updateButtonHome(){
         if (btnHome.isClicked()) {
             btnHome.setClicked(false);
-            myGdxGame.setScreen(new MainMenuScreen(myGdxGame));
+            MyGdxGame.myGdxGame.setScreen(new MainMenuScreen());
             ConstantSound.getInstance().bgmIngame.dispose();
         }
     }
@@ -165,7 +163,7 @@ public class PauseScreen implements Screen {
                 ConstantSound.getInstance().setSoundVolume(0.5f);
             }
 
-            myGdxGame.setScreen(new IngameScreen(myGdxGame));
+            MyGdxGame.myGdxGame.setScreen(new IngameScreen());
         }
     }
 

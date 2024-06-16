@@ -5,7 +5,6 @@ import btck.com.common.sound.ConstantSound;
 import btck.com.controller.attack.Bullet;
 import btck.com.model.entity.Enemy;
 import btck.com.model.entity.Entity;
-import btck.com.view.effect.Effect;
 import btck.com.view.screens.IngameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -33,13 +32,6 @@ public class SlowMo {
         for (Enemy tmp : GameManager.getInstance().getEnemies()) {
             activateEntity(tmp);
         }
-//        for (Effect tmp : IngameScreen.getTopLayerEffects()) {
-//            tmp.setFRAME_DURATION(tmp.getFRAME_DURATION() * slowAmount);
-//        }
-//
-//        for (Effect tmp : IngameScreen.getBottomLayerEffects()) {
-//            tmp.setFRAME_DURATION(tmp.getFRAME_DURATION() * slowAmount);
-//        }
     }
 
     public static void deactivateAll(){
@@ -56,13 +48,6 @@ public class SlowMo {
         for (Enemy tmp : GameManager.getInstance().getEnemies()) {
             deactivateEntity(tmp);
         }
-//        for (Effect tmp : IngameScreen.getTopLayerEffects()) {
-//            tmp.setFRAME_DURATION(tmp.getFRAME_DURATION() / slowAmount);
-//        }
-//
-//        for (Effect tmp : IngameScreen.getBottomLayerEffects()) {
-//            tmp.setFRAME_DURATION(tmp.getFRAME_DURATION() / slowAmount);
-//        }
     }
 
     public static void activateEntity(Entity entity){

@@ -1,18 +1,19 @@
 package btck.com.model.entity.enemy.runner;
 
+import btck.com.MyGdxGame;
 import btck.com.common.Constants;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
-
 import static java.lang.Math.*;
 import static java.lang.Math.sqrt;
 
 public class Runner extends Enemy {
+
+    static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(Constants.RUNNER_ATLAS_PATH));
 
     public Runner(){
         super();
@@ -29,7 +30,6 @@ public class Runner extends Enemy {
         xSpeed = (float) sqrt((attackSpeed * attackSpeed) / (1 + tan * tan));
         ySpeed = xSpeed * tan;
 
-        atlas = new TextureAtlas(Gdx.files.internal(Constants.RUNNER_ATLAS_PATH));
         animations = new Animation[3];
 
         hitbox = new Rectangle();
@@ -44,11 +44,11 @@ public class Runner extends Enemy {
         hitbox.width = width;
         hitbox.height = height / 2;
 
-        attack = new DumpAttack(null, this, DEAL_DAMAGE_TIME.ONCE);
+        attack = new AutoAttack(null, this, DEAL_DAMAGE_TIME.ONCE);
     }
 
     @Override
-    public void draw(SpriteBatch spriteBatch) {
+    public void draw() {
         if(animationIdx == 3) --animationIdx;
         statetime += Gdx.graphics.getDeltaTime();
 
@@ -60,7 +60,7 @@ public class Runner extends Enemy {
             return;
         }
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
+        MyGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if(animationIdx == 0 && animations[animationIdx].isAnimationFinished(statetime)){
             vulnerable = true;

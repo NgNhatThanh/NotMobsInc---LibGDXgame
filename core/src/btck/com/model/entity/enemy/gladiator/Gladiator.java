@@ -1,12 +1,12 @@
 package btck.com.model.entity.enemy.gladiator;
 
+import btck.com.MyGdxGame;
 import btck.com.common.GameManager;
 import btck.com.controller.attack.DEAL_DAMAGE_TIME;
 import btck.com.common.Constants;
 import btck.com.model.entity.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -15,7 +15,7 @@ import static java.lang.Math.sqrt;
 
 public class Gladiator extends Enemy {
 
-    private float tan, deltaSP;
+    static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
 
     public Gladiator(){
         super();
@@ -27,7 +27,6 @@ public class Gladiator extends Enemy {
         normalSpeed = 100;
         currentSpeed = normalSpeed;
 
-        atlas = new TextureAtlas(Gdx.files.internal(Constants.GLADIATOR_ATLAS_PATH));
         animations = new Animation[5];
 
         hitbox = new Rectangle(0, 0, width, height / 2);
@@ -46,7 +45,7 @@ public class Gladiator extends Enemy {
 
 
     @Override
-    public void draw(SpriteBatch spriteBatch) {
+    public void draw() {
         statetime += Gdx.graphics.getDeltaTime();
 
         width = animations[animationIdx].getKeyFrame(statetime).getRegionWidth();
@@ -65,7 +64,7 @@ public class Gladiator extends Enemy {
 
         if(attacking) attack.update(statetime);
 
-        spriteBatch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
+        MyGdxGame.batch.draw(animations[animationIdx].getKeyFrame(statetime, true), (flip ? width / 2 : -width / 2) + x, y, (flip ? -1 : 1) * width, height);
 
         if((animationIdx == 4 || animationIdx == 0) && animations[animationIdx].isAnimationFinished(statetime)){
             vulnerable = true;
@@ -92,10 +91,9 @@ public class Gladiator extends Enemy {
             return;
         }
 
-        if(desX < x) flip = true;
-        else flip = false;
+        flip = desX < x;
 
-        deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
+        float deltaSP = currentSpeed * Gdx.graphics.getDeltaTime();
 
         if(abs(x - desX) < 5){
             if(desY > y) y += deltaSP;
@@ -109,7 +107,7 @@ public class Gladiator extends Enemy {
             return;
         }
 
-        tan = (y - desY) / (x - desX);
+        float tan = (y - desY) / (x - desX);
 
         angle = (float)Math.atan(tan);
         angle = angle * (float)(180 / Math.PI);

@@ -1,13 +1,10 @@
 package btck.com.model.entity;
 
 import btck.com.controller.attack.Attack;
-import btck.com.controller.attack.skill.Skill;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-//import com.sun.source.tree.WhileLoopTree;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +14,7 @@ public abstract class Entity{
 
     protected Party party;
     protected int currentHealth, maxHealth;
-    protected float x, y;
+    public float x, y;
     protected int attackX, attackY;
     public int width, height;
     public float normalSpeed;
@@ -39,7 +36,7 @@ public abstract class Entity{
     protected float FRAME_DURATION;
     protected float statetime;
     protected int animationIdx;
-    public abstract void draw(SpriteBatch spriteBatch);
+    public abstract void draw();
     public abstract void attack(int x, int y);
     public abstract void move(float desX, float desY);
 
