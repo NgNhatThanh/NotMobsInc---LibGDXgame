@@ -1,3 +1,5 @@
+## Download latest version [here](https://github.com/NgNhatThanh/NotMobsInc---LibGDXgame/releases)
+
 # 1. Group Information 
 ### Project Name: Not "Mobs Inc"
 ### Project Link: [Not "Mobs Inc"](https://github.com/NgNhatThanh/ProGamejam_BTCK)
