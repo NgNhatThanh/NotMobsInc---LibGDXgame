@@ -60,11 +60,11 @@ runtime {
     distDir = file(buildDir)
 
     jpackage {
-        //jpackageHome = '/usr/lib/jvm/open-jdk'
+        jpackageHome = '/usr/lib/jvm/open-jdk'
         mainJar = dist.archiveFileName.get()
-//        if (osName.contains('windows')) {
-//            imageOptions = ["--icon", file("../icon.png")]
-//        }
+        if (osName.contains('windows')) {
+            imageOptions = ["--icon", file("../assets/icon.ico")]
+        }
     }
 }
 
