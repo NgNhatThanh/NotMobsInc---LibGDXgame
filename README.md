@@ -66,8 +66,8 @@ At the end of each week, team will merge `develop` into `main/master` to release
 - **desktop**: Contains classes to run on other different platforms.
 
 # 5. Image and Video Demo
-- Demo video: [Link](https://www.youtube.com/watch?v=Akm06mMiO2o)
-- Demo images:
+- #### Demo video: [Link](https://www.youtube.com/watch?v=Akm06mMiO2o)
+- #### Demo images:
 ![demo1](assets/readme/demo1.png)
 ![demo2](assets/readme/demo2.png)
 ![demo3](assets/readme/demo3.png)
@@ -83,4 +83,5 @@ At the end of each week, team will merge `develop` into `main/master` to release
 #### Solution: Reduce the memory usage of Button class by removing abundant properties, and instantiate them only one time with the screen
 # 7. Conclusion
 After this project, our team does have the opportunity to gain knowledge related to Gitflow, collaboration skill and getting to know how a project can be operated in real life, which remarkably improve the programming skill. Hope everyone will enjoy the game.
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+**Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.**
